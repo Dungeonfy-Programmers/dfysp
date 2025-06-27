@@ -1,0 +1,521 @@
+#Cancel Durability
+on item damage:
+    cancel event
+
+on leave:
+	delete {_health::%player%}
+	delete {_maxhealth::%player%}
+	delete {damagetest::%uuid of player%}
+	if {bits::%uuid of player%} = 0:
+		delete {bits::%uuid of player%}
+	if {dungeonsstarted::%uuid of player%} = 0:
+		delete {dungeonsstarted::%uuid of player%}
+	delete {dodge::%uuid of player%}
+#new health system
+every 1 second:
+	loop all players:
+		set health scale of loop-player to 20
+		if {in_sr::%uuid of loop-player%} = true:
+			send action bar "&8- [&c%{_health::%loop-player%}%/%{_maxhealth::%loop-player%}%&8] &8[&6%{sr_time::%uuid of loop-player%}%&8]-" to loop-player
+		
+		else:
+			send action bar "&8- [&c%health of loop-player * 2%/%max health of loop-player * 2%&8] -" to loop-player
+		if name of loop-player's held item is "&dGolem's Grace &b❤":
+			send action bar "&8- [&c%health of loop-player * 2%/%max health of loop-player * 2%&8] ⇔ &8[&e%{golemgracecharge::%uuid of loop-player%}%&8/&e4&8] -" to loop-player
+		
+on death:
+	if victim is op:
+		set death message to "&c<##ff0000>☠ %victim% forgor"
+	else:
+		set death message to "&c<##ff0000>☠ %death message%"
+
+#=============TUTORIAL============
+on walk on nether portal:
+	set {_portaltp} to location at (-16.5, 30, 8.5)
+	set {_portaltp}'s yaw to 90
+	set {_portaltp}'s pitch to 0.01
+	teleport player to {_portaltp}
+	wait 1 second
+	if metadata value "knightdialogue" of player isn't set:
+		set metadata value "knightdialogue" of player to true
+		message "&aKnight&f: Hey you there!"
+		wait 2 second
+		message "&aKnight&f: I can offer you some good starter gear for cheap..."
+		wait 3 seconds
+		message "&aKnight&f: Kill some &dpigs &ffor money, &6Bob &fwill buy pork for a good price!"
+		wait 3 seconds
+		message "&aKnight&f: Make sure to use &b/guide &ffor many useful commands"
+		wait 3 seconds
+		message "&aKnight&f: If you have any questions, join giveaways, and participate in events, join our discord! <link:https://discord.gg/yhw4ajkCu8>&7[&bCLICK&7]"
+on death:
+	set {newspawn} to location at (396.5, 38, -203.5)
+	set {newspawn}'s yaw to 180
+	set {newspawn}'s pitch to 0.01
+	teleport victim to {newspawn}
+on death:
+	if victim is pig:
+		if {pigtutorial::%uuid of attacker%} isn't set:
+			set {pigtutorial::%uuid of attacker%} to true
+			give attacker 4 emeralds
+			play sound "entity.player.levelup" to attacker
+			send message "&6Bob&f: &fAs a reward for killing your first pig, you got &a4 Emeralds&f & &b50 Bits&f!" to attacker
+			set {bits::%uuid of attacker%} to {bits::%uuid of attacker%} + 50
+			wait 3 seconds
+			send message "&6Bob&f: Just letting you know now, &bBits &fare used to determine rank! &aVIP &fis 1000+, &bPOG &fis 2500+, etc." to attacker
+#AFK CHECKER
+
+#===========TAB LIST & DISPLAY NAME=============
+every 30 seconds:
+	loop all players:
+		if loop-player's name is "enook" or "appleboater27" or "Cornz_" or "EnderZombie44" or "renegade450" or "ThreepennyLlama" or "CapacityUnavail" or "Deltaxbyte" or "ZG_1" or "Starry_Phantom" or "Flowerei" or "NightS0rrow" or "MothVI" or "NameLessIV" or "Legend_Of_Lonk":
+			if loop-player's name is "enook" or "EnderZombie44" or "renegade450" or "ThreepennyLlama"  or "Deltaxbyte" or "ZG_1" or "Starry_Phantom" or "NightS0rrow" or "MothVI" or "Legend_Of_Lonk":
+				if loop-player's name is "enook" or "EnderZombie44" or "renegade450" or "Deltaxbyte" or "Starry_Phantom" or "Legend_Of_Lonk":
+					if loop-player's name is "enook":
+						set loop-player's tablist name to "<##FFC300>%loop-player%"
+					else:
+						set loop-player's tablist name to "&c%loop-player%"
+				else:
+					set loop-player's tablist name to "<##59bfff>%loop-player%"
+			else:
+				set loop-player's tablist name to "&e%loop-player%"
+		else:
+			if {bits::%uuid of loop-player%} >= 1000:
+				if {bits::%uuid of loop-player%} >= 2500:
+					if {bits::%uuid of loop-player%} >= 5000:
+						if {bits::%uuid of loop-player%} >= 10000:
+							if {bits::%uuid of loop-player%} >= 25000:
+								set loop-player's tablist name to "&d%loop-player%"
+							else:
+								set loop-player's tablist name to "<##eb8a4a>%loop-player%"
+						else:
+							set loop-player's tablist name to "&5%loop-player%"
+					else:
+						set loop-player's tablist name to "&b%loop-player%"
+				else:
+					set loop-player's tablist name to "&a%loop-player%"
+			else:
+				set loop-player's tablist name to "&f%loop-player%"
+						
+every 30 seconds:
+	loop all players:
+		set {tabrank::%loop-player%} to loop-player's tablist name
+		set loop-player's tablist name to "%{tabrank::%loop-player%}%"
+		set {badges::%uuid of loop-player%} to "&8["
+		if {squad::%uuid of loop-player%} = "butcher":
+			set {badges::%uuid of loop-player%} to "%{badges::%uuid of loop-player%}%&9☃"
+		if {squad::%uuid of loop-player%} = "greg":
+			set {badges::%uuid of loop-player%} to "%{badges::%uuid of loop-player%}%&4&lʊ"
+		if {squad::%uuid of loop-player%} = "padre":
+			set {badges::%uuid of loop-player%} to "%{badges::%uuid of loop-player%}%&e☘"
+		if {supporter::%uuid of loop-player%} = true:
+			set {badges::%uuid of loop-player%} to "%{badges::%uuid of loop-player%}%&6❤"
+		if {discordbooster::%uuid of loop-player%} = true:
+			set {badges::%uuid of loop-player%} to "%{badges::%uuid of loop-player%}%&d◆"
+		if {in_sr::%uuid of loop-player%} = true:
+			set {badges::%uuid of loop-player%} to "%{badges::%uuid of loop-player%}%&b⌛"
+		if {hardcore::%uuid of loop-player%} = true:
+			set {badges::%uuid of loop-player%} to "%{badges::%uuid of loop-player%}%&c☠"
+		if {artist::%uuid of loop-player%} = true:
+			set {badges::%uuid of loop-player%} to "%{badges::%uuid of loop-player%}%&3✎"
+		if {eventwinner::%uuid of loop-player%} = true:
+			set {badges::%uuid of loop-player%} to "%{badges::%uuid of loop-player%}%&b❁"
+		if {verifiedbadge::%uuid of loop-player%} = true:
+			set {badges::%uuid of loop-player%} to "%{badges::%uuid of loop-player%}%&a⌚"
+		if {in_witherien::%uuid of loop-player%} = true:
+			set {badges::%uuid of loop-player%} to "%{badges::%uuid of loop-player%}%&4&l☢"
+		set {badges::%uuid of loop-player%} to "%{badges::%uuid of loop-player%}%&8]"
+		if {badges::%uuid of loop-player%} != "&8[&8]":
+			set loop-player's tablist name to "%{tabrank::%loop-player%}% %{badges::%uuid of loop-player%}%"
+on leave:
+	delete {badges::%uuid of player%}
+	delete {tabrank::%player%}
+command /boosterbadge_add [<offline player>]:
+	permission: op
+	trigger:
+		set {discordbooster::%uuid of arg%} to true
+		broadcast "&d%arg% now has the Booster Badge &d[◆] for boosting the discord server!"
+command /boosterbadge_remove [<offline player>]:
+	permission: op
+	trigger:
+		set {discordbooster::%uuid of arg%} to false
+		message "&d%arg% now no longer has the Booster Badge &d[◆]"
+command /artistbadge_add [<offline player>]:
+	permission: op
+	trigger:
+		set {artist::%uuid of arg%} to true
+		broadcast "&f%arg% now has the Artist Badge &3[✎] &ffor making impressive fanart!"
+command /artistbadge_remove [<offline player>]:
+	permission: op
+	trigger:
+		set {artist::%uuid of arg%} to false
+		message "&f%arg% now no longer has the Artist Badge &3[✎]"
+command /eventbadge_add [<offline player>]:
+	permission: op
+	trigger:
+		set {eventwinner::%uuid of arg%} to true
+		broadcast "&f%arg% now has the Event Winner Badge &b[❁] &ffor winning an event!"
+command /eventbadge_remove [<offline player>]:
+	permission: op
+	trigger:
+		set {eventwinner::%uuid of arg%} to false
+		broadcast "&f%arg% no longer has the Event Winner Badge &b[❁]"
+command /verifiedbadge_add [<offline player>]:
+	permission: op
+	trigger:
+		set {verifiedbadge::%uuid of arg%} to true
+		broadcast "&f%arg% now has the Verified Badge &a[⌚] &ffor submitting 3 legitmate and good runs."
+command /verifiedbadge_remove [<offline player>]:
+	permission: op
+	trigger:
+		set {verifiedbadge::%uuid of arg%} to false
+		message "&f%arg% now no longer has the Verified Badge &a[⌚]"
+command /kills:
+	trigger:
+		message "&fYou have &c%{kills::%uuid of player%}% &ftotal kills!"
+#Tab list					
+every second:
+	loop all players:
+		set loop-player's tab list header to "&b- dungeonfy.minehut.gg -"
+		set {_onlineplayers} to number of all players
+		set loop-player's tab list footer to "&fPlayers: &a%{_onlineplayers}% &fBits: &b%{bits::%uuid of loop-player%}%%nl%&fKills: &c%{kills::%uuid of loop-player%}% %{badges::%uuid of loop-player%}%"
+
+#Armor Change message
+on armor change:
+	if event-item isn't air:
+		if name of event-item is set:
+			if name of event-item isn't "&cTime Traveler's Helmet":
+				set {nameofarmor} to name of event-item
+				send "&aYou equipped %{nameofarmor}%&a!"
+				delete {nameofarmor}
+#Greg Rap Battle
+command /gregrapbattle:
+	permission: op
+	trigger:
+		broadcast "&a*(music starts)*"
+		wait 1 second
+		broadcast "&4Greg: &fTog is not pog"
+		wait 1 second
+		broadcast "&4Greg: &fHe doesn’t know how to chop a log"
+		wait 1 second
+		broadcast "&4Greg: &fI bet he doesn’t even have a dog"
+		wait 1 second
+		broadcast "&4Greg: &fI know Tog doesn’t pull"
+		wait 1 second
+		broadcast "&4Greg: &fTog is very dull"
+		wait 1 second
+		broadcast "&4Greg: &fI will eat from his skull"
+		wait 1 second
+		broadcast "&4Greg: &fHe said hi"
+		wait 1 second
+		broadcast "&4Greg: &fI told him to die"
+		wait 1 second
+		broadcast "&4Greg: &fMy name is Greg (yeah)"
+		wait 1 second
+		broadcast "&4Greg: &fI like to drink from a keg (yeah)"
+		wait 1 second
+		broadcast "&4Greg: &fMy comrades are best (yeah)"
+		wait 1 second
+		broadcast "&4Greg: &fand Tog is a pest (yeah)"
+		broadcast "&a*(music ends)*"
+command /nonesay <text>:
+	permission: op
+	trigger:
+		set {_p} to arg-1
+		broadcast "&f<none>: %{_p}%"
+#================COMMANDS=================
+command /bitsremove [<offline player>] <text>:
+	permission: op
+	trigger:
+		set {_p} to arg-1
+		set {_p2} to arg-2
+		set {bits::%uuid of {_p}%} to {bits::%uuid of {_p}%} - {_p2}
+		message "&b%{_p}% is now at %{bits::%uuid of {_p}%}% total bits!"
+		
+command /vanish:
+	permission: vanish.sk
+	trigger:
+		if {vanish::%player%} is true:
+			set {vanish::%player%} to false
+			broadcast "&e%player% joined the game"
+			reveal player to all players
+		else:
+			set {vanish::%player%} to true
+			broadcast "&e%player% left the game"
+			hide player from all players
+command /bedrockoffhand_equip:
+	aliases: /bro_e
+	trigger:
+		close player's inventory
+		if player's offhand item isn't air:
+			message "&cYou can only do this when you don't have an item in your offhand. /bedrockoffhand_deequip!"
+		else:
+			set player's offhand item to player's held item
+			set player's held item to air
+command /bedrockoffhand_deequip:
+	aliases: /bro_d
+	trigger:
+		close player's inventory
+		if player's offhand item is air:
+			message "&cThere has to be something in your offhand to deequip!"
+		else:
+			if player's held item is air:
+				set player's held item to player's offhand item
+				set player's offhand item to air
+			else:
+				message "&cYour main hand must be empty!"
+command /itemvarset <text>:
+	permission: op
+	trigger:
+		set {%arg-1%} to player's held item
+		set {_itemvar} to name of player's held item
+		message "&a{%arg-1%} is now set to %{_itemvar}%"
+on login:
+	if {damagetest::%uuid of player%} isn't set:
+		set {damagetest::%uuid of player%} to 0
+on damage:
+	if {damagetest::%uuid of attacker%} isn't set:
+		set {damagetest::%uuid of attacker%} to damage * 2
+	else:
+		set {damagetest::%uuid of attacker%} to damage * 2
+command /ip:
+	trigger:
+		message "&fThe ip is &bdungeonfy.minehut.gg"
+command /damagetest:
+	trigger:
+		message "&eYour last hit dealt &c%{damagetest::%uuid of player%}% damage&e!"
+command /forgor:
+	trigger:
+		if {forgorcd::%uuid of player%} isn't set:
+			set {forgorcd::%uuid of player%} to false
+		if {forgorcd::%uuid of player%} = false:
+			set {forgorcd::%uuid of player%} to true
+			make player say "&ci have forgotten ☠"
+			set {forgorcount} to {forgorcount} + 1
+			wait 60 seconds
+			delete {forgorcd::%uuid of player%}
+		else:
+			message "&cThis command is on a cooldown!"
+command /forgorcount:
+	trigger:
+		message "&cWe have forgotten %{forgorcount}% times ☠"
+command /shrug:
+	trigger:
+		make player say "¯\_(ツ)_/¯"
+command /tableflip:
+	trigger:
+		make player say "(╯°□°）╯︵ ┻━┻"
+
+command /spawn:
+	trigger:
+		if {indungeon::%uuid of player%} or {in_witherien::%uuid of player%} = true:
+			message "&cYou can't use this while in a dungeon!"
+		else:
+			set {newspawn} to location at (396.5, 38, -203.5)
+			set {newspawn}'s yaw to 180
+			set {newspawn}'s pitch to 0.01
+			teleport player to {newspawn}
+command /enderchest:
+	aliases: /ec
+	trigger:
+		if {in_sr::%uuid of player%} = true:
+			message "&cYou can't do this command while speedrunning"
+		else:
+			open ender chest of player to player
+			play sound "block.ender_chest.open" to player
+command /discordpromo:
+    permission: op
+    trigger:
+        broadcast "&f<link:https://discord.gg/yhw4ajkCu8>&bhttps://discord.gg/yhw4ajkCu8"
+        broadcast "&fWe'll be hosting &6giveaways &rand announcing new &dudpates &rthere :)"
+command /rules:
+	trigger:
+		message "&cServer Rules" and "&fDepending on the offense, 1 to 4 warnings will result in a ban, for detailed rules you can check: <link:https://tinyurl.com/dfyguidelines>&b&nhttps://tinyurl.com/dfyguidelines" and "" and "&fThe following are warnable and possibly bannable offenses:" and "&f-NSFW Usernames, convos, baiting, etc." and "&f-Toxicity, discrimination, death threats, leaking personal information without consnet" and "&f-No spam, senseless arguments, religious or political arguments, or advertising without consent" and "&f-Hacking, duping, creating lag, backdoring or using any unfair advantage." and "&f-Abusing exploits/bugs/glitches, if you find any, please report them in ##help in our discord server." and "&f-Macroing or AFK'ing any task and escaping the map" and "&f-Exchange of in-game currency for something from our shop/a real life commodity" and " " and "&fDon't abuse admin items if you find them, you may get wiped." and "&fNo scamming/gaslighting or begging excessively for items or roles." and " " and "&fTo appeal or report a cheater, please join our discord server: <link:https://discord.gg/yhw4ajkCu8>&b&nhttps://discord.gg/yhw4ajkCu8"
+command /discord:
+    trigger:
+        send message "<link:https://discord.gg/yhw4ajkCu8>&bhttps://discord.gg/yhw4ajkCu8"
+command /bits [<offline player>]:
+	trigger:
+		if arg is set:
+			set {_p} to arg
+			message "&3%{_p}% has &b%{bits::%uuid of {_p}%}% &3total bits!"
+		else:
+			set {_p} to player
+			message "&3You have &b%{bits::%uuid of {_p}%}% &3total bits!"
+command /killnamedzombie:
+	permission: op
+	trigger:
+		loop all zombies:
+			if name of loop-zombie is set:
+				kill loop-zombie
+
+#====================STARTER GEAR + LOGIN STUFF :)==============
+on login: #Badges and Teleport
+	set {_ns} to location at (396.5, 38, -203.5)
+	set {_ns}'s yaw to 180
+	set {_ns}'s pitch to 0.01
+	teleport player to {_ns}
+	set {loginmsg::%player%} to login message
+	if {supporter::%uuid of player%} = true:
+		set login message to "&e%{loginmsg::%player%}% &6[❤]"
+	if {discordbooster::%uuid of player%} = true:
+		set login message to "&e%{loginmsg::%player%}% &d[◆]"
+	if {hardcore::%uuid of player%} = true:
+		set login message to "&e%{loginmsg::%player%}% &c[☠]"
+	message "&e&lUPDATE 1.32 &fWe added a new &6Mole &fupgrade! If you're interested click <command:/updatetp>&ehere!"
+command /updatetp:
+	trigger:
+		make console execute command "/tp %player% 93.5 43 -288.5 -180 -7.5"
+		message "&e&lUPDATE 1.32 &fWe added a new &6Mole &fupgrade! If you're interested click <command:/updatetp>&ehere!"
+command /joins:
+	trigger:
+		message "&e%{newppl}% total new people joined since March 4 2023 12:53 PST (we were not tracking before ☠"
+on first login:
+	add 1 to {newppl}
+	give stone sword named "&fStarter Blade" with lore "&8This is %player%'s first ever weapon!" to player
+	give player bow with name "&fStarter Bow"
+	give 16 baked potato to player
+	give 16 arrows to player
+	give player big dripleaf with name "&fDripleaf Hat" with lore "&7A wearable dripleaf :D"
+	give player leather helmet with name "&9Dirt Helmet"
+	set {_randomwelcome} to random integer between 1 to 3
+	if {_randomwelcome} = 1:
+		set join message to "<##52ffae>%player% has arrived, welcome :D"
+	if {_randomwelcome} = 2:
+		set join message to "<##52ffae>%player% magically appeared, welcome :)"
+	if {_randomwelcome} = 3:
+		set join message to "<##52ffae>%player% joined the game, welcome :O"
+	set {welcomeactive} to true
+	message "&eWelcome to &bDungeonfy&e! A MMORPG Server with hundreds of custom items and various areas to explore. Use &a/guide &efor helpful commands."
+	wait 3 seconds
+	set {welcomeactive} to false
+on chat:
+	if message contains "welcome":
+		if {welcomeactive} = true:
+			if {alreadywelcomed::%player%} isn't true:
+				set {bits::%uuid of player%} to {bits::%uuid of player%} + 5
+				message "&eThank you for welcoming new players, heres &b5 bits&e!"
+				set {alreadywelcomed::%player%} to true
+				wait 5 seconds
+				delete {alreadywelcomed::%player%}
+on leave:
+	delete {drip::%player%}
+	delete {bit_multi::%uuid of player%}
+	delete {alreadywelcomed::%player%}
+on login:
+	if {bits::%uuid of player%} isn't set:
+		set {bits::%uuid of player%} to 0
+on login:
+	send title "&6Dungeonfy" with subtitle "&7by enook & team" to player for 3 seconds
+	wait 2 ticks
+	make console execute command "/heal %player%"
+	make console execute command "/ncp exempt %player% FIGHT_REACH"
+	make console execute command "/ncp exempt %player% FIGHT_IMPOSSIBLEHIT"
+	make console execute command "/ncp exempt %player% FIGHT_SPEED"
+	make console execute command "/ncp exempt %player% MOVING_SURVIVALFLY"
+
+command /padrewarp:
+	trigger:
+		if {indungeon::%uuid of player%} or {in_witherien::%uuid of player%} = true:
+			message "&cYou can't use this while in a dungeon!"
+		else:
+			set {_stpadre} to location at (-172.5, 39, -61.5)
+			set {_stpadre}'s yaw to -135
+			set {_stpadre}'s pitch to 0.01
+			teleport player to {_stpadre}
+			send title "&6St. Padre" with subtitle "&7Cozy little farming town :D" to player
+
+command /slimewarp:
+	trigger:
+		if {indungeon::%uuid of player%} or {in_witherien::%uuid of player%} = true:
+			message "&cYou can't use this while in a dungeon!"
+		else:
+			set {_slime} to location at (310.5, 4, -233.5)
+			set {_slime}'s yaw to 90
+			set {_slime}'s pitch to 0.01
+			teleport player to {_slime}
+			send title "&aSlimey Sanctuary" with subtitle "&7Long lost... Recently Found." to player
+
+#WEARABLE
+aliases:
+	custom helmets = big dripleaf, pink stained glass
+
+on inventory click:
+	inventory action is place all or nothing
+	cursor slot of player is custom helmets # Check if item is allowed as helmet
+	event-slot is helmet slot of event-player # Check that player clicked the helmet
+	cancel the event
+	set {_old helmet} to helmet of player # Store old helmet
+	set helmet of player to cursor slot of player # Set new helmet to item in player's cursor
+	set cursor slot of player to {_old helmet} # Set player's cursor to old helmet, possibly air
+
+on right click:
+	tool of player is custom helmets
+	helmet of player is air
+	cancel the event
+	set helmet of player to tool of player
+	set tool of player to air
+
+#============WARN SYSTEM==========
+#Made by BigBrainFrog / Frog
+ 
+variables:
+  {warns}  = 0
+ 
+# Warn Command
+command /mute <offline player> <text>:
+	permission: mute.sk
+	permission message: &cYou don't have permission to use this command!
+	trigger:
+		if arg-1 is set:
+			if arg-2 is set:
+				set {muted::%uuid of arg-1%} to true
+				broadcast "&c%player% &cmuted %arg-1% for %arg-2%."	
+command /unmute <offline player>:
+	permission: mute.sk
+	permission message: &cYou don't have permission to use this command!
+	trigger:
+		if arg-1 is set:
+			set {muted::%uuid of arg-1%} to false
+			broadcast "&c%player% &cunmuted %arg-1%."
+		
+command /warn <offline player> <text>:
+  permission: warn.sk
+  permission message: &cYou don't have permission to use this command!
+  trigger:
+    if arg-1 is set:
+      if arg-2 is set:
+        add 1 to {warns::%arg-1's uuid%}
+        broadcast "&c%player% &cwarned %arg-1%"
+        broadcast "&cThey now have %{warns::%arg-1's uuid%}% warn(s)."
+        broadcast "&cReason: %arg-2%"
+# Checks if warn count is divisible by 5 and if it is, it bans the player
+
+ 
+# Unwarn Command
+command /unwarn <offline player>:
+  permission: warn.sk
+  permission message: &4&lYou do not have permission to use this command!
+  trigger:
+    if arg-1 is set:
+      if {warns::%arg-1's uuid%} is 0:
+        send "&cYou can't have negative warns!" to player
+      if {warns::%arg-1's uuid%} is not 0:
+        remove 1 from {warns::%arg-1's uuid%}
+        broadcast "&c%player% unwarned %arg-1%"
+        broadcast "&cThey now have %{warns::%arg-1's uuid%}% warn(s)."
+ 
+# Check Warns Command
+command /checkwarns <offline player>:
+  permission: warn.sk
+  permission message: &4&lYou do not have permission to use this command!
+  trigger:
+    message "&c%arg-1% has %{warns::%arg-1's uuid%}% warn(s)."
+ 
+# Clear Warns Command
+command /clearwarns <offline player>:
+  permission: warn.sk
+  permission message: &4&lYou do not have permission to use this command!
+  trigger:
+    set {warns::%arg-1's uuid%} to 0
+    broadcast "&c%player% &chas cleared %arg-1%'s warnings."
+

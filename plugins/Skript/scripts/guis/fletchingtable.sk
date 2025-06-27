@@ -1,0 +1,12 @@
+#on right click on fletching table:
+	#set {fletching_table} to a new chest inventory with 6 row with name "&6Fletching Table"
+	#set {tippedarrow} to tipped arrow
+	#set tip color of {tippedarrow} to red
+	#set slot 0 of {fletching_table} to tipped arrow
+	#open {fletching_table} to player
+ 
+on inventory click:
+	if name of event-inventory is "&6Fletching Table":
+		if index of event-slot = 10:
+			cancel event
+			send "You clicked on the slot 0 !"

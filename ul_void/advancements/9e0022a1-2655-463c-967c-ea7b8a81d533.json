@@ -1,0 +1,15 @@
+{
+  "minecraft:recipes/misc/gold_nugget_from_smelting": {
+    "criteria": {
+      "has_golden_sword": "2022-04-05 15:03:24 +0000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/gold_nugget_from_blasting": {
+    "criteria": {
+      "has_golden_sword": "2022-04-05 15:03:24 +0000"
+    },
+    "done": true
+  },
+  "DataVersion": 2730
+}

@@ -1,0 +1,80 @@
+#BAKED ITEMS ABILITY=================================
+on right click with cake:
+	if name of player's held item is "&dCheese Cake" or "&dNot as fresh Cheese Cake":
+		cancel event
+		set player's held item to air
+		play sound "entity.strider.eat" to player
+		remove speed and jump boost and absorption and regeneration and strength from player
+		apply speed 5 to player for 2400 seconds
+		apply jump boost 5 to player for 2400 seconds
+		apply regeneration 4 to player for 2400 seconds
+		apply absorption 5 to player for 2400 seconds
+		apply strength 4 to player for 2400 seconds
+		
+on right click with bread:
+	if name of player's held item is "&6Pumpkin Bread":
+		cancel event
+		remove 1 bread from player
+		apply strength 5 to player for 5 seconds
+on right click with cookie:
+	if name of player's held item is "&6Sugar Cookie":
+		cancel event
+		remove 1 cookie from player
+		apply speed 5 to player for 5 seconds
+on right click with glow berries:
+	if name of player's held item is "&6Magical Fruit":
+		cancel event
+		remove 1 glow berries from player
+		apply absorption 8 to player for 60 seconds
+	
+#==================BAKING SYSTEM================	
+options:
+	cooldown: 24 hours
+
+command /dailycake:
+	trigger:
+		set {_waited} to difference between {cakeofdaily::%uuid of player%} and now
+		if {_waited} is less than {@cooldown}:
+			send "&cYou can bake your next cake in %difference between {@cooldown} and {_waited}%"
+		else:
+			if player has 256 wheat:
+				remove 256 wheat from player
+				set {cakesbaked} to {cakesbaked} + 1
+				set {cakeofdaily::%uuid of player%} to now
+				give player 1 cake with name "&dCheese Cake" with lore "&7Right click to consume!" and " " and "&fSpeed 5, &aJump Boost 5&f, &6Absorption 5&f," and "&dRegeneration 4&f, &4Strength 4&f for 40 minutes" and " " and "&f##%{cakesbaked}% &fcake baked by %player%!" and "&8* Effects do not stack *"
+				broadcast "&6%player% just baked their daily cake!"
+			else:
+				send message "&cYou need four stacks of wheat to claim your daily cake!"
+				
+command /dailycakesbaked:
+	trigger:
+		send message "&f%{cakesbaked}% daily cakes have been baked!" to player
+		
+command /bake:
+	trigger:
+		if player has 384 wheat:
+			remove 384 wheat from player
+			give player 1 cake with name "&dNot as fresh Cheese Cake" with lore "&7Right click to consume!" and " " and "&fSpeed 5, &aJump Boost 5&f, &6Absorption 5&f," and "&dRegeneration 4&f, &4Strength 4&f for 40 minutes" and " " and "&8* Effects do not stack *"
+			broadcast "&6%player% just baked a cake!"
+			if {in_sr.%uuid of player%} = true:
+				if {sr_cake.%uuid of player%} = true:
+					set {in_sr.%uuid of player%} to false
+					set {sr_cake.%uuid of player%} to false
+			
+					if {sr_time.%uuid of player%} < {wr_cake}:
+						broadcast "&a%player%'s final time is %{sr_time.%uuid of player%}% in &eBake a Not as Fresh Cheesecake &6NEW WR!"
+						set {wr_cake_holder} to player's name
+						set {wr_cake} to {sr_time.%uuid of player%}
+						set {pb_cake.%uuid of player%} to {sr_time.%uuid of player%}
+					else:
+						if {sr_time.%uuid of player%} < {pb_cake.%uuid of player%}:
+							set {pb_cake.%uuid of player%} to {sr_time.%uuid of player%}
+							message "&aYour final time is %{sr_time.%uuid of player%}% in &eBake a Not as Fresh Cheesecake &6NEW PB!"
+						else:
+							message "&aYour final time is %{sr_time.%uuid of player%}% in &eBake a Not as Fresh Cheesecake"
+					clear player's inventory
+					give player {normalinventory%player%::*}
+					clear {normalinventory%player%::*}
+			
+		else:
+			send message "&cYou need six stacks of wheat to bake this cake!"

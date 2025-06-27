@@ -1,0 +1,39 @@
+#============SUPPORTER OBTAIN============
+command /supportergive [<offline player>]:
+	permission: op
+	trigger:
+		set {_supporter} to arg
+		set {supporter.%uuid of arg%} to true
+		broadcast "<tooltip:&eClick here to buy/gift Dungeonfy Supporter>&d&lSUPPORT! &6%{_supporter}% &fjust bought &dDungeonfy Supporter&f, TYSM &c❤"
+		wait 1 second
+		send message "&eYou will be receiving your &dSupporter Cap &ein 5 seconds, make sure your inventory isn't full!" to arg
+		wait 5 seconds
+		set {supportercapnum} to {supportercapnum} + 1
+		set {_supportercap} to leather helmet with item flag hide dye named "&6Supporter Cap" with lore "&eTYSM for supporting the server :D &c❤" and "&8##%{supportercapnum}% supporter cap obtained by %{_supporter}%"
+		dye {_supportercap} (251, 168, 0)
+		give {_supporter} {_supportercap}
+#{discordbooster.%uuid of player%}		
+every 600 seconds:
+	loop all players:
+		if {supporter.%uuid of loop-player%} = true:
+			if {clockdrops.%loop-player%} = true:
+				give 1 comparator named "&6Clock Parts" with lore "&7used to buy cool cosmetic items" to loop-player
+				send message "&6SUPPORT! &fYou got a bonus &6Clock Part&f!" to loop-player
+every 600 seconds:
+	loop all players:
+		if {discordbooster.%uuid of loop-player%} = true:
+			if {clockdrops.%loop-player%} = true:
+				give 1 comparator named "&6Clock Parts" with lore "&7used to buy cool cosmetic items" to loop-player
+				send message "&dSUPPORT! &fYou got a bonus &6Clock Part&f!" to loop-player
+
+command /supportertest [<offline player>]:
+	permission: op
+	trigger:
+		set {_supporter} to arg
+		set {_supportercap} to leather helmet with item flag hide dye named "&6Supporter Cap" with lore "&eTYSM supporting the server :D &c❤" and "&8##%{supportercapnum}% supporter cap obtained by %{_supporter}%"
+		dye {_supportercap} (251, 168, 0)
+		give {_supporter} {_supportercap}
+command /supporterremove [<offline player>]:
+	permission: op
+	trigger:
+		set {supporter.%uuid of arg%} to false

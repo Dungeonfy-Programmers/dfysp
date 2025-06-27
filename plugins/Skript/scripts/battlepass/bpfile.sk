@@ -1,0 +1,178 @@
+on script load:
+    set {battlepass::locked} to red dye named "&cLocked!"
+    set {battlepass::unlocked} to lime dye named "&aClick to Claim"
+    set {battlepass::claimed} to gray dye named "&7Reward Claimed"
+    set {battlepass::plocked} to netherite ingot named "&4Locked"
+    set {battlepass::punlocked} to gold ingot named "&6Click to Claim"
+    set {battlepass::pclaimed} to iron ingot named "&7Claimed"
+    set {battlepass::settings::levelxp} to 100
+
+    set {battlepass::rewards::standard::1} to 10 diamonds
+    set {battlepass::rewards::standard::2} to
+    set {battlepass::rewards::standard::3} to
+    set {battlepass::rewards::standard::4} to
+    set {battlepass::rewards::standard::5} to
+    set {battlepass::rewards::standard::6} to
+    set {battlepass::rewards::standard::7} to
+    set {battlepass::rewards::standard::8} to
+    set {battlepass::rewards::standard::9} to
+    
+    set {battlepass::rewards::premium::1} to
+    set {battlepass::rewards::premium::2} to
+    set {battlepass::rewards::premium::3} to
+    set {battlepass::rewards::premium::4} to
+    set {battlepass::rewards::premium::5} to
+    set {battlepass::rewards::premium::6} to
+    set {battlepass::rewards::premium::7} to
+    set {battlepass::rewards::premium::8} to
+    set {battlepass::rewards::premium::9} to
+
+command /reset-bp-level [<player>]:
+    permission: battlepass.admin
+    trigger:
+        set {_target} to arg-1 ? player
+        delete {battlepass::players::%{_target}'s uuid%::xp}
+        delete {battlepass::players::%{_target}'s uuid%::level}
+        delete {battlepass::players::%{_target}'s uuid%::claimed::*}
+        delete {battlepass::players::%{_target}'s uuid%::claimable::*}
+        send "Reset %{_target}%'s battlepass"
+
+command /set-bp-level <integer> [<player>]:
+    permission: battlepass.admin
+    trigger:
+        set {_level} to arg-1
+        set {_target} to arg-2 ? player
+        set {battlepass::players::%{_target}'s uuid%::xp} to 0
+        set {battlepass::players::%{_target}'s uuid%::level} to {_level}
+
+        set {_li} to 1
+        loop {_level} times:
+
+            add {_li} to {battlepass::players::%{_target}'s uuid%::claimable::*}
+            add {_li} + 18 to {battlepass::players::%{_target}'s uuid%::claimable::*}
+
+            add 1 to {_li}
+        send "Set %{_target}%'s battlepass level to %{_level}%"
+
+command /battlepass:
+    aliases: /dyepass, /dye-pass, /batte-pass, /pass, /path-of-transformations
+    permission: battlepass.open
+    trigger:
+        set {_level} to {battlepass::players::%player's uuid%::level} ? 0
+        set {_xp} to {battlepass::players::%player's uuid%::xp} ? 0
+        set {_claimable::*} to {battlepass::players::%player's uuid%::claimable::*}
+
+        set {_claimed::*} to {battlepass::players::%player's uuid%::claimed::*}
+        set {_mxp} to {battlepass::settings::levelxp}
+
+        set {_gui} to a new chest inventory with 6 rows with name "Dye Pass %{_level}% | %{_xp}%/%{_mxp}%"
+        set slots (integers between 0 and 8) and (integers between 36 and 44) of {_gui} to black stained glass pane named "&6"
+
+        set slots (45, 46, 47) of {_gui} to book
+        set slots (48, 50) of {_gui} to black stained glass pane named "&6"
+        set slot 49 of {_gui} to barrier named "&cClose"
+        set slot 51 of {_gui} to experience bottle
+        set slot 52 of {_gui} to emerald
+        set slot 53 of {_gui} to purple glazed terracotta
+
+        loop 9 times:
+            add {battlepass::locked} to {_bpitems::*}
+
+        if {_level} = 9:
+            loop 9 times:
+                add orange stained glass pane to {_bpitems::*}
+        else:
+            loop {_level} times:
+                add green stained glass pane to {_bpitems::*}
+            loop (9 - {_level}) times:
+                add red stained glass pane to {_bpitems::*}
+            
+        loop 9 times: 
+            add {battlepass::plocked} to {_bpitems::*}
+        
+        loop {_claimable::*}:
+            if (loop-value) < 10:
+                set {_bpitems::%loop-value%} to {battlepass::unlocked}
+            else:
+                set {_bpitems::%loop-value%} to {battlepass::punlocked}
+        
+        loop {_claimed::*}:
+            if loop-value < 10:
+                set {_bpitems::%loop-value%} to {battlepass::claimed}
+            else:
+                set {_bpitems::%loop-value%} to {battlepass::pclaimed}
+
+        set {_li} to 9
+        loop 27 times:
+            add 1 to {_li}
+
+        open {_gui} to player
+
+on inventory click:
+    name of event-inventory contains "Dye Pass"
+    cancel event
+
+    inventory of player does not contain event-item
+    set {_level} to (index of event-slot) - 8
+    set {_mlevel} to mod({_level},3)
+    set {_plevel} to (index of event-slot) - 26 + 18
+    set {_pmlevel} to mod({_level},3)
+    set {_target} to player
+
+    if type of event-item is type of {battlepass::unlocked}:
+        if {_mlevel} is 1:
+            send "&aYou have received 2 trim points and %{battlepass::rewards::standard::%{_level}%}%."
+            add 2 to {battlepass::players::%{_target}'s uuid%::trimpoints}
+            
+        if {_mlevel} is 2:
+            send "&aYou have received 1 trim point and %{battlepass::rewards::standard::%{_level}%}%."
+            add 1 to {battlepass::players::%{_target}'s uuid%::trimpoints}
+            
+        if {_mlevel} is 0:
+            send "&aYou have received 1 &bdye point&a and %{battlepass::rewards::standard::%{_level}%}%."
+            add 1 to {battlepass::players::%{_target}'s uuid%::dyepoints}
+
+        add {battlepass::rewards::standard::%{_level}%} to inventory of player
+        add {_level} to {battlepass::players::%player's uuid%::claimed::*}
+        make player execute command "/battlepass"
+        
+    
+    if type of event-item is type of {battlepass::punlocked}:
+        if player does not have permission "battlepass.premium":
+            send "&cYou need to have the premium dye pass (Transformation Elder) to claim this reward."
+            close inventory of player
+            stop
+        if {_pmlevel} is 1:
+            send "&aYou have received 6 trim points and %{battlepass::rewards::premium::%{_level}%}%."
+            add 6 to {battlepass::players::%{_target}'s uuid%::trimpoints}
+            
+        if {_pmlevel} is 2:
+            send "&aYou have received 3 trim point and %{battlepass::rewards::premium::%{_level}%}%."
+            add 3 to {battlepass::players::%{_target}'s uuid%::trimpoints}
+            
+        if {_pmlevel} is 0:
+            send "&aYou have received 3 &bdye point&a and %{battlepass::rewards::premium::%{_level}%}%."
+            add 3 to {battlepass::players::%{_target}'s uuid%::dyepoints}
+
+        add {battlepass::rewards::premium::%{_level}%} to inventory of player
+        add {_plevel} to {battlepass::players::%player's uuid%::claimed::*}
+        make player execute command "/battlepass"
+    
+    if type of event-item is type of {battlepass::claimed}:
+        send "&7This reward has already been claimed."
+        close inventory of player
+    
+    if type of event-item is type of {battlepass::pclaimed}:
+        send "&7This reward has already been claimed."
+        close inventory of player
+    
+    if type of event-item is type of {battlepass::locked}:
+        send "&cThis reward is locked. Gain more levels to unlock it!"
+        close inventory of player
+    
+    if type of event-item is type of {battlepass::plocked}:
+        send "&cThis reward is locked. Gain more levels to unlock it!"
+        close inventory of player
+
+
+

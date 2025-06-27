@@ -1,0 +1,22 @@
+command /htest: #Change to /holiday, holidayfy
+	permission: op
+	trigger:
+		set {_holgui} to a new chest inventory with 4 row with name "&c&lHOLIDAYFY"
+		set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 32 and 33 and 34 and 35 of {_holgui} to gray stained glass pane named " "
+		
+		set slot 10 of {_holgui} to 19 paintings named "&aHolidayfy Day 1" with lore "&8Starts December 19" and " " and "&6Supporter &c30%% OFF! &7+ &a/supportergift"
+		set slot 11 of {_holgui} to 20 paintings named "&aHolidayfy Day 2" with lore "&8Starts December 20" and " " and "&7Gift random people item, get one" and "&7back in return!"
+		set slot 12 of {_holgui} to 21 spruce saplings named "&aHolidayfy Day 3" with lore "&8Starts December 21" and " " and "&6Santa's Workshop Warp"
+		set slot 13 of {_holgui} to 22 paintings named "&aHolidayfy Day 4" with lore "&8Starts December 22" and " " and "&aFREE! &cFestive Enook's Cap"
+		set slot 14 of {_holgui} to 23 paintings named "&aHolidayfy Day 5" with lore "&8Starts December 23" and " " and "&fSnow White Dye &7for &6Supporters"
+		set slot 15 of {_holgui} to 24 paintings named "&aHolidayfy Day 6" with lore "&8Starts December 24" and " " and "&b2x Gifting Rates &7in /gift"
+		set slot 16 of {_holgui} to 25 snowballs named "&aHolidayfy Day 7" with lore "&8Starts December 25" and " " and "&aFREE! &fSnow Trail Effect" and "&cMerry Christmas!"
+		
+		set slot 31 of {_holgui} to barrier named "&fClose Menu"
+		open {_holgui} to player
+ 
+on inventory click:
+	if name of event-inventory is "&c&lHOLIDAYFY":
+		cancel event
+		if index of event-slot = 31:
+			close player's inventory

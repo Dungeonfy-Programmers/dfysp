@@ -1,0 +1,15 @@
+{
+  "minecraft:recipes/brewing/golden_carrot": {
+    "criteria": {
+      "has_gold_nugget": "2022-10-11 13:52:44 +0000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/gold_ingot_from_nuggets": {
+    "criteria": {
+      "has_gold_nugget": "2022-10-11 13:52:44 +0000"
+    },
+    "done": true
+  },
+  "DataVersion": 2730
+}

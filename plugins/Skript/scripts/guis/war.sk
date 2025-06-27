@@ -1,0 +1,41 @@
+command /wartides:
+	trigger:
+		send message "&fWar Members:" and "&9Anti-Greg&f: %{resistancemembers}%" and "&cGreg Army&f: %{gregvotes}%" to player
+command /chooseside:
+	trigger:
+		if {sidechosen::%player%} isn't set:
+			set {sidechosen::%player%} to false
+		set {chooseside} to a new chest inventory with 4 row with name "&6Choose a side!"
+		set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 of {chooseside} to gray stained glass pane named " "
+		set slot 12 of {chooseside} to blue dye with name "&9Blue Pill" with lore "&7Continue believing what you want to, this is for the Village!" and " " and "&eClick to join!"
+		set slot 14 of {chooseside} to red dye with name "&cRed Pill" with lore "&7Your life will never be the same after joining Greg::" and " " and "&eClick to join!"
+		set slot 31 of {chooseside} to barrier with name "&fClose Menu"
+		open {chooseside} to player
+on inventory click:
+	if name of event-inventory is "&6Choose a side!":
+		cancel event
+		if index of event-slot = 12:
+			if {sidechosen::%player%} = false:
+				set {sidechosen::%player%} to true
+				set {resistancemembers} to {resistancemembers} + 1
+				close player's inventory
+				send message "&aYou joined the Anti-Greg resistance, now with %{resistancemembers}% total members!"
+				give player blue dye with name "&9Blue Pill" with lore "&8Not a matrix refrence :)" and " " and "&f##%{resistancemembers}% blue pill claimed by %player%"
+			else:
+				cancel event
+				close player's inventory
+				send message "&cYou already joined another side!"
+		if index of event-slot = 14:
+			if {sidechosen::%player%} = false:
+				set {sidechosen::%player%} to true
+				set {gregvotes} to {gregvotes} + 1
+				close player's inventory
+				send message "&aYou joined Greg, bringing him to %{gregvotes}% total comrades!"
+				give player red dye with name "&cRed Pill" with lore "&8Not a matrix refrence :)" and " " and "&f##%{gregvotes}% red pill claimed by %player%"
+			else:
+				cancel event
+				close player's inventory
+				send message "&cYou already joined another side!"
+		if index of event-slot = 31:
+			cancel event
+			close player's inventory

@@ -1,0 +1,75 @@
+command /set-var-to-player-tool <string>:
+	permission: op
+	trigger:
+		set {portablefred} to player's tool
+		
+command /del-insane-vars:
+	permission: op
+	trigger:
+		delete {in_witherien::%uuid of player%}
+		delete {in_witherien.%uuid of player%}
+		
+command /test-nbt:
+	permission: op
+	trigger:
+		set string tag "test" of nbt compound of player's tool to "10000"
+		send nbt compound of player's tool to player
+		
+command /set-mole-ms <int> <string>:
+	permission: op
+	trigger:
+		set string tag "%arg-2%" of nbt compound of player's offhand tool to "%arg-1%"
+
+command /heal [<offline player>]:
+	permission: op
+	trigger:
+		if arg-1 is not set:
+			set health of player to max health of player
+			set food level of player to 40
+			set saturation of player to 40
+		else:
+			set health of arg-1 to max health of arg-1
+			set food level of arg-1 to 40
+			set saturation of arg-1 to 40
+
+command /sudo <offline player> <boolean> [<String>]:
+	permission: sudo.use
+	trigger:
+		if arg-2 is false:
+			make arg-1 execute command "%arg-3%"
+		else:
+			make arg-1 say arg-3
+		
+on damage:
+	if name of victim's helmet is "&dPurified Australian Spider Helmet":
+		send "&dPurified Australian Spider Helmet &cwas removed so here is a silly item instead" to victim
+		set {_item} to leather helmet named "&x&F&B&0&8&0&8S&x&F&E&5&9&0&1i&x&E&B&D&4&0&0l&x&6&1&F&F&2&Fl&x&0&0&9&E&9&Dy &x&2&5&1&4&F&FH&x&9&5&0&0&E&8a&x&F&F&0&0&5&Ft" with lore "&7""I like pure aussie armor"" - you probably "
+		paint {_item} blue
+		set victim's helmet to {_item}
+		
+	if name of victim's chestplate is "&dPurified Australian Spider Chestplate":
+		send "&dPurified Australian Spider Chestplate &cwas removed so here is a silly item instead" to victim
+		set {_item} to leather chestplate named "&x&F&B&0&8&0&8S&x&F&D&3&1&0&5i&x&F&E&5&9&0&1l&x&F&7&9&2&0&0l&x&E&B&D&4&0&0y &x&C&3&F&F&0&CC&x&6&1&F&F&2&Fh&x&0&0&F&F&5&3e&x&0&0&9&E&9&Ds&x&0&0&3&C&E&6t&x&2&5&1&4&F&Fp&x&5&E&0&8&F&Fl&x&9&5&0&0&E&8a&x&C&A&0&0&A&4t&x&F&F&0&0&5&Fe" with lore "&7""u either a smart fella or a fart fella"" - Einstein" 
+		paint {_item} lime
+		set victim's chestplate to {_item}
+		
+	if name of victim's leggings is "&dPurified Australian Spider Leggings":
+		send "&dPurified Australian Spider Leggings &cwas removed so here is a silly item instead" to victim
+		set {_item} to leather pants named "&x&F&B&0&8&0&8S&x&F&E&4&F&0&2i&x&F&1&B&3&0&0l&x&A&A&F&F&1&5l&x&0&0&F&F&5&3y &x&0&0&5&5&D&4P&x&4&2&0&E&F&Fa&x&A&2&0&0&D&7n&x&F&F&0&0&5&Ft" with lore "&7""roses are red, violets are blue, you %nl%&7are my toilet and i'll be your poo"" - _rohee" 
+		set victim's leggings to {_item}
+
+	if name of victim's boots is "&dPurified Australian Spider Boots":
+		send "&dPurified Australian Spider Boots &cwas removed so here is a silly item instead" to victim
+		set {_item} to leather boots named "&x&F&B&0&8&0&8S&x&F&E&4&7&0&3i&x&F&6&9&A&0&0l&x&E&3&F&F&0&0l&x&4&C&F&F&3&7y &x&0&0&B&3&8&CS&x&0&0&1&C&F&Fh&x&5&7&0&9&F&Fo&x&A&C&0&0&C&Ae&x&F&F&0&0&5&Fs" with lore "&7""Once you go black you never go back"" - Tyrell"
+		paint {_item} black
+		set victim's boots to {_item}
+	if name of victim's helmet is "&aTime Traveler's Helmet":
+		send "&cPlease make a ticket in the discord to claim your new &aTime Traveler's Helmet" to victim
+		set {_nbt} to nbt of victim's helmet
+		set {_item} to golden pickaxe with nbt {_nbt}
+		set victim's helmet to {_item}
+
+function setNBTtag(tagName: string, value: string, nbt: nbt compound):
+	set string tag "%{tagName}%" of {_nbt} to {_value}
+		
+		

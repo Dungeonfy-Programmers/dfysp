@@ -1,0 +1,190 @@
+on load:
+	set {normaldia} to diamond block
+#========Compactors=======
+on break of black stained glass or black stained glass pane:
+	if name of slot 6 of player's inventory contains "&dHematite Gizmo":
+		if player has 128 black stained glass named "&fHematite Crystal":
+			remove 128 black stained glass from player
+			give player {hematitegem}
+every 1 second:
+	loop all players:
+		if name of slot 7 of loop-player's inventory is "&dDiamond Fren :D":
+			if loop-player has 9 diamonds:
+				if loop-player has 9 diamonds named "&dExceedingly Shiny Diamond":
+					remove 9 diamonds named "&dExceedingly Shiny Diamond" from loop-player
+					give loop-player {compexdia}
+				else:
+					remove 9 diamonds named "" from loop-player
+					give loop-player diamond block
+on block break:
+	set {_t} to 1
+	if {_t} = 1:
+		if slot 6 of player's inventory is {portablefred}:
+			if {farmingluck::%uuid of player%} >= 10:
+				if player has 2 nether wart block:
+					remove 2 nether wart block from player
+					give player diamond
+				if player has 2 baked potato:
+					remove 2 baked potato from player
+					give player diamond
+				if player has 2 glowstone dust named "&6Brown Sugar":
+					remove 2 glowstone dust named "&6Brown Sugar" from player
+					give player diamond
+				if player has orange dye named "&6Abnormal Pumpkin":
+					remove 1 orange dye named "&6Abnormal Pumpkin" from player
+					give player 2 diamond
+				if player has 4 hay bale:
+					remove 4 hay bale from player
+					give player diamond
+				#even more compacted
+				if player has red nether bricks:
+					remove red nether bricks from player
+					give player 32 diamond
+				if player has poisonous potato:
+					remove poisonous potato from player
+					give player 32 diamond
+				if player has player head named "&eDelicious Hay":
+					remove player head named "&eDelicious Hay" from player
+					give player 16 diamond
+				if player has flower pot:
+					remove flower pot from player
+					give player 32 diamond
+#necklaces
+
+#wart necklace
+on break:
+	if event-block is nether wart:
+		if slot 7 of player's inventory is player head named "&cNether Wart Necklace":
+			give player 2 nether wart
+
+#holy charm
+on damage:
+	damage cause isn't thorns
+	if slot 7 of attacker's inventory is dandelion:
+		wait 6 ticks
+		heal attacker by (damage * 0.015)
+every 600 seconds:
+	loop all players:
+		if slot 7 of loop-player's inventory is clock:
+			give 1 comparator named "&6Clock Parts" with lore "&7used to buy cool cosmetic items" to loop-player
+			send message "&6&lCLOCK! &fYou got a bonus &6Clock Part&f!" to loop-player
+every 600 seconds:
+	loop all players:
+		if name of loop-player's offhand item is "&dSmart PocketClock Watch™":
+			give 1 comparator named "&6Clock Parts" with lore "&7used to buy cool cosmetic items" to loop-player
+			send message "&6&lCLOCK! &fYou got a bonus &6Clock Part&f!" to loop-player
+on inventory slot change:
+	if name of player's offhand item is "&dSmart PocketClock Watch™":
+		if player has 32 comparator:
+			remove 32 comparator from player
+			give player {clockengine}
+
+on death:
+	if name of slot 7 of attacker's inventory is "&eTwisting Vine Necklace":
+		chance of 20%:
+			give attacker lapis lazuli
+			
+on break:
+	if event-block is fully grown wheat plant:
+		if name of slot 7 of player's inventory is "&eHaysewn Necklace":
+			give 8 wheat to player
+on break of honeycomb block:
+	if name of slot 7 of player's inventory is "&eCharm of the Hive":
+		give 2 honeycomb to player
+on break of acacia log:
+	if name of slot 7 of player's inventory is "&eArtisan's Necklace":
+		chance of 20%:
+			give player {acacialog}
+on fishing:
+	fishing state is "CAUGHT_FISH":
+		slot 8 of player's inventory is player head named "&6Copper Fishing Pipe":
+			wait 30 ticks
+			give player 2 diamonds
+		slot 8 of player's inventory is player head named "&6Copper Fishing Pipe":
+			wait 30 ticks
+			give player 4 diamonds
+		
+#rings and bracelets
+
+on death:
+	if name of slot 8 of attacker's inventory is "&eLapis Ring":
+		chance of 20%:
+			give attacker lapis lazuli
+on break of black stained glass or black stained glass pane:
+	if name of slot 8 of player's inventory is "&eHematite Ring":
+		give 2 black stained glass with name "&fHematite Crystal" to player
+on break of red stained glass or red stained glass pane:
+	if name of slot 8 of player's inventory is "&eRuby Ring":
+		give 2 red stained glass with name "&fRuby Crystal" to player
+
+
+on inventory click:
+	if index of event-slot is 8:
+		if name of player's cursor slot is "&eRuby Ring":
+			wait 1 tick
+			while name of slot 8 of player's inventory is "&eRuby Ring":
+				apply regeneration 5 to player for 5 seconds
+				wait 5 seconds
+
+
+on inventory click:
+	if index of event-slot is 7:
+		if name of player's cursor slot is "&dHeart of the Nether":
+			wait 1 tick
+			while name of slot 7 of player's inventory is "&dHeart of the Nether":
+				apply fire resistance 1 to player for 5 seconds
+				wait 5 seconds
+			
+
+on break of melon:
+	if slot 8 of player's inventory is melon seeds with name "&eMelon Ring":
+		give 2 melon slices to player
+every 10 second:
+	loop all players:
+		if name of slot 8 of loop-player's inventory is "&eBurger":
+			remove saturation from loop-player
+			apply saturation 5 without particles to loop-player for 11 seconds
+on death:
+	if slot 8 of attacker's inventory is player head with name "&eEmerald Ring":
+		chance of 25%:
+			drop emerald
+on death:
+	if slot 8 of attacker's inventory is player head with name "&eGolden Ring":
+		chance of 25%:
+			drop gold nugget
+every 5 seconds:
+	loop all players:
+		if slot 8 of loop-player's inventory is golden horse armor with name "&eGolden Ring":
+			remove absorption from loop-player
+			apply absorption 5 to loop-player for 120 seconds
+on death:
+	if slot 8 of attacker's inventory is player head with name "&eDiamond Ring":
+		chance of 25%:
+			drop diamond
+on death:
+	if slot 8 of attacker's inventory is player head with name "&dCharm of the Bear":
+		give attacker 2 diamond
+
+#===========back==========
+every 10 seconds:
+	loop all players:
+		if slot 6 of loop-player's inventory is anvil with name "&fHeavy Weight™":
+			remove slowness from loop-player
+			apply slowness 5 to loop-player for 11 seconds
+on death:
+	if slot 6 of attacker's inventory is banner with name "&eMagician's Cloak":
+		chance of 10%:
+			give attacker lapis lazuli
+every 10 seconds:
+	loop all players:
+		if slot 6 of loop-player's inventory is banner with name "&eMagician's Cloak":
+			remove strength from loop-player
+			apply strength 10 to loop-player for 11 seconds
+
+#azure cloak
+every 1 second:
+	loop all players:
+		if slot 6 of loop-player's inventory is banner with name "&eAzure Cloak":
+			if loop-player has 6 cyan stained glass:
+				remove 6 cyan stained glass from loop-player
+				give loop-player cyan dye with name "&3Azure Powder"

@@ -1,0 +1,9 @@
+{
+  "minecraft:recipes/redstone/dispenser": {
+    "criteria": {
+      "has_bow": "2023-02-22 11:38:50 +0000"
+    },
+    "done": true
+  },
+  "DataVersion": 2730
+}

@@ -1,0 +1,144 @@
+#the ant eater
+on damage:
+	attacker is player
+	if name of attacker's held item contains "&cThe Ant Eater":
+		if name of victim is "&6&lFurguson, Lord of The Lands Between" or "&d&lFurguson, All-Father of The Lands Between":
+			increase damage by damage * 2
+			
+on damage:
+	attacker is player
+	if name of attacker's held item is "&cThe Ant Eater &4❁":
+		chance of 15%:
+			loop all creatures in radius 5 around attacker:
+				if loop-creature isn't a player:
+					apply glowing 1 without particles to loop-creature for 5 seconds
+					make attacker damage loop-creature by 2000
+#full furguson set					
+on damage:
+	attacker is player
+	if name of attacker's helmet is "&6Furguson's Mechanical Head":
+		if name of attacker's held item contains "&cThe Ant Eater":
+			increase damage by damage * 0.2
+	if name of attacker's chestplate is "&6Furguson's Cuirass":
+		if max health of victim is max health of attacker * 20:
+			increase damage by damage * 2
+	
+on damage:
+	attacker is player
+	if name of attacker's leggings is "&6Furguson's Waist Guards":
+		if {furgpants} is 1:
+			increase damage by damage * 0.05
+		if {furgpants} is 2:
+			increase damage by damage * 0.1
+		if {furgpants} is 3:
+			increase damage by damage * 0.15
+			
+every 2 second:
+	set {furgpants} to 0
+	clear {furgPants::*}
+	loop all players:
+		if name of loop-player's leggings is "&6Furguson's Waist Guards":
+			add loop-player's skull named "&6%loop-player%" to {furgPants::*}
+			set {furgpants} to {furgpants} + 1
+	if {furgpants} > 3:
+		set {furgpants} to 3
+	set {furgpants} to {furgpants} * 2
+			
+on damage:
+	victim is player
+	if name of victim's boots is "&6Furguson's Boots":
+		if victim's health <= victim's max health * 0.50:
+			if {furgbootscd.%uuid of victim%} isn't set:
+				set {furgbootscd.%uuid of victim%} to false
+			if {furgbootscd.%uuid of victim%} is false:
+				set {furgbootscd.%uuid of victim%} to true
+				set {speed::%uuid of victim%} to victim's movement speed attribute
+				send message "&aYou've received 2x speed for 5 seconds!" to victim
+				add {speed::%uuid of victim%} to victim's movement speed attribute
+				wait 5 seconds
+				set victim's movement speed attribute to {speed::%uuid of victim%}
+				send message "&aYou've lost your 2x speed." to victim
+				wait 25 seconds
+				set {furgbootscd.%uuid of victim%} to false
+				
+on damage:
+	victim is player
+	if name of victim's helmet is "&6Furguson's Mechanical Head":
+		if name of victim's chestplate is "&6Furguson's Cuirass":
+			if name of victim's leggings is "&6Furguson's Waist Guards":
+				if name of victim's boots is "&6Furguson's Boots":
+					if victim's health <= victim's max health * 0.25:
+						if {abugslifecd.%uuid of victim%} isn't set:
+							set {abugslifecd.%uuid of victim%} to false
+						if {abugslifecd.%uuid of victim%} is false:
+							set {abugslifecd.%uuid of victim%} to true
+							set {abugslife.%uuid of victim%} to true
+							play sound "block.beacon.activate" at pitch 1 to victim
+							send message "&aYou've become a cockroach out of defense." to victim
+							wait 10 seconds
+							set {abugslife.%uuid of victim%} to false
+							send message "&cYou are no longer a cockroach." to victim
+							wait 60 seconds
+							set {abugslifecd.%uuid of victim%} to false
+on damage:
+	attacker is player
+	if {abugslife.%uuid of attacker%} is true:
+		cancel event
+on damage:
+	victim is player
+	if {abugslife.%uuid of victim%} is true:
+		cancel event
+
+command /mechant_toggle:
+    trigger:
+        if {smallbutmighty.%uuid of player%} isn't set:
+            set {smallbutmighty.%uuid of player%} to true
+        if {smallbutmighty.%uuid of player%} is false:
+            set {smallbutmighty.%uuid of player%} to true
+            send message "&fYour &6Small But Mighty &fability is now &aOn&f!" to player
+            stop
+        if {smallbutmighty.%uuid of player%} is true:
+            set {smallbutmighty.%uuid of player%} to false
+            send message "&fYour &6Small But Mighty &fability is now &cOff&f!" to player
+            stop
+#mechanical ant			
+on damage:
+	attacker is player
+	if name of attacker's offhand item is "&6Mechanical Ant":
+		heal attacker by damage * 0.501
+		chance of 0.01%:
+			heal victim by max health of victim * 0.05
+			send message "&c&lOUCH! &fYour &6Mechanical Ant &fhealed your &cEnemy &ffor &c5%% ❤&f!" to attacker
+			stop
+on death:
+	attacker is player
+	if name of attacker's offhand item is "&6Mechanical Ant":
+		if {smallbutmighty.%uuid of attacker%} is true:
+			add 1 to {sbmcounter::%uuid of attacker%}
+			send action bar "&b&l%{sbmcounter::%uuid of attacker%}%/50 HITS" to attacker
+			if {sbmcounter::%uuid of attacker%} >= 50:
+				set {sbmcounter::%uuid of attacker%} to 0
+				set {sbmrandom::%uuid of attacker%} to a random integer between 1 and 2
+				if {sbmrandom::%uuid of attacker%} is 1:
+					set {sbmrandom::%uuid of attacker%} to 0
+					play sound "block.beacon.activate" at pitch 1 to attacker
+					send message "&aYou got 200%% extra damage!" to attacker	
+				if {sbmrandom::%uuid of attacker%} is 2:
+					set {sbmrandom::%uuid of attacker%} to 0
+					play sound "block.beacon.deactivate" at pitch 1 to attacker
+					send message "&cYou will take 100%% increased damage!" to attacker
+
+on damage:
+	victim is player
+	if {sbmrandom::%uuid of victim%} is 2:
+		increase damage by damage * 1
+	attacker is player
+	if {sbmrandom::%uuid of attacker%} is 1:
+		increase damage by damage * 2
+		
+every 1 second:
+	loop all players:
+		if name of slot 6 of loop-player's inventory is "&6The Ant's Cloak":
+			if loop-player doesn't have potion effect strength:
+				apply strength 15 without particles to loop-player for 2 seconds
+			heal loop-player by max health of loop-player * 0.01

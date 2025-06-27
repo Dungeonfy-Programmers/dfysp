@@ -1,0 +1,30 @@
+on right click:
+  name of player's held item is "&bUndead King's Exterminator"
+  make player shoot arrow
+  push last shot projectile right at force 0.4
+  make player shoot arrow
+  push last shot projectile left at force 0.4
+  make player shoot arrow
+  push last shot projectile up at force 0.4
+  make player shoot arrow
+  push last shot projectile down at force 0.4
+  make player shoot arrow
+  push last shot projectile right at force 0.4
+  push last shot projectile down at force 0.4
+  make player shoot arrow
+  push last shot projectile left at force 0.4
+  push last shot projectile down at force 0.4
+  make player shoot arrow
+  push last shot projectile left at force 0.4
+  push last shot projectile up at force 0.4
+  make player shoot arrow
+  push last shot projectile right at force 0.4
+  push last shot projectile up at force 0.4
+  make player shoot arrow
+
+on projectile hit:
+  name of shooter's held item is "&bUndead King's Exterminator"
+  make shooter damage victim by 35000
+  wait 1 tick
+  set victim's invulnerability ticks to 0
+  

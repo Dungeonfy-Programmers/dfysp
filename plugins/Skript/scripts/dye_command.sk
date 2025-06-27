@@ -1,0 +1,65 @@
+command /set-dye <int> <int> <int> <string>:
+  permission: op
+  trigger:
+    set int tag "dyeColor;%arg-4%;red" of nbt compound of player's tool to arg-1
+    set int tag "dyeColor;%arg-4%;green" of nbt compound of player's tool to arg-2
+    set int tag "dyeColor;%arg-4%;blue" of nbt compound of player's tool to arg-3
+    send nbt compound of player's tool to player
+
+on right click:
+  player is sneaking
+
+  
+  if int tag "dyeColor;Helmet;red" of nbt compound of player's offhand tool is set:
+    if player's tool is leather helmet:
+      
+      
+      set {_r} to int tag "dyeColor;Helmet;red" of nbt compound of player's offhand tool
+      set {_g} to int tag "dyeColor;Helmet;green" of nbt compound of player's offhand tool
+      set {_b} to int tag "dyeColor;Helmet;blue" of nbt compound of player's offhand tool
+      dye player's tool rgb({_r},{_g},{_b})
+      remove 1 of player's offhand tool from player's inventory
+      cancel event
+  
+  if int tag "dyeColor;Chestplate;red" of nbt compound of player's offhand tool is set:
+    
+    if player's tool is leather tunic:
+      
+    
+      set {_r} to int tag "dyeColor;Chestplate;red" of nbt compound of player's offhand tool
+      set {_g} to int tag "dyeColor;Chestplate;green" of nbt compound of player's offhand tool
+      set {_b} to int tag "dyeColor;Chestplate;blue" of nbt compound of player's offhand tool
+      dye player's tool rgb({_r},{_g},{_b})
+      remove 1 of player's offhand tool from player's inventory
+      cancel event
+
+  if int tag "dyeColor;Leggings;red" of nbt compound of player's offhand tool is set:
+    if player's tool is leather pants:
+      
+      
+      set {_r} to int tag "dyeColor;Leggings;red" of nbt compound of player's offhand tool
+      set {_g} to int tag "dyeColor;Leggings;green" of nbt compound of player's offhand tool
+      set {_b} to int tag "dyeColor;Leggings;blue" of nbt compound of player's offhand tool
+      dye player's tool rgb({_r},{_g},{_b})
+      remove 1 of player's offhand tool from player's inventory
+      cancel event
+
+  if int tag "dyeColor;Boots;red" of nbt compound of player's offhand tool is set:
+    if player's tool is leather boots:
+      
+      
+      set {_r} to int tag "dyeColor;Boots;red" of nbt compound of player's offhand tool
+      set {_g} to int tag "dyeColor;Boots;green" of nbt compound of player's offhand tool
+      set {_b} to int tag "dyeColor;Boots;blue" of nbt compound of player's offhand tool
+      dye player's tool rgb({_r},{_g},{_b})
+      remove 1 of player's offhand tool from player's inventory
+      cancel event
+  
+
+  
+
+on tab complete of "/set-dye":
+  set tab completions for position 1 to "[red]"
+  set tab completions for position 2 to "[green]"
+  set tab completions for position 3 to "[blue]"
+  set tab completions for position 4 to "Helmet", "Chestplate", "Leggings", and "Boots"

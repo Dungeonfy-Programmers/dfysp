@@ -1,0 +1,427 @@
+on death:
+	if {indungeon::%uuid of victim%} = true:
+		set {indungeon::%uuid of victim%} to false
+		send message "<##ff0000>You failed the dungeon, no more waves will spawn!" to victim
+
+#███████╗░█████╗░░██████╗██╗░░░██╗
+#██╔════╝██╔══██╗██╔════╝╚██╗░██╔╝
+#█████╗░░███████║╚█████╗░░╚████╔╝░
+#██╔══╝░░██╔══██║░╚═══██╗░░╚██╔╝░░
+#███████╗██║░░██║██████╔╝░░░██║░░░
+#╚══════╝╚═╝░░╚═╝╚═════╝░░░░╚═╝░░░
+on right click:
+	if name of player's held item is "&dEasy Dungeon Booklet":
+		close player's inventory
+		if {indungeon::%uuid of player%} or {in_witherien::%uuid of player%} = true:
+			message "&cYou are currently on a cooldown for entering dungeons!" to player
+		else:
+			set player's held item to air
+			set {easydungeon} to random integer between 1 to 3
+			set {dungeonsstarted::%uuid of player%} to {dungeonsstarted::%uuid of player%} + 1
+			set {indungeon::%uuid of player%} to true
+			if {easydungeon} = 1: #rooted room
+				set {_raidtp} to location at (222.5, 36, -20.5)
+				set {_raidtp}'s yaw to -90
+				set {_raidtp}'s pitch to 0.01
+				if {teamwarp::%uuid of player%} = true:
+					loop all players in radius 2 of player:
+						if {teamwarp::%uuid of loop-player%} = true:
+							teleport loop-player to {_raidtp}
+							send message "&a%loop-player% has joined your in this dungeon!" to player
+							send message "&fIf you didn't intend on joining this player's dungeon, you can use /dungeon_team to turn off!" to loop-player
+							send message "&aYou have joined %player%'s dungeon raid!" to loop-player
+				teleport player to {_raidtp}
+				message "&a&l=======================" and " " and "&6      - Dungeon Raid -" and "      &7Difficulty: <##acf49c>Easy" and "       &7Duration: &f1:00" and " " and "&f        Room: Rooted" and " " and "&a&l=======================" to player
+				play sound "entity.player.levelup" at pitch 0.5
+				make console execute command "/setblock 229 32 -22 air replace"
+				message "&fRoom Modifiers: &dRegeneration II &f(1:00)" to player
+				remove regeneration from player
+				apply regeneration 2 to player for 60 seconds
+				wait 5 seconds
+				message "&fDungeon Raid: <##ff0000>Wave 1/4" to player
+				make console execute command "/setblock 229 32 -22 minecraft:redstone_block destroy"
+				make console execute command "/setblock 229 32 -22 air replace"
+				wait 15 seconds
+				if {indungeon::%uuid of player%} = true:
+					message "&fDungeon Raid: <##ff0000>Wave 2/4" to player
+					make console execute command "/setblock 229 32 -22 minecraft:redstone_block destroy"
+					make console execute command "/setblock 229 32 -22 air replace"
+					make console execute command "/setblock 229 46 -23 minecraft:redstone_block destroy"
+					make console execute command "/setblock 229 46 -23 air replace"
+					wait 20 seconds
+					if {indungeon::%uuid of player%} = true:
+						message "&fDungeon Raid: <##ff0000>Wave 3/4" to player
+						make console execute command "/setblock 229 32 -22 minecraft:redstone_block destroy" #tree dudes
+						make console execute command "/setblock 229 32 -22 air replace" #archer
+						make console execute command "/setblock 229 46 -23 minecraft:redstone_block destroy"
+						make console execute command "/setblock 229 46 -23 air replace"
+						make console execute command "/setblock 226 52 -15 air replace"
+						make console execute command "/setblock 226 52 -15 minecraft:redstone_block destroy"
+						message "&cWATCH OUT FOR THE TREE WARRIORS!" to player
+						wait 20 seconds
+						if {indungeon::%uuid of player%} = true:
+							message "&fDungeon Raid: <##ff0000>Wave 4/4 &6BOSS FIGHT!" to player
+							play sound "entity.firework_rocket.large_blast_far"
+							make console execute command "/setblock 226 52 -15 air replace"
+							make console execute command "/setblock 226 52 -15 minecraft:redstone_block destroy"
+							make console execute command "/setblock 226 52 -21 air replace"
+							make console execute command "/setblock 226 52 -21 minecraft:redstone_block"
+							message "&cTree Spirit: &8It's time for you to die >:D" to player
+							wait 5 seconds
+							set {indungeon::%uuid of player%} to false
+			if {easydungeon} = 2: #archways
+				set {_raidtp} to location at (278.5, 35, -21.5)
+				set {_raidtp}'s yaw to 90
+				set {_raidtp}'s pitch to 0.01
+				if {teamwarp::%uuid of player%} = true:
+					loop all players in radius 2 of player:
+						if {teamwarp::%uuid of loop-player%} = true:
+							teleport loop-player to {_raidtp}
+							send message "&a%loop-player% has joined your in this dungeon!" to player
+							send message "&fIf you didn't intend on joining this player's dungeon, you can use /dungeon_team to turn off!" to loop-player
+							send message "&aYou have joined %player%'s dungeon raid!" to loop-player
+				teleport player to {_raidtp}
+				message "&a&l=======================" and " " and "&6      - Dungeon Raid -" and "      &7Difficulty: <##acf49c>Easy" and "       &7Duration: &f1:00" and " " and "&f      Room: Archways" and " " and "&a&l=======================" to player
+				play sound "entity.player.levelup" at pitch 0.5
+				message "&fRoom Modifiers: &8Slowness I&f, &4Strength II &f(1:00)" to player
+				remove strength from player
+				apply strength 2 to player for 60 seconds
+				remove slowness from player
+				apply slowness 1 to player for 60 seconds
+				make console execute command "/setblock 270 32 -20 air replace"
+				wait 5 seconds
+				message "&fDungeon Raid: <##ff0000>Wave 1/4" to player
+				make console execute command "/setblock 270 32 -20 minecraft:redstone_block destroy"
+				make console execute command "/setblock 270 32 -20 air replace"
+				make console execute command "/setblock 265 53 -20 air replace"
+				wait 25 seconds
+				if {indungeon::%uuid of player%} = true:
+					message "&fDungeon Raid: <##ff0000>Wave 2/4" to player
+					make console execute command "/setblock 265 53 -20 minecraft:redstone_block destroy"
+					make console execute command "/setblock 270 32 -20 minecraft:redstone_block destroy"
+					make console execute command "/setblock 270 32 -20 air replace"
+					make console execute command "/setblock 270 32 -20 air replace"
+					make console execute command "/setblock 265 53 -20 air replace"
+					wait 20 seconds
+					if {indungeon::%uuid of player%} = true:
+						message "&fDungeon Raid: <##ff0000>Wave 3/4" to player
+						make console execute command "/setblock 265 53 -20 minecraft:redstone_block destroy"
+						make console execute command "/setblock 270 32 -20 minecraft:redstone_block destroy"
+						make console execute command "/setblock 270 32 -20 air replace"
+						wait 20 seconds
+						if {indungeon::%uuid of player%} = true:
+							message "&fDungeon Raid: <##ff0000>Wave 4/4 &6BOSS FIGHT!" to player
+							message "&cThe Manager: &8What you know' bout rolling down in the deep" to player
+							play sound "entity.firework_rocket.large_blast_far"
+							wait 2 seconds
+							make console execute command "/setblock 265 53 -20 minecraft:redstone_block destroy"
+							make console execute command "/setblock 263 53 -20 minecraft:redstone_block destroy"
+							message "&cThe Manager: &8yeah when your brain goes numb it's a mental freeze" to player
+							wait 2 second
+							message "&cThe Manager: &8I feel like an astronaut in the ocean yeah" to player
+							wait 5 seconds
+							set {indungeon::%uuid of player%} to false
+			if {easydungeon} = 3: #fungus room
+				set {_raidtp} to location at (242.5, 38, -20.5)
+				set {_raidtp}'s yaw to -90
+				set {_raidtp}'s pitch to 0.01
+				if {teamwarp::%uuid of player%} = true:
+					loop all players in radius 2 of player:
+						if {teamwarp::%uuid of loop-player%} = true:
+							teleport loop-player to {_raidtp}
+							send message "&a%loop-player% has joined your in this dungeon!" to player
+							send message "&fIf you didn't intend on joining this player's dungeon, you can use /dungeon_team to turn off!" to loop-player
+							send message "&aYou have joined %player%'s dungeon raid!" to loop-player
+				teleport player to {_raidtp}
+				message "&a&l=======================" and " " and "&6      - Dungeon Raid -" and "      &7Difficulty: <##acf49c>Easy" and "       &7Duration: &f1:00" and " " and "&f        Room: Fungus" and " " and "&a&l=======================" to player
+				play sound "entity.player.levelup" at pitch 0.5
+				make console execute command "/setblock 249 35 -22 air replace"
+				message "&fRoom Modifiers: &6Resistance I &f(1:00)" to player
+				remove resistance from player
+				apply resistance 1 to player for 60 seconds
+				wait 5 seconds
+				message "&fDungeon Raid: <##ff0000>Wave 1/4" to player
+				make console execute command "/setblock 249 35 -22 minecraft:redstone_block destroy"
+				make console execute command "/setblock 249 35 -22 air replace"
+				wait 15 seconds
+				if {indungeon::%uuid of player%} = true:
+					message "&fDungeon Raid: <##ff0000>Wave 2/4" to player
+					make console execute command "/setblock 249 35 -22 minecraft:redstone_block destroy"
+					make console execute command "/setblock 249 35 -22 air replace"
+					wait 20 seconds
+					if {indungeon::%uuid of player%} = true:
+						message "&fDungeon Raid: <##ff0000>Wave 3/4" to player
+						make console execute command "/setblock 246 53 -20 minecraft:redstone_block destroy" #shroom warriors
+						make console execute command "/setblock 249 35 -22 minecraft:redstone_block destroy"
+						make console execute command "/setblock 249 35 -22 air replace"
+						wait 20 seconds
+						if {indungeon::%uuid of player%} = true:
+							message "&fDungeon Raid: <##ff0000>Wave 4/4 &6BOSS FIGHT!" to player
+							play sound "entity.firework_rocket.large_blast_far"
+							make console execute command "/setblock 246 53 -20 minecraft:redstone_block destroy" #shroom warriors
+							message "&cEvil Shroom Baby: &8AUGHHHHHHHH!" to player
+							make console execute command "/setblock 244 53 -20 minecraft:redstone_block destroy"
+							wait 5 seconds
+							set {indungeon::%uuid of player%} to false
+
+#███╗░░░███╗███████╗██████╗░██╗██╗░░░██╗███╗░░░███╗
+#████╗░████║██╔════╝██╔══██╗██║██║░░░██║████╗░████║
+#██╔████╔██║█████╗░░██║░░██║██║██║░░░██║██╔████╔██║
+#██║╚██╔╝██║██╔══╝░░██║░░██║██║██║░░░██║██║╚██╔╝██║
+#██║░╚═╝░██║███████╗██████╔╝██║╚██████╔╝██║░╚═╝░██║
+#╚═╝░░░░░╚═╝╚══════╝╚═════╝░╚═╝░╚═════╝░╚═╝░░░░░╚═╝
+on right click:
+	if name of player's held item is "&dMedium Dungeon Booklet":
+		close player's inventory
+		#if {ezdungeonbosskills::%uuid of player%} >= 10:
+		if {_adwawdawd} is not set:
+			if {indungeon::%uuid of player%} = true:
+				message "&cYou are currently on a cooldown for entering dungeons!" to player
+			else:
+				set player's held item to air
+				set {meddungeon} to random integer between 1 to 3
+				set {dungeonsstarted::%uuid of player%} to {dungeonsstarted::%uuid of player%} + 1
+				set {indungeon::%uuid of player%} to true
+				if {meddungeon} = 1:
+					set {_raidtp} to location at (278.5, 37, 20)
+					set {_raidtp}'s yaw to 90
+					set {_raidtp}'s pitch to 0.01
+					if {teamwarp::%uuid of player%} = true:
+						loop all players in radius 2 of player:
+							if {teamwarp::%uuid of loop-player%} = true:
+								teleport loop-player to {_raidtp}
+								send message "&a%loop-player% has joined your in this dungeon!" to player
+								send message "&fIf you didn't intend on joining this player's dungeon, you can use /dungeon_team to turn off!" to loop-player
+								send message "&aYou have joined %player%'s dungeon raid!" to loop-player
+					teleport player to {_raidtp} 
+					message "&6&l=======================" and " " and "&6      - Dungeon Raid -" and "     &7Difficulty: &eMedium" and "       &7Duration: &f1:30" and " " and "&f        Room: Digsite" and " " and "&6&l=======================" to player
+					play sound "entity.player.levelup" at pitch 0.5
+					make console execute command "/setblock 272 32 20 air replace"
+					message "&fRoom Modifiers: &cNone" to player
+					wait 5 seconds
+					message "&fDungeon Raid: <##ff0000>Wave 1/4" to player
+					make console execute command "/setblock 272 32 20 minecraft:redstone_block destroy"
+					make console execute command "/setblock 272 32 20 air replace"
+					wait 15 seconds
+					if {indungeon::%uuid of player%} = true:
+						message "&fDungeon Raid: <##ff0000>Wave 2/4" to player
+						make console execute command "/setblock 272 32 20 minecraft:redstone_block destroy"
+						make console execute command "/setblock 272 32 20 air replace"
+						make console execute command "/setblock 268 56 21 minecraft:redstone_block destroy"
+						wait 20 seconds
+						if {indungeon::%uuid of player%} = true:
+							message "&fDungeon Raid: <##ff0000>Wave 3/4" to player
+							make console execute command "/setblock 272 32 20 minecraft:redstone_block destroy"
+							make console execute command "/setblock 272 32 20 air replace"
+							make console execute command "/setblock 268 56 21 minecraft:redstone_block destroy"
+							wait 20 seconds
+							if {indungeon::%uuid of player%} = true:
+								message "&fDungeon Raid: <##ff0000>Wave 4/4 &6BOSS FIGHT!" to player
+								make console execute command "/setblock 268 56 21 minecraft:redstone_block destroy"
+								make console execute command "/setblock 265 56 21 minecraft:redstone_block destroy"
+								message "&eTNT Husk: &8Hmmmm... what's for dinner?" to player
+								wait 3 seconds
+								message "&eTNT Husk: &8I really like sand." to player
+								set {indungeon::%uuid of player%} to false
+				if {meddungeon} = 2:
+					set {_raidtp} to location at (257.5, 36, 21.5)
+					set {_raidtp}'s yaw to 90
+					set {_raidtp}'s pitch to 0.01
+					if {teamwarp::%uuid of player%} = true:
+						loop all players in radius 2 of player:
+							if {teamwarp::%uuid of loop-player%} = true:
+								teleport loop-player to {_raidtp}
+								send message "&a%loop-player% has joined your in this dungeon!" to player
+								send message "&fIf you didn't intend on joining this player's dungeon, you can use /dungeon_team to turn off!" to loop-player
+								send message "&aYou have joined %player%'s dungeon raid!" to loop-player
+					teleport player to {_raidtp}
+					message "&6&l=======================" and " " and "&6      - Dungeon Raid -" and "     &7Difficulty: &eMedium" and "       &7Duration: &f1:30" and " " and "&f        Room: Swamp" and " " and "&6&l=======================" to player
+					play sound "entity.player.levelup" at pitch 0.5
+					make console execute command "/setblock 250 32 21 air replace"
+					message "&fRoom Modifiers: &8Slowness IV" to player
+					apply slowness 4 to player for 60 seconds
+					wait 5 seconds
+					message "&fDungeon Raid: <##ff0000>Wave 1/4" to player
+					make console execute command "/setblock 250 32 21 minecraft:redstone_block destroy"
+					make console execute command "/setblock 250 32 21 air replace"
+					wait 20 seconds
+					if {indungeon::%uuid of player%} = true:
+						message "&fDungeon Raid: <##ff0000>Wave 2/4" to player
+						make console execute command "/setblock 250 32 21 minecraft:redstone_block destroy"
+						make console execute command "/setblock 250 32 21 air replace"
+						make console execute command "/setblock 255 55 28 minecraft:redstone_block destroy" #mangrove zombies
+						wait 20 seconds
+						if {indungeon::%uuid of player%} = true:
+							message "&fDungeon Raid: <##ff0000>Wave 3/4" to player
+							make console execute command "/setblock 250 32 21 minecraft:redstone_block destroy"
+							make console execute command "/setblock 250 32 21 air replace"
+							wait 20 seconds
+							if {indungeon::%uuid of player%} = true:
+								message "&fDungeon Raid: <##ff0000>Wave 4/4 &6BOSS FIGHT!" to player
+								make console execute command "/setblock 250 32 21 minecraft:redstone_block destroy"
+								make console execute command "/setblock 250 32 21 air replace" #spider
+								make console execute command "/setblock 257 55 28 air replace"
+								make console execute command "/setblock 257 55 28 minecraft:redstone_block destroy"
+								make console execute command "/setblock 255 55 28 minecraft:redstone_block destroy" #mangrove zombies
+								message "&eWitch: &8Where are my ingredients!?" to player
+								wait 2 seconds
+								message "&eWitch: &8WHERE ARE THEY!!" to player
+								set {indungeon::%uuid of player%} to false
+				if {meddungeon} = 3:
+					set {_raidtp} to location at (230, 34, 11.5)
+					set {_raidtp}'s yaw to 0.01
+					set {_raidtp}'s pitch to 0.01
+					if {teamwarp::%uuid of player%} = true:
+						loop all players in radius 2 of player:
+							if {teamwarp::%uuid of loop-player%} = true:
+								teleport loop-player to {_raidtp}
+								send message "&a%loop-player% has joined your in this dungeon!" to player
+								send message "&fIf you didn't intend on joining this player's dungeon, you can use /dungeon_team to turn off!" to loop-player
+								send message "&aYou have joined %player%'s dungeon raid!" to loop-player
+					teleport player to {_raidtp}
+					message "&6&l=======================" and " " and "&6      - Dungeon Raid -" and "     &7Difficulty: &eMedium" and "       &7Duration: &f1:30" and " " and "&f        Room: Sewer" and " " and "&6&l=======================" to player
+					play sound "entity.player.levelup" at pitch 0.5
+					make console execute command "/setblock 229 32 18 air replace"
+					message "&fRoom Modifiers: &8Weakness IV" to player
+					apply weakness 4 to player for 90 seconds
+					wait 5 seconds
+					message "&fDungeon Raid: <##ff0000>Wave 1/4" to player
+					make console execute command "/setblock 229 32 18 redstone_block destroy"
+					make console execute command "/setblock 229 32 18 air replace"
+					wait 20 seconds
+					if {indungeon::%uuid of player%} = true:
+						message "&fDungeon Raid: <##ff0000>Wave 2/4" to player
+						make console execute command "/setblock 229 32 18 redstone_block destroy"
+						make console execute command "/setblock 229 32 18 air replace"
+						wait 20 seconds
+						if {indungeon::%uuid of player%} = true:
+							message "&fDungeon Raid: <##ff0000>Wave 3/4" to player
+							message "&aWatch out for the Acidic Skeleton!!" to player
+							make console execute command "/setblock 229 32 18 redstone_block destroy"
+							make console execute command "/setblock 229 32 18 air replace"
+							make console execute command "/setblock 221 55 28 minecraft:redstone_block destroy" #acidic skeletons
+							wait 20 seconds
+							message "&fDungeon Raid: <##ff0000>Wave 4/4 &6BOSS FIGHT!" to player
+							make console execute command "/setblock 229 32 18 redstone_block destroy"
+							make console execute command "/setblock 229 32 18 air replace"
+							make console execute command "/setblock 224 55 28 minecraft:redstone_block destroy" #lost wanderer
+							message "&2Lost Wanderer: &fYou've finally made it here haha" to player
+							wait 2 seconds
+							message "&2Lost Wanderer: &fLet us fight to the death >:)" to player
+							set {indungeon::%uuid of player%} to false
+		else:
+			message "&cYou need at least 10 easy dungeon boss kills to enter medium dungeons!" to player
+
+#██╗░░██╗░█████╗░██████╗░██████╗░
+#██║░░██║██╔══██╗██╔══██╗██╔══██╗
+#███████║███████║██████╔╝██║░░██║
+#██╔══██║██╔══██║██╔══██╗██║░░██║
+#██║░░██║██║░░██║██║░░██║██████╔╝
+#╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░
+on right click:
+	if name of player's held item is "&cHard Dungeon Booklet":
+		close player's inventory
+		#if {meddungeonbosskills::%uuid of player%} >= 30:
+		if {_awdawdawd} is not set:
+			if {indungeon::%uuid of player%} = true:
+				message "&cYou are currently on a cooldown for entering dungeons!" to player
+			else:
+				set player's held item to air
+				set {harddungeon} to random integer between 1 to 2
+				set {dungeonsstarted::%uuid of player%} to {dungeonsstarted::%uuid of player%} + 1
+				set {indungeon::%uuid of player%} to true
+				if {harddungeon} = 1:
+					set {_raidtp} to location at (289.5, 34, 45.5)
+					set {_raidtp}'s yaw to 0.01
+					set {_raidtp}'s pitch to 0.01
+					if {teamwarp::%uuid of player%} = true:
+						loop all players in radius 2 of player:
+							if {teamwarp::%uuid of loop-player%} = true:
+								teleport loop-player to {_raidtp}
+								send message "&a%loop-player% has joined your in this dungeon!" to player
+								send message "&fIf you didn't intend on joining this player's dungeon, you can use /dungeon_team to turn off!" to loop-player
+								send message "&aYou have joined %player%'s dungeon raid!" to loop-player
+					teleport player to {_raidtp}
+					message "&c&l=======================" and " " and "&6      - Dungeon Raid -" and "     &7Difficulty: &cHard" and "       &7Duration: &f2:00" and " " and "&f        Room: GregLabs™" and " " and "&c&l=======================" to player
+					play sound "entity.player.levelup" at pitch 0.5
+					make console execute command "/setblock 289 31 51 air replace"
+					wait 5 seconds
+					message "&fDungeon Raid: <##ff0000>Wave 1/4" to player
+					make console execute command "/setblock 289 31 51 minecraft:redstone_block destroy"
+					make console execute command "/setblock 289 31 51 air replace"
+					wait 20 seconds
+					if {indungeon::%uuid of player%} = true:
+						message "&fDungeon Raid: <##ff0000>Wave 2/4" to player
+						make console execute command "/setblock 289 31 51 minecraft:redstone_block destroy"
+						make console execute command "/setblock 289 31 51 air replace"
+						wait 20 seconds
+						if {indungeon::%uuid of player%} = true:
+							message "&fDungeon Raid: <##ff0000>Wave 3/4" to player
+							message "&eThe Experiments have spawned!" to player
+							make console execute command "/setblock 289 31 51 minecraft:redstone_block destroy"
+							make console execute command "/setblock 289 31 51 air replace"
+							make console execute command "/setblock 282 58 61 minecraft:redstone_block destroy" #experiment minibosses
+							wait 35 seconds
+							if {indungeon::%uuid of player%} = true:
+								message "&fDungeon Raid: <##ff0000>Wave 4/4 &6BOSS FIGHT!" to player
+								message "&cRobotic Mastermind: &8It's all gone.. everything..." to player
+								wait 1 second
+								message "&cRobotic Mastermind: &8They're all dead..." to player
+								wait 2 seconds
+								message "&cRobotic Mastermind: &8YOU DID THIS!" to player
+								wait 1 second
+								message "&cRobotic Mastermind: &8IT'S ALL YOUR FAULT!" to player
+								wait 3 seconds
+								message "&cRobotic Mastermind: &8It's time for you to meet your end." to player
+								make console execute command "/setblock 282 58 61 minecraft:redstone_block destroy" #experiment minibosses
+								make console execute command "/setblock 285 58 61 minecraft:redstone_block destroy" #robotic master mind
+								set {indungeon::%uuid of player%} to false
+				if {harddungeon} = 2:
+					set {_raidtp} to location at (274, 37, 61.5)
+					set {_raidtp}'s yaw to -180
+					set {_raidtp}'s pitch to 0.01
+					if {teamwarp::%uuid of player%} = true:
+						loop all players in radius 2 of player:
+							if {teamwarp::%uuid of loop-player%} = true:
+								teleport loop-player to {_raidtp}
+								send message "&a%loop-player% has joined your in this dungeon!" to player
+								send message "&fIf you didn't intend on joining this player's dungeon, you can use /dungeon_team to turn off!" to loop-player
+								send message "&aYou have joined %player%'s dungeon raid!" to loop-player
+					teleport player to {_raidtp} 
+					message "&c&l=======================" and " " and "&6      - Dungeon Raid -" and "     &7Difficulty: &cHard" and "       &7Duration: &f2:00" and " " and "&f    Room: Withered Fortress" and " " and "&c&l=======================" to player
+					play sound "entity.player.levelup" at pitch 0.5
+					make console execute command "/setblock 289 31 51 air replace"
+					wait 5 seconds
+					message "&fDungeon Raid: <##ff0000>Wave 1/5" to player
+					make console execute command "/setblock 274 31 55 minecraft:redstone_block destroy"
+					make console execute command "/setblock 274 31 55 air replace"
+					wait 20 seconds
+					if {indungeon::%uuid of player%} = true:
+						message "&fDungeon Raid: <##ff0000>Wave 2/5" to player
+						make console execute command "/setblock 274 31 55 minecraft:redstone_block destroy"
+						make console execute command "/setblock 274 31 55 air replace"
+						make console execute command "/setblock 265 31 47 minecraft:redstone_block destroy" #magmae and lava pit mob things
+						wait 20 seconds
+						if {indungeon::%uuid of player%} = true:
+							message "&fDungeon Raid: <##ff0000>Wave 3/5" to player
+							make console execute command "/setblock 274 31 55 minecraft:redstone_block destroy"
+							make console execute command "/setblock 274 31 55 air replace"
+							make console execute command "/setblock 265 58 61 minecraft:redstone_block destroy" #brute
+							message "&6The B.R.U.T.E has spawned!" to player
+							wait 20 seconds
+							if {indungeon::%uuid of player%} = true:
+								message "&fDungeon Raid: <##ff0000>Wave 4/5" to player
+								make console execute command "/setblock 274 31 55 minecraft:redstone_block destroy"
+								make console execute command "/setblock 274 31 55 air replace"
+								make console execute command "/setblock 263 58 61 minecraft:redstone_block destroy" #fortress warrior
+								message "&6The Fortress Warrior has spawned!" to player
+								wait 20 seconds
+								if {indungeon::%uuid of player%} = true:
+									message "&fDungeon Raid: <##ff0000>Wave 5/5 &6BOSS FIGHT!" to player
+									make console execute command "/setblock 274 31 55 minecraft:redstone_block destroy"
+									make console execute command "/setblock 274 31 55 air replace"
+									make console execute command "/setblock 261 58 61 minecraft:redstone_block destroy" #boss
+									message "&8Withered Warrior: &7Long live Witherein!" to player
+									set {indungeon::%uuid of player%} to false
+		else:
+			message "&cYou need at least 30 Medium Dungeon kills to enter hard dungeons!" to player

@@ -1,0 +1,757 @@
+on break of terracotta:
+	if player's gamemode is adventure:
+		cancel event
+		set event-block to bedrock
+		give player brick named "&fTerracotta Brick" with lore "&8Desert Resource"
+		wait 5 seconds
+		set event-block to terracotta
+on break of raw copper block:
+	if gamemode of player isn't creative:
+		cancel event
+		set event-block to bedrock
+		give player 4 raw copper named "&fRaw Copper" with lore "&7Pretty much useless in this form. Smelting" and "&7this at the &bFurnace &7might help."
+		wait 10 seconds
+		set event-block to raw copper block
+on break of orange concrete powder:
+	if gamemode of player isn't creative:
+		cancel event
+		set event-block to bedrock
+		give player 2 raw copper named "&fRaw Copper" with lore "&7Pretty much useless in this form. Smelting" and "&7this at the &bFurnace &7might help."
+		wait 5 seconds
+		set event-block to orange concrete powder
+on break of orange wool:
+	if gamemode of player isn't creative:
+		cancel event
+		set event-block to bedrock
+		give player 3 raw copper named "&fRaw Copper" with lore "&7Pretty much useless in this form. Smelting" and "&7this at the &bFurnace &7might help."
+		wait 5 seconds
+		set event-block to orange wool
+
+on right click on furnace:
+	cancel event
+	if name of player's held item is "&fRaw Copper":
+		remove raw copper from player
+		give player copper ingot named "&6Copper Ingot" with lore "&7A usable version of copper to make armor," and "&7tools, and weapons!"
+
+
+#rock mining
+on break of stone button:
+	if gamemode of player isn't creative:
+		set player's held item to air
+		play sound "entity.item.break"
+		cancel event
+		set {_rocktype} to random integer between 1 to 4
+		if {_rocktype} = 1:
+			give player stone button with name "&fRock"
+		if {_rocktype} = 2:
+			give player firework star with name "&fPebble"
+		if {_rocktype} = 3:
+			give player {boulder}
+		if {_rocktype} = 4:
+			give player bedrock with name "&fBedrock"
+on break of stone button:
+	if name of player's helmet is "&eNovice Rock Collector Trophy":
+		chance of 10%:
+			message "&fYour &eNovice Rock Collector Trophy &fgot you a bonus rock!" to player
+			set {_rocktype} to random integer between 1 to 4
+			if {_rocktype} = 1:
+				give player stone button with name "&fRock"
+			if {_rocktype} = 2:
+				give player firework star with name "&fPebble"
+			if {_rocktype} = 3:
+				give player {boulder}
+			if {_rocktype} = 4:
+				give player bedrock with name "&fBedrock"
+on break of stone button:
+	if name of player's helmet is "&eChampion Rock Collector Trophy":
+		chance of 25%:
+			message "&fYour &eChampion Rock Collector Trophy &fgot you a bonus rock!" to player
+			set {_rocktype} to random integer between 1 to 4
+			if {_rocktype} = 1:
+				give player stone button with name "&fRock"
+			if {_rocktype} = 2:
+				give player firework star with name "&fPebble"
+			if {_rocktype} = 3:
+				give player {boulder}
+			if {_rocktype} = 4:
+				give player bedrock with name "&fBedrock"
+on break of stone button:
+	if name of player's helmet is "&dGoober Rock Collector Trophy":
+		chance of 50%:
+			message "&fYour &dGoober Rock Collector Trophy &fgot you a bonus rock!" to player
+			set {_rocktype} to random integer between 1 to 4
+			if {_rocktype} = 1:
+				give player stone button with name "&fRock"
+			if {_rocktype} = 2:
+				give player firework star with name "&fPebble"
+			if {_rocktype} = 3:
+				give player {boulder}
+			if {_rocktype} = 4:
+				give player bedrock with name "&fBedrock"
+
+#acacia wood
+on break of acacia wood:
+	if gamemode of player isn't creative:
+		clear drops
+		give player {acacialog}
+		play sound "block.wood.break" at pitch 2
+		wait 20 seconds
+		set event-block to acacia wood
+on break of acacia wood:
+	chance of 5%:
+		give player {banana}
+on break of acacia wood:
+	chance of 5%:
+		give player lime dye with name "&fTree Twine" with lore "&8A powerful type of string like material"
+on break of acacia wood:
+	chance of 10%:
+		if gamemode of player isn't creative:
+			if name of player's helmet isn't "&6Safety Hat" or "&eSewer Zombie's Helmet":
+				set {hp} to player's max health
+				damage player by {hp} * 0.2
+				message "&fYou got hit by an acacia log!" to player
+on break of acacia wood:
+	if gamemode of player isn't creative:
+		chance of 1%:
+			if name of player's offhand item isn't "&dMonkey":
+				summon silverfish at event-location
+				apply strength 10 to last spawned silverfish
+				message "&c&lPEST! &fA termite appeared! &7(1%%)" to player
+on break of acacia wood:
+	if name of player's offhand item is "&dMonkey":
+		give player {acacialog}
+		give player {acacialog}
+on death of silverfish:
+	drop 2 gold ingots
+on break of acacia wood:
+	chance of 0.02%:
+		give player yellow dye with name "&eBanana Soul" with lore "&7Gain a gauranteed banana per acacia wood." and " " and "&7Necklace: 8th Hotbar Slot for effect" and "&fDropped by %player%!"
+		broadcast "&e&ke &r&e&lBANANA SOUL &ke &r&f%player% just dropped a &eBanana Soul&f! &7(&d0.02%%&7)"
+on break of acacia wood:
+	if slot 7 of player's inventory is yellow dye with name "&eBanana Soul":
+		give player {banana}
+#===banaxe series ========#
+on break of acacia wood:
+	if name of player's held item is "&6Bananaxe 4070":
+		give player {banana}
+on break of acacia wood:
+	if name of player's held item is "&6Bananaxe 4080":
+		give player {banana}
+		give player {banana}
+on break of acacia wood:
+	if name of player's held item is "&dBananaxe 4090":
+		give player {banana}
+		give player {banana}
+		give player {banana}
+		give player {banana}
+#===== misc axes =====#
+on break of acacia wood:
+	if name of player's held item is "&6Carpenter's Hatchet":
+		give player {acacialog}
+		give player {acacialog}
+on break of acacia wood:
+	if name of player's held item is "&dArtisan's Hatchet":
+		give player {acacialog}
+		give player {acacialog}
+		give player {acacialog}
+
+#mist launching
+on walk on light gray stained glass:
+	if name of player's boots isn't "&bVapor Boots":
+		if lore of player's boots contains "&6Lightweight":
+
+		else:
+			push player forward at speed 2
+			push player upward at speed 3
+#===================COBALT=================
+on break of blue wool:
+	if gamemode of player isn't creative:
+		cancel event
+		give player blue dye with name "&9Cobalt" with lore "&8Great for car batteries"
+		set event-block to bedrock
+		wait 5 seconds
+		set event-block to blue wool
+on break of blue concrete powder:
+	if gamemode of player isn't creative:
+		cancel event
+		give player blue dye with name "&9Cobalt" with lore "&8Great for car batteries"
+		set event-block to bedrock
+		wait 5 seconds
+		set event-block to blue concrete powder
+on break of blue carpet:
+	if gamemode of player isn't creative:
+		cancel event
+		give player blue dye with name "&9Cobalt" with lore "&8Great for car batteries"
+		set event-block to air
+		wait 5 seconds
+		set event-block to blue carpet
+on break of blue carpet or blue wool or blue concrete powder:
+	if name of player's held item is "&bSteve's Spade":
+		chance of 50%:
+			give player blue dye with name "&9Cobalt" with lore "&8Great for car batteries"
+			
+
+#===============GILDED BLACKSTONE=============
+on break of gilded blackstone:
+	if gamemode of player isn't creative:
+		cancel event
+		set event-block to polished blackstone bricks
+		play sound "block.note_block.pling" to player
+		give player diamond block
+		give player gold ingot with name "&6Gilded Gold" with lore "&7Obtained from mining gilded blackstone!"
+		message "&6&lGILDED LOOT! &fYou dug up a &bDiamond Block&f!" to player
+		message "&6&lGILDED LOOT! &fYou dug up &6Gilded Gold&f!" to player
+		wait 600 seconds
+		set event-block to gilded blackstone
+on break of gilded blackstone:
+	chance of 20%:
+		message "&6&lGILDED LOOT! &fYou dug up &b10x bits&f!" to player
+		set {bits.%uuid of player%} to {bits.%uuid of player%} + 10
+on break of gilded blackstone:
+	chance of 20%:
+		message "&6&lGILDED LOOT! &fYou dug up &a20x Experience Bottles&f!" to player
+		give player 20 experience bottles
+on break of gilded blackstone:
+	chance of 20%:
+		message "&6&lGILDED LOOT! &fYou dug up &d8x Enchanted Golden Apples&f!" to player
+		give 8 enchanted golden apple to player
+		
+on break of shroomlight:
+	if gamemode of player isn't creative:
+		cancel event
+		give player shroomlight
+		set event-block to bedrock
+		wait 5 seconds
+		set event-block to shroomlight
+on break of shroomlight:
+	chance of 10%:
+		give player 10 shroomlights
+		send message "&6&lSHROOMS! &fYOu got bonus 10 Shroomlights! &7(10%%)" to player 
+		send title "&610x Shroomlights" with subtitle "&710%%" to player
+#HOENYCOMB FARMING
+on break of honey block:
+	if gamemode of player isn't creative:
+		clear drops
+		wait 5 seconds
+		set event-block to honey block
+on break of honeycomb block:
+	if gamemode of player isn't creative:
+		cancel event
+		set event-block to bedrock
+		set {_hc} to random integer between 1 to 3
+		set {_hc} to "%{_hc}% honeycomb" parsed as item
+		give player {_hc}
+		wait 5 seconds
+		set event-block to honeycomb block
+on break of honeycomb block:
+	if name of player's off hand item contains "&eBee":
+		give player honeycomb
+
+#ARCHAEOLOGY
+on break of coarse dirt:
+	if gamemode of player is adventure:
+		cancel event
+		if name of player's held item is "&6Archaeologist Spade":
+			set held item of player to air
+			set event-block to bedrock
+			play sound "entity.item.break" to player
+			give brown dye named "&fPile of Dirt" with lore "&7A pile of dirt... what did you expect?" to player
+			set {archaeologydrop} to random integer between 0 to 2
+			if {archaeologydrop} = 0:
+				give player bone named "&fDinosaur Bones" with lore "&7Rather intriguing..."
+				send message "&6You dug up a dinosaur bone!" to player 
+			if {archaeologydrop} = 1:
+				give player raw mutton named "&fUnusual Meat" with lore "&7Right click to consume!"
+				send message "&6You dug up unusual meat!" to player 
+			if {archaeologydrop} = 2:
+				give player {exshinydia}
+				send message "&6You dug up an exceedingly shiny diamond!!" to player 
+			wait 5 seconds
+			set event-block to coarse dirt
+on break of coarse dirt:
+	if name of player's helmet is "&6Archaeologist Helmet":
+		drop brown dye named "&fPile of Dirt" with lore "&7A pile of dirt... what did you expect?"
+on break of coarse dirt:
+	chance of 0.5%:
+		give player gray dye with name "&dDusted Soul" with lore "&7Right click to give &4Strength 10 &7to" and "&7you and anyone within 5 blocks of you" and "&7for 8 seconds. &8(15s cooldown)"
+		broadcast "&d&ke &d%player% just dug up a dusted soul! &ke"
+
+on right click with gray dye:
+	if name of player's held item is "&dDusted Soul":
+		if metadata tag "dustedsoul" of player isn't set:
+			set metadata tag "dustedsoul" of player to false
+		if metadata tag "dustedsoul" of player = false:
+			apply strength 10 to all players within 5 blocks of the player
+			set metadata tag "dustedsoul" of player to true
+			wait 15 seconds
+			set metadata tag "dustedsoul" of player to false
+		if metadata tag "dustedsoul" of player = true:
+			cancel event
+			send message "&cThis ability is on a cooldown!" to player
+on right click with raw mutton:
+	if name of player's held item is "&fUnusual Meat":
+		cancel event
+		remove 1 raw mutton from player
+		apply strength 8 to player for 5 seconds
+
+command /freespade:
+	trigger:
+		if {freespade::%uuid of player%} isn't set:
+			set {freespade::%uuid of player%} to true
+			give {archyspade} to player
+			send message "&aYou claimed your free spade!" to player
+		else:
+			send message "&cYou have already claimed your free spade!" to player
+
+on break of coal ore:
+	if name of player's held item is "&aSteve's Pickaxe":
+		chance of 50%:
+			give player coal
+on break of iron ore:
+	if name of player's held item is "&aSteve's Pickaxe":
+		chance of 50%:
+			give player iron ingot
+
+#ice regen system
+on break of ice:
+    cancel event
+    give player ice
+    set event-block to bedrock
+    wait 5 seconds
+    set event-block to ice
+on break of packed ice:
+    cancel event
+    give player packed ice
+    set event-block to bedrock
+    wait 5 seconds
+    set event-block to packed ice
+on break of blue ice:
+    cancel event
+    give player blue ice
+    set event-block to bedrock
+    wait 5 seconds
+    set event-block to blue ice
+on break of blue ice:
+	chance of 10%:
+		give player 10 blue ice
+		send title "&b10x Blue Ice" with subtitle "&f10%%" to player for 1 seconds
+
+#end blocks
+on break of end stone:
+	cancel event
+	give player endstone
+	set event-block to bedrock
+	wait 5 seconds
+	set event-block to end stone
+on break of purple wool:
+	cancel event
+	give purple glazed terracotta named "&dEnderite"  to player
+	set event-block to bedrock
+	wait 5 seconds
+	set event-block to purple wool
+on walk on purple wool:
+    damage player by 1
+on walk on purple concrete powder:
+    damage player by 1
+on break of purple concrete powder:
+	cancel event
+	give purple glazed terracotta named "&dEnderite" to player
+	set event-block to bedrock
+	wait 5 seconds
+	set event-block to purple concrete powder
+on break of purple wool or purple concrete powder:
+	chance of {luckofcave::%uuid of player%}%:
+		give 10 purple glazed terracotta named "&dEnderite" to player
+		send title "&510x Enderite" with subtitle "&f%{luckofcave.%uuid of player%}%%%" for 1 seconds
+on break of endstone:
+	chance of {luckofcave::%uuid of player%}%:
+		give 10 endstone to player
+		send title "&e10x Endstone" with subtitle "&f%{luckofcave.%uuid of player%}%%%" for 1 seconds
+	
+on break of stripped warped stem:
+	clear drops
+	give player stripped warped stem
+	wait 10 seconds
+	set event-block to stripped warped stem
+
+#frozen giant
+on damage:
+    victim is giant
+    if attacker is player:
+        damage attacker by damage * 0.2
+	
+#warped wood
+on break of stripped warped stem:
+    wait 5 seconds
+    set event-block to stripped warped stem
+
+#=============COAL AND IRON ORE==============
+on break of coal ore:
+	if gamemode of player isn't creative:
+		cancel event
+		set event-block to bedrock
+		give player coal
+		wait 5 seconds
+		set event-block to coal ore
+on break of iron ore:
+	if gamemode of player isn't creative:
+		cancel event
+		set event-block to bedrock
+		give player iron ingot
+		wait 5 seconds
+		set event-block to iron ore
+	
+command /crystalbox:
+	permission: op
+	trigger:
+		set {crystalbox} to a new chest inventory with 3 row with name "&6Crystal Loot!"
+		set {crystalbox_slot} to random integer between 0 to 27
+		set slot {crystalbox_slot} of {crystalbox} to stone
+		open {crystalbox} to player
+ 
+on inventory click:
+	if name of event-inventory is "&6Crystal Loot!":
+		
+command /crystalloot:
+	trigger:
+		if {crystalloot::%uuid of player%} isn't set:
+			set {crystalloot::%uuid of player%} to false
+			message "&fCrystal Loot is now to &cOFF" to player
+		if {crystalloot::%uuid of player%} = false:
+			set {crystalloot::%uuid of player%} to true
+			message "&fCrystal Loot is now to &aON" to player
+		else:
+			set {crystalloot::%uuid of player%} to false
+			message "&fCrystal Loot is now to &cOFF" to player
+		
+#RUBY========================
+on break of red stained glass pane or red stained glass:
+	if {crystalloot::%uuid of player%} isn't false:
+		chance of 5%:
+			message "&6Crystal Loot! &fYou have 3 seconds to claim all the crystals!" to player
+			wait 1 second
+			set {crystalbox} to a new chest inventory with 3 row with name "&6Crystal Loot!"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 red stained glass named "&fRuby Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 red stained glass named "&fRuby Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 20 red stained glass named "&fRuby Crystal"
+			open {crystalbox} to player
+			wait 3 seconds
+			if name of player's inventory is "&6Crystal Loot!":
+				close player's inventory
+on break of red stained glass:
+    give red stained glass named "&fRuby Crystal" to player
+    drop redstone named "&fRuby Powder" at event-location
+    wait 5 seconds
+    set event-block to red stained glass	
+on break of red stained glass pane:
+    give red stained glass named "&fRuby Crystal" to player
+    drop redstone named "&fRuby Powder" at event-location
+    wait 5 seconds
+    set event-block to red stained glass pane	
+on break of red stained glass pane:
+    chance of 50%:
+        give redstone named "&fRuby Powder" to player
+on break of red stained glass:
+    chance of 50%:
+        give redstone named "&fRuby Powder" to player
+		
+on break of red stained glass or red stained glass pane:
+	chance of {luckofcave::%uuid of player%}%:
+		give 10 red stained glass named "&fRuby Crystal" to player
+		send title "&f10x Ruby Crystal" with subtitle "&7%{luckofcave.%uuid of player%}%%%" for 1 seconds
+on break of red stained glass or red stained glass pane:
+	chance of {luckofcave::uuid of player}%:
+		give 10 redstone named "&fRuby Powder" to player
+		send title "&f10x Ruby Powder" with subtitle "&7%{luckofcave.%uuid of player%}%%%"
+
+#sapphire
+on break of light blue stained glass pane or light blue stained glass:
+	chance of 5%:
+		if {crystalloot::%uuid of player%} isn't false:
+			message "&6Crystal Loot! &fYou have 3 seconds to claim all the crystals!" to player
+			wait 1 second
+			set {crystalbox} to a new chest inventory with 3 row with name "&6Crystal Loot!"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 light blue stained glass named "&fSapphire Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 light blue stained glass named "&fSapphire Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 20 light blue stained glass named "&fSapphire Crystal"
+			open {crystalbox} to player
+			wait 3 seconds
+			if name of player's inventory is "&6Crystal Loot!":
+				close player's inventory
+on break of light blue stained glass:
+    give light blue stained glass named "&fSapphire Crystal" to player
+    wait 5 seconds
+    set event-block to light blue stained glass
+on break of light blue stained glass pane:
+    give light blue stained glass named "&fSapphire Crystal" to player
+    wait 5 seconds
+    set event-block to light blue stained glass pane
+on break of light blue stained glass or light blue stained glass pane:
+	chance of {luckofcave::%uuid of player%}%:
+		give 20 light blue stained glass named "&fSapphire Crystal" to player
+		send title "&b20x Sapphire Crystal" with subtitle "&f%{luckofcave.%uuid of player%}%%%" for 1 seconds
+	
+#amethyst
+on break of purple stained glass pane or purple stained glass:
+	chance of 5%:
+		if {crystalloot::%uuid of player%} isn't false:
+			message "&6Crystal Loot! &fYou have 3 seconds to claim all the crystals!" to player
+			wait 1 second
+			set {crystalbox} to a new chest inventory with 3 row with name "&6Crystal Loot!"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 purple stained glass named "&fAmethyst Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 purple stained glass named "&fAmethyst Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 20 purple stained glass named "&fAmethyst Crystal"
+			open {crystalbox} to player
+			wait 3 seconds
+			if name of player's inventory is "&6Crystal Loot!":
+				close player's inventory
+on break of purple stained glass:
+    give purple stained glass named "&fAmethyst Crystal" to player
+    wait 5 seconds
+    set event-block to purple stained glass	
+on break of purple stained glass pane:
+    give purple stained glass named "&fAmethyst Crystal" to player
+    wait 5 seconds
+    set event-block to purple stained glass pane
+on break of purple stained glass or purple stained glass pane:
+	chance of {luckofcave.%uuid of player%}%:
+		give 20 purple stained glass named "&fAmethyst Crystal" to player
+		send title "&520x Amethyst Crystal" with subtitle "&f%{luckofcave.%uuid of player%}%%%" for 1 seconds
+	
+#amber
+on break of orange stained glass pane or orange stained glass:
+	chance of 5%:
+		if {crystalloot::%uuid of player%} isn't false:
+			message "&6Crystal Loot! &fYou have 3 seconds to claim all the crystals!" to player
+			wait 1 second
+			set {crystalbox} to a new chest inventory with 3 row with name "&6Crystal Loot!"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 orange stained glass named "&fAmber Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 orange stained glass named "&fAmber Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 20 orange stained glass named "&fAmber Crystal"
+			open {crystalbox} to player
+			wait 3 seconds
+			if name of player's inventory is "&6Crystal Loot!":
+				close player's inventory
+on break of orange stained glass:
+    give orange stained glass named "&fAmber Crystal" to player
+    wait 5 seconds
+    set event-block to orange stained glass
+on break of orange stained glass pane:
+    give orange stained glass named "&fAmber Crystal" to player
+    wait 5 seconds
+    set event-block to orange stained glass pane
+on break of orange stained glass or orange stained glass pane:
+	chance of {luckofcave::%uuid of player%}%:
+		give 20 orange stained glass named "&fAmber Crystal" to player
+		send title "&620x Amber Crystal" with subtitle "&f%{luckofcave.%uuid of player%}%%%" for 1 seconds
+	
+#jade
+on break of lime stained glass pane or lime stained glass:
+	chance of 5%:
+		if {crystalloot::%uuid of player%} isn't false:
+			message "&6Crystal Loot! &fYou have 3 seconds to claim all the crystals!" to player
+			wait 1 second
+			set {crystalbox} to a new chest inventory with 3 row with name "&6Crystal Loot!"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 lime stained glass named "&fJade Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 lime stained glass named "&fJade Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 20 lime stained glass named "&fJade Crystal"
+			open {crystalbox} to player
+			wait 3 seconds
+			if name of player's inventory is "&6Crystal Loot!":
+				close player's inventory
+on break of lime stained glass:
+    give lime stained glass named "&fJade Crystal" to player
+    wait 5 seconds
+    set event-block to lime stained glass
+on break of lime stained glass pane:
+    give lime stained glass named "&fJade Crystal" to player
+    wait 5 seconds
+    set event-block to lime stained glass pane
+on break of lime stained glass or lime stained glass pane:
+	chance of {luckofcave::%uuid of player%}%:
+		give 20 lime stained glass named "&fJade Crystal" to player
+		send title "&a20x Jade Crystal" with subtitle "&f%{luckofcave.%uuid of player%}%%%" for 1 seconds
+	
+#hematite
+on break of black stained glass pane or black stained glass:
+	chance of 5%:
+		if {crystalloot::%uuid of player%} isn't false:
+			message "&6Crystal Loot! &fYou have 3 seconds to claim all the crystals!" to player
+			wait 1 second
+			set {crystalbox} to a new chest inventory with 3 row with name "&6Crystal Loot!"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 black stained glass named "&fHematite Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 black stained glass named "&fHematite Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 20 black stained glass named "&fHematite Crystal"
+			open {crystalbox} to player
+			wait 3 seconds
+			if name of player's inventory is "&6Crystal Loot!":
+				close player's inventory
+		
+on break of black stained glass:
+    give black stained glass named "&fHematite Crystal" to player
+    wait 5 seconds
+    set event-block to black stained glass
+	
+on break of black stained glass pane:
+    give black stained glass named "&fHematite Crystal" to player
+    wait 5 seconds
+    set event-block to black stained glass pane
+on break of black stained glass or black stained glass pane:
+	chance of {luckofcave::%uuid of player%}%:
+		give 20 black stained glass named "&fHematite Crystal" to player
+		send title "&820x Hematite Crystal" with subtitle "&f%{luckofcave::%uuid of player%}%%%" for 1 seconds
+on break black stained glass or black stained glass pane:
+	if name of player's helmet is "&dHemitite Slated Helmet":
+		give black stained glass named "&fHematite Crystal" to player
+on break black stained glass or black stained glass pane:
+	if name of player's chestplate is "&dHemitite Slated Chestplate":
+		give black stained glass named "&fHematite Crystal" to player
+on break black stained glass or black stained glass pane:
+	if name of player's leggings is "&dHemitite Slated Leggings":
+		give black stained glass named "&fHematite Crystal" to player
+on break black stained glass or black stained glass pane:
+	if name of player's boots is "&dHemitite Slated Boots":
+		give black stained glass named "&fHematite Crystal" to player
+		
+	
+#quartz
+on break of white stained glass pane or white stained glass:
+	chance of 5%:
+		if {crystalloot::%uuid of player%} isn't false:
+			message "&6Crystal Loot! &fYou have 3 seconds to claim all the crystals!" to player
+			wait 1 second
+			set {crystalbox} to a new chest inventory with 3 row with name "&6Crystal Loot!"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 white stained glass named "&fQuartz Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 white stained glass named "&fQuartz Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 20 white stained glass named "&fQuartz Crystal"
+			open {crystalbox} to player
+			wait 3 seconds
+			if name of player's inventory is "&6Crystal Loot!":
+				close player's inventory
+on break of white stained glass:
+    give white stained glass named "&fQuartz Crystal" to player
+    wait 5 seconds
+    set event-block to white stained glass
+on break of white stained glass pane:
+    give white stained glass named "&fQuartz Crystal" to player
+    wait 5 seconds
+    set event-block to white stained glass pane
+on break of white stained glass or white stained glass pane:
+	chance of {luckofcave::%uuid of player%}%:
+		give 20 white stained glass named "&fQuartz Crystal" to player
+		send title "&f20x Quartz Crystal" with subtitle "&f%{luckofcave.%uuid of player%}%%%" for 1 seconds
+
+#azure
+on break of cyan stained glass pane or cyan stained glass:
+	chance of 5%:
+		if {crystalloot::%uuid of player%} isn't false:
+			message "&6Crystal Loot! &fYou have 3 seconds to claim all the crystals!" to player
+			wait 1 second
+			set {crystalbox} to a new chest inventory with 3 row with name "&6Crystal Loot!"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 cyan stained glass named "&3Azure Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 cyan stained glass named "&3Azure Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 20 cyan stained glass named "&3Azure Crystal"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 cyan dye with name "&3Azure Powder"
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {crystalbox} to 10 cyan dye with name "&3Azure Powder"
+			open {crystalbox} to player
+			wait 3 seconds
+			if name of player's inventory is "&6Crystal Loot!":
+				close player's inventory
+on break of cyan stained glass:
+    give cyan stained glass named "&3Azure Crystal" to player
+    wait 10 seconds
+    set event-block to cyan stained glass
+	
+on break of cyan stained glass pane:
+    give cyan stained glass named "&3Azure Crystal" to player
+    wait 10 seconds
+    set event-block to cyan stained glass pane
+on break of cyan stained glass or cyan stained glass pane:
+	chance of 50%:
+		give cyan dye with name "&3Azure Powder" to player
+on break of cyan stained glass or cyan stained glass pane:
+	give cyan dye with name "&3Azure Powder" to player
+on break of cyan stained glass or cyan stained glass pane:
+	chance of {luckofcave::uuid of player}%:
+		give 20 cyan stained glass named "&3Azure Crystal" to player
+		send title "&320x Azure Crystal" with subtitle "&f%{luckofcave.%uuid of player%}%%%"
+on break of cyan stained glass or cyan stained glass pane:
+	chance of {luckofcave::%uuid of player%}%:
+		give 10 cyan dye with name "&3Azure Powder" to player
+		send title "&310x Azure Powder" with subtitle "&f%{luckofcave.%uuid of player%}%%%" for 1 seconds
+
+#===========MAGIC GLASS=========
+on break of black stained glass or black stained glass pane:
+	if {magicglass} = true:
+		set {glassmined} to {glassmined} + 1
+		chance of 10%:
+			give 10 black stained glass with name "&fHematite Crystal" to player
+			send message "&b&lMAGIC GLASS! &fYou got bonus 10 Hematite Crystals!" to player 
+on break of cyan stained glass or cyan stained glass pane:
+	if {magicglass} = true:
+		set {glassmined} to {glassmined} + 1
+		chance of 10%:
+			give 10 cyan stained glass with name "&3Azure Crystal" to player
+			send message "&b&lMAGIC GLASS! &fYou got bonus 10 Azure Crystals!" to player
+on break of red stained glass or red stained glass pane:
+	if {magicglass} = true:
+		set {glassmined} to {glassmined} + 1
+		chance of 10%:
+			give 10 red stained glass with name "&fRuby Crystal" to player
+			send message "&b&lMAGIC GLASS! &fYou got bonus 10 Ruby Crystals!" to player
+on break of orange stained glass or orange stained glass pane:
+	if {magicglass} = true:
+		set {glassmined} to {glassmined} + 1
+		chance of 10%:
+			give 10 orange stained glass with name "&fAmber Crystal" to player
+			send message "&b&lMAGIC GLASS! &fYou got bonus 10 Amber Crystals!" to player
+on break of lime stained glass or lime stained glass pane:
+	if {magicglass} = true:
+		set {glassmined} to {glassmined} + 1
+		chance of 10%:
+			give 10 lime stained glass with name "&fJade Crystal" to player
+			send message "&b&lMAGIC GLASS! &fYou got bonus 10 Jade Crystals!" to player
+on break of light blue stained glass or light blue stained glass pane:
+	if {magicglass} = true:
+		set {glassmined} to {glassmined} + 1
+		chance of 10%:
+			give 10 light blue stained glass with name "&fSapphire Crystal" to player
+			send message "&b&lMAGIC GLASS! &fYou got bonus 10 Sapphire Crystals!" to player
+on break of purple stained glass or purple stained glass pane:
+	if {magicglass} = true:
+		set {glassmined} to {glassmined} + 1
+		chance of 10%:
+			give 10 purple stained glass with name "&fAmethyst Crystal" to player
+			send message "&b&lMAGIC GLASS! &fYou got bonus 10 Amethyst Crystals!" to player
+on break of white stained glass or white stained glass pane:
+	if {magicglass} = true:
+		set {glassmined} to {glassmined} + 1
+		chance of 10%:
+			give 10 white stained glass with name "&fQuartz Crystal" to player
+			send message "&b&lMAGIC GLASS! &fYou got bonus 10 Quartz Crystals!" to player

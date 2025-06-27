@@ -1,0 +1,25 @@
+command /enchants:
+	aliases: /ench, /enchlist
+	trigger:
+		set {_cench} to a new chest inventory with 6 row with name "&dMystical Enchants"
+		set slot 0 of {_cench} to enchanted book named "&6Lightweight" with lore "&7Disables the mist from launching you." and " " and "&7From: &dMystic Table &8in /oldwarp" and "&7Applied To: &eBoots" and "&7Requires: &cFeather Falling IV"
+		set slot 1 of {_cench} to enchanted book named "&6Fancy Pants" with lore "&7Gain &6Absorption II &7when hit!" and " " and "&7From: &dMystic Table &8in /oldwarp" and "&7Applied To: &eLeggings"
+		set slot 2 of {_cench} to enchanted book named "&6Squirrel" with lore "&7Disables fall damage." and " " and "&7From: &2Squirrel Man &8in Tribe Camp (hiding in a tree)" and "&7Applied To: &eBoots" and "&7Requires: &cFeather Falling V"
+		set slot 3 of {_cench} to enchanted book named "&6First Aid" with lore "&7When below half health, heal &c10 health&7/s" and " " and "&7From: &aJake &8in Hidden Sanctuary" and "&7Applied To: &eChestplates"
+		set slot 4 of {_cench} to enchanted book named "&6Thick Skull" with lore "&7Taking a combined total of &c25 hits" and "&7from enemies, gain &fResistance II" and "&7for 3 seconds." and " " and "&7From: &6Barrels &8(from fishing with &6Barrelerator)" and "&7Applied To: &eHelmets"
+		set slot 5 of {_cench} to enchanted book named "&6Bloody Work" with lore "&7On hit have a &a3%% chance to make enemies" and "&7bleed dealing &c1%% &7of their max health each" and "&7second for 5 seconds." and " " and "&7From: &aSaoki &8in Kyushu Island" and "&7Applied To: &eMelee Weapons" and "&7Requires: &cSharpness VII"
+		set slot 6 of {_cench} to enchanted book named "&6Frostbite" with lore "&720%% to apply &8Slowness V &7and" and "&fWeakness II &7for 4 seconds on hit" and " " and "&7From: &dMystic Table &8in /oldwarp" and "&7Applied To: &eSwords, Axes" and "&7Requires: &cSharpness V" and "" and "&c&lTHIS ENCHANT IS DISCONTINUED"
+		set slot 7 of {_cench} to enchanted book named "&6Bit Hunter" with lore "&7When mining, fishing, or killing things, have a" and "&7chance for some &bbits&7!" and " " and "&7From: &dMystic Table &8in /oldwarp" and "&7Applied To: &eAll Tools, Rods, and Weapons"
+		set slot 8 of {_cench} to enchanted book named "&6Greed" with lore "&7Grants a 20%% chance for diamond on kill" and " " and "&7From: &dMystic Table &8in /oldwarp" and "&7Applied To: &eMelee Weapons" and "&7Requires: &cSharpness V"
+		set slot 9 of {_cench} to enchanted book named "&6Shiny Fish" with lore "&7Gaurantees &b3 Diamonds &7per catch." and " " and "&7From: &dMystic Table &8in /oldwarp" and "&7Applied To: &eFishing Rods"
+		set slot 10 of {_cench} to enchanted book named "&6Double Roll" with lore "&720%% chance to have an &6extra roll &7on fish catch" and " " and "&7From: &6Barrels &8(from fishing with &6Barrelerator)" and "&7Applied To: &eFishing Rods" and "&7Requires: &cLure V"
+		set slot 11 of {_cench} to enchanted book named "&6Barrelerator" with lore "&710%% chance to fish up a &6Submerged Barrel&7!" and " " and "&7From: &2Frank the Fisherman &8(from the Fishing Village)" and "&7Applied To: &eFishing Rods"
+
+		set slot 49 of {_cench} to barrier with name "&fClose Menu"
+		open {_cench} to player
+ 
+on inventory click:
+	if name of event-inventory is "&dMystical Enchants":
+		cancel event
+		if event-item is barrier:
+			close player's inventory

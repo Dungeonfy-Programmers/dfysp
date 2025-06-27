@@ -1,0 +1,505 @@
+#Egg Dropping
+on death:
+    victim is chicken:
+        drop egg at event-location		
+on right click:
+    if name of player's held item contains "&6Golden Egg":
+        cancel event		
+on projectile shoot:
+	if event-projectile is a egg:
+		if gamemode of shooter isn't creative:
+			cancel event
+#ANCIENT EGG
+on break of pumpkin or wheat plant or potato plant or cactus or carrot plant or nether wart or sugar cane or melon:
+	if name of player's offhand item is "&fAncient Egg":
+		chance of 0.01%:
+			set {_rand} to a random integer between 1 and 2
+			if {_rand} = 1:
+				set player's offhand item to {capybara}
+				broadcast "&e&lHATCH! &f%player%'s Ancient Egg hatched into a &2Capybara&f!"
+			if {_rand} = 2:
+				set player's offhand item to {sniffer}
+				broadcast "&e&lHATCH! &f%player%'s Ancient Egg hatched into a &2Sniffer&f!"
+#Capybara Tank Pet
+on damage:
+	if name of victim's offhand item is "&2Capybara":
+		chance of 15%:
+			cancel event
+every 2 second:
+	set {capys} to 0
+	clear {capyUsers::*}
+	loop all players:
+		if name of loop-player's offhand item is "&2Capybara":
+			add loop-player's skull named "&e%loop-player%" to {capyUsers::*}
+			set {capys} to {capys} + 1 	
+	if {capys} > 4: #Cap it at 4
+		set {capys} to 4
+	set {capys} to {capys} * 2
+command /capyusers:
+	trigger:
+		set {_gui} to a new chest inventory with 2 row with name "&2Capybara Users"
+		add {capyUsers::*} to {_gui}
+		open {_gui} to player
+ 
+on inventory click:
+	if name of event-inventory is "&2Capybara Users":
+		cancel event
+on break:
+	if event-block is pumpkin:
+		if name of player's offhand item is "&2Capybara":
+			give player "%{capys}% pumpkin" parsed as item
+on break:
+	if event-block is potato plant:
+		if name of player's offhand item is "&2Capybara":
+			give player "%{capys}% potatoes" parsed as item
+on break:
+	if event-block is fully grown carrot plant:
+		if name of player's offhand item is "&2Capybara":
+			give player "%{capys}% carrots" parsed as item
+on break:
+	if event-block is wheat plant:
+		if name of player's offhand item is "&2Capybara":
+			give player "%{capys}% wheat" parsed as item
+on break:
+	if event-block is nether wart:
+		if name of player's offhand item is "&2Capybara":
+			give player "%{capys}% nether wart" parsed as item
+on break:
+	if event-block is sugar cane:
+		if name of player's offhand item is "&2Capybara":
+			give player "%{capys}% sugar cane" parsed as item
+on break:
+	if event-block is cactus:
+		if name of player's offhand item is "&2Capybara":
+			give player "%{capys}% cactus" parsed as item
+
+#Sniffer			
+on break:
+	if event-block is pumpkin:
+		if name of player's offhand item is "&2Sniffer":
+			give player 3 pumpkin
+			chance of 0.1%:
+				give player wheat seeds of protection 1 with item flag hide enchants named "&fAncient Seeds" with lore "&7Obtained with the help of the &2Sniffer &7:D"
+				message "&a&lSNIFF! &fYou got Ancient Seeds from your &2Sniffer&f!" to player
+on break:
+	if event-block is potato plant:
+		if name of player's offhand item is "&2Sniffer":
+			give player 3 potatoes
+			chance of 0.1%:
+				give player wheat seeds of protection 1 with item flag hide enchants named "&fAncient Seeds" with lore "&7Obtained with the help of the &2Sniffer &7:D"
+				message "&a&lSNIFF! &fYou got Ancient Seeds from your &2Sniffer&f!" to player
+on break:
+	if event-block is fully grown carrot plant:
+		if name of player's offhand item is "&2Sniffer":
+			give player 3 carrots
+			chance of 0.1%:
+				give player wheat seeds of protection 1 with item flag hide enchants named "&fAncient Seeds" with lore "&7Obtained with the help of the &2Sniffer &7:D"
+				message "&a&lSNIFF! &fYou got Ancient Seeds from your &2Sniffer&f!" to player
+on break:
+	if event-block is wheat plant:
+		if name of player's offhand item is "&2Sniffer":
+			give player 3 wheat
+			chance of 0.1%:
+				give player wheat seeds of protection 1 with item flag hide enchants named "&fAncient Seeds" with lore "&7Obtained with the help of the &2Sniffer &7:D"
+				message "&a&lSNIFF! &fYou got Ancient Seeds from your &2Sniffer&f!" to player
+on break:
+	if event-block is nether wart:
+		if name of player's offhand item is "&2Sniffer":
+			give player 3 nether wart
+			chance of 0.01%:
+				give player wheat seeds of protection 1 with item flag hide enchants named "&fAncient Seeds" with lore "&7Obtained with the help of the &2Sniffer &7:D"
+				message "&a&lSNIFF! &fYou got Ancient Seeds from your &2Sniffer&f!" to player
+on break:
+	if event-block is sugar cane:
+		if name of player's offhand item is "&2Sniffer":
+			give player 3 sugar cane
+			chance of 0.1%:
+				give player wheat seeds of protection 1 with item flag hide enchants named "&fAncient Seeds" with lore "&7Obtained with the help of the &2Sniffer &7:D"
+				message "&a&lSNIFF! &fYou got Ancient Seeds from your &2Sniffer&f!" to player
+on break:
+	if event-block is cactus:
+		if name of player's offhand item is "&2Sniffer":
+			give player 3 cactus
+			chance of 0.1%:
+				give player wheat seeds of protection 1 with item flag hide enchants named "&fAncient Seeds" with lore "&7Obtained with the help of the &2Sniffer &7:D"
+				message "&a&lSNIFF! &fYou got Ancient Seeds from your &2Sniffer&f!" to player
+#Computoor
+on death:
+	if name of attacker's offhand item contains "&dComputoor":
+		give attacker 4 diamonds
+on death:
+	if name of attacker's offhand item contains "&dComputoor":
+		chance of 4%:
+			give 1 comparator named "&6Clock Parts" with lore "&7used to buy cool cosmetic items" to attacker
+			send "&b&lCOMPUTOOR! &fYou got extra &6Clock Parts&7." to attacker
+every 10 minutes:
+	loop all players:
+		if name of loop-player's offhand item contains "&dComputoor":
+			give 1 comparator named "&6Clock Parts" with lore "&7used to buy cool cosmetic items" to loop-player
+			send "&b&lCOMPUTOOR! &fYou got extra &6Clock Parts&7." to loop-player
+
+#Wither
+on damage of wither or wither skeleton:
+	name of attacker's offhand item contains "&dWither":
+		add damage * 0.5 to damage
+#on damage:
+    #if attacker is a player:
+        #damage cause isn't thorns or fire
+        #if name of attacker's offhand item is "&dWither":
+            #loop all creatures in radius 2 of victim:
+                #if name of attacker's chestplate contains "&d☠":
+                    #damage loop-creature by damage * 0.25
+                #else:
+                    #damage loop-creature by damage * 0.08
+
+on damage:
+    name of attacker's offhand item is "&dWither"
+    loop all creatures in radius 2 of attacker:
+        if metadata value "wipethefloor" of loop-creature is not set:
+            name of attacker's chestplate contains "&d☠"
+            wait 1 tick
+            make attacker damage loop-creature by damage * 0.08
+            set metadata value "wipethefloor" of loop-creature to true
+            wait 0.1 seconds
+            clear metadata value "wipethefloor" of loop-creature
+        else:
+            wait 1 tick
+            make attacker damage loop-creature by damage * 0.25
+            set metadata value "wipethefloor" of loop-creature to true
+            wait 1 seconds
+            clear metadata value "wipethefloor" of loop-creature
+        if metadata value "wipethefloor" of loop-creature is true:
+            stop
+#Cactus Pet
+on load:
+	set {cactusfruit} to 0
+on damage:
+	name of victim's offhand item is "&dCactus":
+		make victim damage attacker by damage * 1/6
+		set {cactusfruit} to {cactusfruit} + damage * 0.2
+every 4 seconds:
+	loop all players:
+		if name of loop-player's offhand item is "&dCactus":
+			set {cactususers} to {cactususers} + 1
+			{cactusfruit} > 0:
+				add {cactusfruit} to loop-player's health
+				set {cactusfruit} to 0
+				send action bar "&a&lCACTUS FRUIT &fx%{cactususers}%" to loop-player
+			if {cactususers} >= 6:
+				apply regeneration 6 to loop-player for 5 seconds replacing the existing effect
+			else:
+				apply regeneration {cactususers} to loop-player for 5 seconds replacing the existing effect
+			set {cactususers} to 0
+#=============dragnov===============
+on damage:
+    if name of attacker's offhand item is "&5Dragnov Pet &8(Tier V)":
+        set {_bonusdamage} to health of victim * 0.02
+        set damage to damage + {_bonusdamage}
+every 1 seconds:
+    loop all players:
+        if name of loop-player's offhand item is "&5Dragnov Pet &8(Tier V)" or "&5Dragnov Pet &8(Tier IV)" or "&5Dragnov Pet &8(Tier III)":
+            remove night vision from loop-player
+            apply night vision 1 to loop-player for 13 seconds
+every 1 seconds:
+    loop all players:
+        if name of loop-player's off hand item contains "&5Dragnov Pet":
+            remove strength from loop-player
+            apply strength 8 to loop-player for 2 seconds
+on damage:
+	if name of attacker's off hand item contains "&5Dragnov Pet &8(Tier V)":
+		if victim is enderman or ender dragon or endermite or phantom:
+			increase damage by damage * 3
+on damage:
+	if name of attacker's offhand item contains "&5Dragnov Pet &8(Tier II)" or "&5Dragnov Pet &8(Tier III)" or "&5Dragnov Pet &8(Tier IV)":
+		if victim is enderman or ender dragon or endermite or phantom:
+			increase damage by damage * 2.5
+#=============lapis golem=============
+on death:
+	if name of attacker's off hand item is "&eLapis Golem":
+		chance of 50%:
+			give attacker lapis lazuli
+#============cobalt golem=============
+every 1 seconds:
+    loop all players:
+        if name of loop-player's off hand item contains "&dCobalt Golem":
+            remove resistance from loop-player
+            apply resistance 1 to loop-player for 2 seconds
+on break of blue wool or blue carpet or blue concrete powder:
+	if name of player's off hand item is "&dCobalt Golem":
+		give player 2 blue dye with name "&9Cobalt" with lore "&8Great for car batteries"
+#ferret
+on break coal ore:
+	if name of player's off hand item is "&eFerret":
+		give player 2 coal
+on break iron ore:
+	if name of player's off hand item is "&eFerret":
+		give player 2 iron ingot
+#brown mooooshroooooom
+on break of sugar cane or nether wart or pumpkin or melon or fully grown carrot plant or fully grown wheat plant or shroomlight or cactus:
+	if name of player's offhand item is "&eBrown Mooshroom":
+		chance of 50%:
+			give player shroomlight
+
+#============RECAST BLAZE========
+every 8 seconds:
+	loop all players:
+		if name of loop-player's offhand item is "&dRecast Blaze":
+			loop all creatures in radius 4 of loop-player:
+				make loop-player damage loop-creature by 50
+on death of blaze:
+	if name of attacker's offhand item is "&dRecast Blaze":
+		give attacker diamond
+on login:
+	make console execute command "/ncp exempt %player% FIGHT_REACH"
+#============BABY SPIDER===========
+on damage:
+    if name of attacker's off hand item contains "&6Baby Spider":
+        chance of 100%:
+            apply haste 3 to the attacker
+            apply poison 2 to the victim
+            apply slowness 4 to the victim
+			
+#Allay Pet
+on damage:
+	if name of attacker's off hand item contains "&dAllay":
+		chance of 34%:
+			increase damage by damage
+			send title " " with subtitle "&b[⚔] x2" to attacker for 1 second
+on sneak toggle:
+	if name of player's offhand item is "&dAllay":
+		if metadata tag "allaycd" of player isn't set:
+			set metadata tag "allaycd" of player to false
+		if metadata tag "allaycd" of player = false:
+			set metadata tag "allaycd" of player to true
+			add 20 to player's health
+			send message "&aYou used your Allay ability!" to player
+			add 20 to all players in radius 5 of the player's health
+			wait 20 seconds
+			send message "&aYour Allay ability is ready!"
+			set metadata tag "allaycd" of player to false
+
+#Horned Sheep Pet
+on damage:			
+	if name of attacker's offhand item is "&dHorned Sheep":
+		wait 6 ticks
+		add 5 + (damage * 0.025) to attacker's health
+every 1 seconds:
+    loop all players:
+        if name of loop-player's off hand item contains "&dHorned Sheep":
+            remove fire resistance from loop-player
+            apply fire resistance 1 to loop-player for 3 seconds
+#Zebra
+on death:
+	if name of attacker's off hand item is "&dZebra":
+		give 3 gold ingot to attacker
+			
+#Unicorn		
+on death:
+	if name of attacker's off hand item is "&dUnicorn":
+		give 2 diamonds to attacker
+on death:
+	if projectile exists:
+		if projectile is a arrow:
+			if name of shooter's off hand item is "&dUnicorn":
+				give 2 diamonds to shooter
+			
+#Majestic Unicorn
+on death:
+	if name of attacker's off hand item is "&dMajestic Unicorn":
+		give 3 diamonds to attacker
+every 10 ticks:
+	loop all players:
+		if name of loop-player's off hand item is "&dMajestic Unicorn":
+			loop all items in loop-player's inventory:
+				if loop-item contains diamond named "&dExceedingly Shiny Diamond":
+					send message "&aomg enook your code work" to loop-player
+
+#Snowman Pet
+on damage:
+	damage cause isn't thorns
+	if name of attacker's offhand item contains "&dSnowman :D":
+		wait 6 ticks
+		add damage * 0.05 + 5 to attacker's health
+		remove weakness from victim
+		apply weakness 20 to victim for 5 seconds
+on shoot:
+	if name of shooter's offhand item contains "&dSnowman :D":
+		shoot snowball from shooter's head at speed 2
+on damage:
+	if projectile exists:
+		if projectile is snowball:
+			if victim isn't player:
+				increase damage by 150
+				send title "&b[❄150]" to attacker
+
+#Endermite Pet		
+on damage:
+	if name of attacker's offhand item is "&eEndermite":
+		if victim is enderman or ender dragon or endermite:
+			increase damage by damage
+on break of purple wool:
+	if name of player's offhand item is "&eEndermite":
+		give player 4 purple glazed terracotta with name "&dEnderite"
+on break of purple concrete powder:
+	if name of player's offhand item is "&eEndermite":
+		give player 4 purple glazed terracotta with name "&dEnderite"
+
+#Hog Pet
+on damage:
+	if name of attacker's offhand item is "&eHog":
+		add 5 to attacker's health
+#Mole Pet
+every 1 seconds:
+    loop all players:
+        if name of loop-player's off hand item contains "&6Mole":
+            remove haste from loop-player
+            apply haste 5 to loop-player for 2 seconds
+#Mole Upgrade
+every 1 seconds:
+    loop all players:
+        if name of loop-player's off hand item contains "&eEnergized Mole":
+            remove haste from loop-player
+            apply haste 6 to loop-player for 2 seconds			
+#Polar Bear Pet
+on break of ice or packed ice or blue ice:
+	if name of player's off hand item contains "&ePolar Bear":
+		give player blue ice
+
+#Warden Pet #rip og meta
+every 1 seconds:
+	loop all players:
+		if name of loop-player's off hand item contains "&dWarden":
+			remove strength from loop-player
+			apply strength 7 to loop-player for 2 seconds
+on damage:
+    if name of attacker's off hand item contains "&dWarden":
+        chance of 12.5%:
+            increase damage by damage * 2
+            send title " " with subtitle "&1[⚔] x3" to attacker for 1 second
+
+#Bee Pet
+on damage:
+    if name of attacker's off hand item contains "&eBee":
+        chance of 12.5%:
+            cancel event
+            make attacker damage victim by damage * 2
+            send title " " with subtitle "&e[⚔] x2" to attacker for 1 second
+	
+#Hamster Pet
+on death:
+	if name of attacker's offhand item is "&eHamster":
+		apply strength 4 to attacker for 10 seconds
+
+#Cow Pet
+on death of cow:
+	if name of attacker's offhand item is "&eCow":
+		give attacker 2 raw beef
+#Dino Whale
+on death:
+    if name of attacker's off hand item contains "&dDino Whale":
+        wait 4 ticks
+        add 8 to health of attacker
+every 10 seconds:
+	loop all players:
+		if name of loop-player's off hand item contains "&dDino Whale":
+			remove absorption from loop-player
+			apply absorption 4 to loop-player for 11 seconds
+		
+#Parrot Pet
+on death:
+    if name of attacker's off hand item is "&eParrot":
+        chance of 4%:
+            drop diamond at event-location
+            send message "&a&lLUCKY! &r&fYour &eParrot &fjust dropped a &bDiamond&f! &7(4%%)" to attacker
+            play sound "entity.parrot.ambient" with volume 1 and pitch 1 at attacker
+			
+#Fishing Pets
+every 1 second:
+	loop all players:
+		if name of loop-player's off hand item is "&dDunkleosteus" or "&dDonkasaurus":
+			remove water breathing from loop-player
+			apply water breathing 1 to loop-player for 3 seconds
+on fishing:
+	if fishing state is "CAUGHT_FISH":
+		if name of player's offhand item is "&dDunkleosteus":
+			wait 40 ticks
+			send title "&fRolling..."
+			play sound "block.note_block.hat" to player
+			set {fishingdrop} to random integer between 1 and 6
+			wait 10 ticks
+			play sound "block.note_block.hat" to player
+			wait 10 ticks
+			play sound "block.note_block.hat" to player
+			wait 10 ticks
+			play sound "block.note_block.pling" to player
+			if {fishingdrop} is equal to 1:
+				send title "&6Ł" with subtitle "&61"
+				give player 4 emeralds
+				send message "&6&lNET 1 &f+&a4 Emeralds" to player
+			if {fishingdrop} = 2:
+				send title "&6♧" with subtitle "&62"
+				give player 1 diamonds
+				send message "&6&lNET 2 &f+&b1 Diamond" to player
+			if {fishingdrop} = 3:
+				send title "&6✦" with subtitle "&63"
+				give player 2 diamonds
+				send message "&6&lNET 3 &f+&b2 Diamonds" to player
+			if {fishingdrop} = 4:
+				send title "&6✥" with subtitle "&64"
+				give player 4 diamonds
+				send message "&6&lNET 4 &f+&b4 Diamonds" to player
+			if {fishingdrop} = 5:
+				send title "&6☯" with subtitle "&65"
+				give player 8 diamonds
+				send message "&6&lNET 5 &f+&b8 Diamonds" to player
+			if {fishingdrop} = 6:
+				send title "&6Ω" with subtitle "&66"
+				give player diamond block
+				send message "&6&lNET 6 &f+&b1 Diamond Block" to player
+		if name of player's offhand item is "&dDonkasaurus":
+			wait 40 ticks
+			if {fishingdrop} is equal to 1:
+				send title "&bŁ" with subtitle "&b1"
+				give player 4 gold nuggets
+				send message "&b&lNET 1 &f+&64 Gold Nuggets" to player
+			if {fishingdrop} = 2:
+				send title "&b♧" with subtitle "&b2"
+				give player 1 gold ingot
+				send message "&b&lNET 2 &f+&6Gold Ingot" to player
+			if {fishingdrop} = 3:
+				send title "&b✦" with subtitle "&b3"
+				give player 2 gold ingots
+				send message "&b&lNET 3 &f+&62 Gold Ingots" to player
+			if {fishingdrop} = 4:
+				send title "&b✥" with subtitle "&b4"
+				give player 4 gold ingots
+				send message "&b&lNET 4 &f+&64 Gold Ingots" to player
+			if {fishingdrop} = 5:
+				send title "&b☯" with subtitle "&b5"
+				give player 8 gold ingots
+				send message "&b&lNET 5 &f+&68 Gold Ingots" to player
+			if {fishingdrop} = 6:
+				send title "&bΩ" with subtitle "&b6"
+				give player gold block
+				send message "&b&lNET 6 &f+&6Gold Block" to player
+
+#Oni Pet
+on sneak toggle:
+	if name of player's offhand item is "&4Oni":
+		if metadata tag "onipetcd" of player isn't set:
+			set metadata tag "onipetcd" of player to true
+		if metadata tag "onipetcd" of player is true:
+			set metadata tag "onipetcd" of player to false
+			apply strength 20 to player for 60 seconds
+			wait 60 seconds
+			apply weakness 20 to player for 30 seconds
+			apply nausea to player for 30 seconds
+			set metadata tag "onipetcd" of player to true
+			send message "&aYour &4Oni &apet ability is ready."
+			
+on damage:
+	if attacker is player:
+		if name of attacker's offhand item is "&4Oni":
+			chance of 15%:
+				increase damage by damage * 2
+				send title "&4[⚔] x2" to attacker

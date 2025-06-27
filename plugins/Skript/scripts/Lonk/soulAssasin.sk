@@ -1,0 +1,25 @@
+on damage:
+    attacker is op
+    set {_loc} to location 2 block behind victim
+    set {_atkloc} to location(x coord of attacker, y coord of attacker, z coord of attacker, world of attacker)
+    loop all players in radius 2 around {_loc}:
+        if loop-player is attacker:
+            #broadcast "DEBUG - Behind"
+
+on armor change:
+    if name of event-item contains "&bSculk Assassin":
+        set {_armorCheck} to 0
+        loop armor of player:
+            name of loop-slot contains "&bSculk Assassin"
+            add 1 to {_armorCheck}
+        while {_armorCheck} >= 4:
+            set {_armorCheck} to 0
+            loop armor of player:
+                name of loop-slot contains "&bSculk Assassin"
+                add 1 to {_armorCheck}
+            if {_armorCheck} >= 4:
+                apply invisibility without particles to player for 5 seconds
+                wait 5 seconds
+
+
+        

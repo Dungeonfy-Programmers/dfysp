@@ -1,0 +1,186 @@
+#========dev chat========
+command /sc <text>:
+    permission: sk.staffchat
+    trigger:
+        set {_text} to arg-1
+        loop all players:
+            if loop-player has permission "sk.staffchat":
+                send "&c[STAFF] &8>> &f%player%: %{_text}%" to loop-player
+
+#==================EMOJIS===============
+on chat:
+	if {supporter::%uuid of player%} or {discordbooster::%uuid of player%} = true:
+		replace ":skull:" with "&c☠&f" in message
+		replace ":up:" with "<##FF8b60>&l⬆&f" in message
+		replace ":down:" with "<##9494FF>&l⬇&f" in message
+		replace ":smile:" with "&e☻&f" in message
+		replace ":note:" with "&d♬&f" in message
+		replace ":star:" with "&e⭐&f" in message
+		replace ":sus:" with "&l&cඞ&r" in message
+		replace ":sad:" with "&e☹&f" in message
+		replace ":heart:" or "<3" with "&c❤&f" in message
+	else:
+		replace ":skull:" with "&f☠" in message
+		replace ":up:" with "⬆" in message
+		replace ":down:" with "⬇" in message
+		replace ":smile:" with "☻" in message
+		replace ":note:" with "♬" in message
+		replace ":star:" with "⭐" in message
+		replace ":sus:" with "ඞ" in message
+		replace ":sad:" with "☹" in message
+		replace ":heart:" or "<3" with "❤" in message
+	replace "rolling down in the deep" with "&brolling down in the deep&f" in message
+on chat:
+	if message contains "buy" or "sell" or "trade":
+		wait 1 tick
+		message "&aLooking to trade items? Check out our discord: <link:https://discord.gg/yhw4ajkCu8>&b&n&ohttps://discord.gg/yhw4ajkCu8"
+		
+command /emojilist:
+	trigger:
+		message "&aList of all custom emojis, enjoy :D" and "&7(These are colored with &6Dungeonfy Supporter&7)" and "&f:skull: = ☠   :up: = ⬆" and "&f:down: = ⬇   :smile: = ☻" and "&f:note: = ♬   :star: = ⭐" and ":sus: = ඞ   :sad: = ☹   :heart: = ❤"
+
+#Ranks & Badges
+
+on chat:
+	cancel event
+	if {muted::%uuid of player%} = true:
+		message "&cYou are currently muted by a staff member! To appeal please join our discord."
+	else:
+		if message contains "fag" or "cock" or "pussy" or "nigg" or "boob" or "vagina" or "penis" or "porn" or "hentai" or "chink" or "kink" or "dick" or "beaner":
+			make console execute command "/kick %player% &cProfanity? :face_with_raised_eyebrow:"
+		else:
+			if name of player is "enook":	
+				broadcast "%{badges::%uuid of player%}%-<##FFC300>[OWNER] %player%&f: %message%"
+				stop
+			if player has permission "chatPrefix.admin":
+				broadcast "%{badges::%uuid of player%}%-&4[&cADMIN&4] &c%player%&f: %message%"
+				stop
+			if player has permission "chatPrefix.builder":
+				broadcast "%{badges::%uuid of player%}%-<##59bfff>[BUILDER] %player%&f: %message%"
+				stop
+			if player has permission "chatPrefix.mod":
+				broadcast "%{badges::%uuid of player%}%-&e[MOD] %player%&f: %message%"
+				stop
+			else:
+				if {bits::%uuid of player%} >= 1000:
+					if {bits::%uuid of player%} >= 2500:
+						if {bits::%uuid of player%} >= 5000:
+							if {bits::%uuid of player%} >= 10000:
+								if {bits::%uuid of player%} >= 25000:
+									broadcast "%{badges::%uuid of player%}%-&5[&dGRANDMASTER&5] &d%player%&f: %message%"
+								else:
+									broadcast "%{badges::%uuid of player%}%-<##eb8a4a>[MASTER] %player%&f: %message%"
+							else:
+								broadcast "%{badges::%uuid of player%}%-&5[EPIC] %player%&f: %message%"
+						else:
+							broadcast "%{badges::%uuid of player%}%-&3[&bPOG&3] &b%player%&f: %message%"
+					else:
+						broadcast "%{badges::%uuid of player%}%-&2[&aVIP&2] &a%player%&f: %message%"
+				else:
+					broadcast "%{badges::%uuid of player%}% &f%player%&f: %message%"
+
+on death:
+	set {kills::%uuid of attacker%} to {kills::%uuid of attacker%} + 1
+on login:
+	if {kills::%uuid of player%} isn't set:
+		set {kills::%uuid of player%} to 0			
+on login:
+	if {clockdrops::%player%} isn't set:
+		set {clockdrops::%player%} to true
+command /timerewards:
+	aliases: /timeplayed_toggle
+	trigger:
+		if {clockdrops::%player%} = true:
+			set {clockdrops::%player%} to false
+			send "&cTime played rewards now disabled!"
+		else:
+			set {clockdrops::%player%} to true
+			send "&aTime played rewards now enabled!"
+every 120 seconds:
+    broadcast "<##FFC300>You are currently playing &bdungeonfy.minehut.gg"
+#playtime rewards
+every 600 seconds:
+	loop all players:
+		if {hardcore::%uuid of loop-player%} != true:
+			if {in_sr::%uuid of loop-player%} != true:
+				if {clockdrops::%loop-player%} = true:
+					give 4 emeralds to loop-player
+					give 1 comparator named "&6Clock Parts" with lore "&7used to buy cool cosmetic items" to loop-player
+					send message "&a+4 Emeralds &6+1 Clock Parts &e(Time Played)" to loop-player
+
+every 3600 seconds:
+	loop all players:
+		if {hardcore::%uuid of loop-player%} != true:
+			if {in_sr::%uuid of loop-player%} != true:
+				if {clockdrops::%loop-player%} = true:
+				give 8 diamonds to loop-player
+				give 2 comparator named "&6Clock Parts" with lore "&7used to buy cool cosmetic items" to loop-player
+				send message "&b+8 Diamonds &6+2 Clock Parts &e(Time Played)" to loop-player
+every 1800 seconds:
+	wait 45 seconds
+	broadcast "&eWant to try &cHardcore Mode &eor &bSpeedrunning&e? &fCheck out /challenges!"
+every 3 minutes:
+	broadcast "&c[WARNING] KILLING ALL &eSPAWNER MOBS &cIN 5 SECONDS!"
+	wait 5 seconds
+	set {_clearedmobs} to 0
+	loop all creatures:
+		if name of loop-creature isn't "&cTree Spirit" or "&cThe Manager" or "&cEvil Shroom Baby" or "&eSwamp Witch" or "&eTNT Husk" or "&2Lost Wanderer" or "&c&lRobotic Mastermind" or "&5Vorpal Drifter" or "&6Santiago" or "&2Bullfrog" or "&1Soul Seeker" or "&2Zombie Lord" or "&5&lCorrupted Mage" or "&eErik" or "&8Withered Soldier" or "&4Greg the Dictator &2Zombie Mode" or "&c&lBlaze Druid" or "&4Emperor Genichiro" or "&6The Grandfather" or "&6&lFurguson, Lord of The Lands Between" or "&d&lFurguson, All-Father of The Lands Between":
+			if loop-creature isn't a wither or zombie villager or villager or horse or iron golem or piglin:
+				kill loop-creature
+				add 1 to {_clearedmobs}
+	broadcast "&c[WARNING] JUST KILLED %{_clearedmobs}% TOTAL MOBS!"	
+	make console execute command "/kill @e[type=item]"
+	make console execute command "/kill @e[type=arrow]"
+	wait 15 seconds
+	broadcast "&fWe'll be hosting &6giveaways &fand announcing new &dupdates &fin our discord:" and "<link:https://discord.gg/yhw4ajkCu8>&b&n&ohttps://discord.gg/yhw4ajkCu8"
+
+on load:
+	set {carrotmadness} to false
+	set {murderevent} to false
+	set {pigpocolaypse} to false
+	set {magicglass} to false
+#=============events=============
+every 3600 seconds:
+	set {minor_event} to random integer between 0 to 3
+	if {minor_event} is equal to 0:
+		broadcast "&6&lCARROT MADNESS! &fThis event provides bonus 4 carrots while farming carrots for &e20 minutes&f!"
+		set {carrotmadness} to true
+		wait 1200 seconds
+		broadcast "&6&lCARROT MADNESS! &fThis event has ended, hope you got some carrots!"
+		set {carrotmadness} to false
+	if {minor_event} is equal to 1:
+		broadcast "&c&lMURDER! &fBonus 50%% chance for a &bDiamond &fon kill for &e20 minutes&f!"
+		set {murderevent} to true
+		wait 1200 seconds
+		broadcast "&c&lMURDER! &fThis event has concluded, hope you got some kills :)"
+		set {murderevent} to false
+	if {minor_event} is equal to 2:
+		broadcast "&d&lPIGPOCOLAYPSE! &f10%% chance to spawn a &dZoglin &fon &dPig &fkill for &e20 minutes&f!"
+		set {pigpocolaypse} to true
+		wait 1200 seconds
+		broadcast "&d&lPIGPOCOLAYPSE! &fThis event has ended, hope you got some zoglin hide :D"
+		set {pigpocolaypse} to false
+	if {minor_event} is equal to 3:
+		broadcast "&b&lMAGIC GLASS &f10%% chance to get a &bbonus crystals &ffor &e20 minutes&f!"
+		set {magicglass} to true
+		set {glassmined} to 0
+		wait 1200 seconds
+		broadcast "&b&lMAGIC GLASS! &fThis event has concluded, with a total of %{glassmined}% crystals mined!"
+		set {magicglass} to false
+		
+on break: #carrotmadness
+	if event-block is fully grown carrot plant:
+		if {carrotmadness} = true:
+			if {in_sr::%uuid of player%} != true:
+				give player 4 carrots
+on death: #murder event
+	if {murderevent} = true:
+		if {in_sr::%uuid of attacker%} != true:
+			chance of 50%:
+				give attacker diamond
+on death of pig: #pigpoc
+	if {pigpocolaypse} = true:
+		chance of 10%:
+			if {in_sr::%uuid of attacker%} != true:
+				spawn zoglin
+				send message "&d&lZOGLIN! &fYou spawned a zoglin because of Pigpocolaypse" to attacker

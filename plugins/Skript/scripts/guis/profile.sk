@@ -1,0 +1,175 @@
+on right click on entity:
+	entity is a player:
+		cancel event
+		make player execute command "/profile %entity%"
+
+on inventory click:
+	if name of event-inventory contains "s Profile":
+		cancel event
+		if index of event-slot = 49:
+			cancel event
+			close player's inventory
+			
+#===============/TRASH COMMAND===========
+command /trash:
+	aliases: /tr
+	trigger:
+		set {trashcan} to a new chest inventory with 5 row with name "&cTrash Can"
+		open {trashcan} to player
+		
+#==============stats command==========
+command /profile [<offline player>]:
+	trigger:
+		if arg is set:
+			if arg is "enook" or "renegade450" or "EnderZombie44" or "Deltaxbyte" or "ilgiocatore" or "Starry_Phantom" or "stoopi_poopy":
+				message "&cYou can't check this person's profile ;)"
+			else:
+				set {_p} to arg-1
+				set {profile} to a new chest inventory with 6 row with name "&b%{_p}%'s Profile"
+				set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 and 36 and 37 and 38 and 39 and 40 and 41 and 42 and 43 and 44 and 45 and 46 and 47 and 48 and 49 and 50 and 51 and 52 and 53 of {profile} to gray stained glass pane named " "
+				#Sidebar
+				set slot 0 of {profile} to player's skull named "&aYour Profile &8/profile, /profile <name>" with lore "&7Click out to check out your" and "&7stats, gear, and more!"
+				set slot 9 of {profile} to ender pearl named "&bWarp &8/warp, /wp" with lore "&7Click to view your next area" and "&7to explore and take on!"
+				set slot 18 of {profile} to minecart with chest named "&eStorage &8/storage, /st" with lore "&7Click to view your avalible storage!"
+				set slot 27 of {profile} to experience bottle named "&aGifting &8/gift" with lore "&7Click to view a shop to gift" and "&7&aXP &7and &bBits &7to everyone online :D"
+				set slot 36 of {profile} to paper named "&fOther Commands &8/other, /ot" with lore "&7Click to check out some other useful commands."
+				set slot 45 of {profile} to barrier named "&fClose Menu"
+				if held item of {_p} is air:
+					set slot 11 of {profile} to white stained glass pane named "&eMainhand Empty Slot!"
+				else:
+					set slot 11 of {profile} to held item of {_p}
+				if offhand item of {_p} is air:
+					set slot 12 of {profile} to white stained glass pane named "&eOffhand Empty Slot!"
+				else:
+					set slot 12 of {profile} to offhand item of {_p}
+				if helmet of {_p} is air:
+					set slot 13 of {profile} to white stained glass pane named "&eHelmet Empty Slot!"
+				else:
+					set slot 13 of {profile} to helmet of {_p}
+				if chestplate of {_p} is air:
+					set slot 14 of {profile} to white stained glass pane named "&eChestplate Empty Slot!"
+				else:
+					set slot 14 of {profile} to chestplate of {_p}
+				if leggings of {_p} is air:
+					set slot 15 of {profile} to white stained glass pane named "&eLeggings Empty Slot!"
+				else:
+					set slot 15 of {profile} to leggings of {_p}
+				if boots of {_p} is air:
+					set slot 16 of {profile} to white stained glass pane named "&eShoes Empty Slot!"
+				else:
+					set slot 16 of {profile} to boots of {_p}
+				set slot 38 of {profile} to light blue dye with name "&b%{_p}%'s Total Bits" with lore "&f%{bits::%uuid of {_p}%}%" and " " and "&7Used to determine your rank!" and " " and "&aVIP &7= &b1000 Bits" and "&bPOG &7= &b2500 Bits" and "&5EPIC &7= &b5000 Bits" and "<##eb8a4a>MASTER &7= &b10000 Bits" and "&dGRANDMASTER &7= &b25000 Bits"
+				set slot 30 of {profile} to lily pad with name "&5%{_p}%'s Crystal Luck" with lore "&f%{luckofcave::%uuid of {_p}%}%&8/20" and " " and "&7The chance you get bonus crystals!" and " " and "&a%{_p}%'s Farming Luck" and "&f%{farmingluck::%uuid of {_p}%}%&8/80" and " " and "&7For every 2 farming luck you get 1 bonus crop!"
+				set {maxhealthprofile} to {_p}'s max health * 2
+				set {healthprofile} to {_p}'s health * 2
+				set slot 29 of {profile} to red dye with name "&c%{_p}%'s Health" with lore "&f%{healthprofile}%&8/%{maxhealthprofile}%" and " " and "&7Displays the player's well being in game"
+				set slot 32 of {profile} to skeleton skull named "&cDungeon Stats" with lore "&fDungeons Started: %{dungeonsstarted::%uuid of {_p}%}%" and "&fEasy Bosses Killed: %{ezdungeonbosskills::%uuid of {_p}%}%" and "&fMedium Bosses Killed: %{meddungeonbosskills::%uuid of {_p}%}%" and "&fHard Bosses Killed: %{harddungeonbosskills::%uuid of {_p}%}%" and "&fWither Kills: %{witherkills::%uuid of {_p}%}%" and "&fWither Runs Completed: %{witherruns::%uuid of {_p}%}%" and "&a%({witherruns::%uuid of {_p}%}/10)+({harddungeonbosskills::%uuid of {_p}%}/20)+({meddungeonbosskills::%uuid of {_p}%}/30)+({ezdungeonbosskills::%uuid of {_p}%}/40)% Dungeon Luck"
+				set slot 31 of {profile} to powder snow bucket named "&6Season Quest Progress" with lore "&f%{task1::%uuid of {_p}%}%&8/5000 &7Logs Chopped" and "&f%{task2::%uuid of {_p}%}%&8/8000 &7Mobs Killed" and "&f%{task3::%uuid of {_p}%}%&8/2500 &7Ores/Crystals Mined"
+				set slot 33 of {profile} to iron sword with name "&eLast Dealt Hit" with lore "&f%{damagetest::%uuid of {_p}%}% damage" and " " and "&eTotal Kills" and "&f%{kills::%uuid of {_p}%}% Kills"
+				set slot 39 of {profile} to painting named "&6Achievement Points" with lore "&f%{ach_points::%uuid of {_p}%}%&7/170" and " " and "&7View achievements with /achievements"
+				set slot 34 of {profile} to sugar named "&bSpeedruns" with lore "&7Obtain Versatile Yeezys: &e%{pb_vers::%uuid of {_p}%}%" and "&7Kill Zombie Lord: &e%{pb_zl::%uuid of {_p}%}%" and "&7Kill Vorpal Drifter: &e%{pb_vd::%uuid of {_p}%}%" and " " and "&7Some people abuse bugs to get a better time," and "&7people with the &a[⌚] &7in tab are verified runners." and "&8To apply for this, go to https://forms.gle/136JKJXU454Lqazb9" and "" and "&c2 hours and 46.65 minutes is the unset time!"
+				open {profile} to player
+		else:
+			set {profile} to a new chest inventory with 6 row with name "&b%player%'s Profile"
+			set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 and 36 and 37 and 38 and 39 and 40 and 41 and 42 and 43 and 44 and 45 and 46 and 47 and 48 and 49 and 50 and 51 and 52 and 53 of {profile} to gray stained glass pane named " "
+			#Sidebar
+			set slot 0 of {profile} to player's skull named "&aYour Profile &8/profile, /profile <name>" with lore "&7Click out to check out your" and "&7stats, gear, and more!"
+			set slot 9 of {profile} to ender pearl named "&bWarp &8/warp, /wp" with lore "&7Click to view your next area" and "&7to explore and take on!"
+			set slot 18 of {profile} to minecart with chest named "&eStorage &8/storage, /st" with lore "&7Click to view your avalible storage!"
+			set slot 27 of {profile} to experience bottle named "&aGifting &8/gift" with lore "&7Click to view a shop to gift" and "&7&aXP &7and &bBits &7to everyone online :D"
+			set slot 36 of {profile} to paper named "&fOther Commands &8/other, /ot" with lore "&7Click to check out some other useful commands."
+			set slot 45 of {profile} to barrier named "&fClose Menu"
+			if held item of player is air:
+				set slot 11 of {profile} to white stained glass pane named "&eMainhand Empty Slot!"
+			else:
+				set slot 11 of {profile} to held item of player
+			if offhand item of player is air:
+				set slot 12 of {profile} to white stained glass pane named "&eOffhand Empty Slot!"
+			else:
+				set slot 12 of {profile} to offhand item of player
+			if helmet of player is air:
+				set slot 13 of {profile} to white stained glass pane named "&eHelmet Empty Slot!"
+			else:
+				set slot 13 of {profile} to helmet of player
+			if chestplate of player is air:
+				set slot 14 of {profile} to white stained glass pane named "&eChestplate Empty Slot!"
+			else:
+				set slot 14 of {profile} to chestplate of player
+			if leggings of player is air:
+				set slot 15 of {profile} to white stained glass pane named "&eLeggings Empty Slot!"
+			else:
+				set slot 15 of {profile} to leggings of player
+			if boots of player is air:
+				set slot 16 of {profile} to white stained glass pane named "&eShoes Empty Slot!"
+			else:
+				set slot 16 of {profile} to boots of player
+			set slot 38 of {profile} to light blue dye with name "&b%entity%'s Total Bits" with lore "&f%{bits::%uuid of player%}%" and " " and "&7Used to determine your rank!" and " " and "&aVIP &7= &b1000 Bits" and "&bPOG &7= &b2500 Bits" and "&5EPIC &7= &b5000 Bits" and "<##eb8a4a>MASTER &7= &b10000 Bits" and "&dGRANDMASTER &7= &b25000 Bits"
+			set slot 30 of {profile} to lily pad with name "&5%player%'s Crystal Luck" with lore "&f%{luckofcave::%uuid of player%}%&8/20" and " " and "&7The chance you get bonus crystals!" and " " and "&a%player%'s Farming Luck" and "&f%{farmingluck::%uuid of player%}%&8/80" and " " and "&7For every 2 farming luck you get 1 bonus crop!"
+			set {maxhealthprofile} to entity's max health * 2
+			set {healthprofile} to entity's health * 2
+			set slot 29 of {profile} to red dye with name "&c%player%'s Health" with lore "&f%{healthprofile}%&8/%{maxhealthprofile}%" and " " and "&7Displays the player's well being in game"
+			set slot 32 of {profile} to skeleton skull named "&cDungeon Stats" with lore "&fDungeons Started: %{dungeonsstarted::%uuid of player%}%" and "&fEasy Bosses Killed: %{ezdungeonbosskills::%uuid of player%}%" and "&fMedium Bosses Killed: %{meddungeonbosskills::%uuid of player%}%" and "&fHard Bosses Killed: %{harddungeonbosskills::%uuid of player%}%" and "&fWither Kills: %{witherkills::%uuid of player%}%" and "&fWither Runs Completed: %{witherruns::%uuid of player%}%" and "&a%({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40)% Dungeon Luck"
+			set slot 31 of {profile} to powder snow bucket named "&6Season Quest Progress" with lore "&f%{task1::%uuid of player%}%&8/5000 &7Logs Chopped" and "&f%{task2::%uuid of player%}%&8/8000 &7Mobs Killed" and "&f%{task3::%uuid of player%}%&8/2500 &7Ores/Crystals Mined"
+			set slot 33 of {profile} to iron sword named "&eLast Dealt Hit" with lore "&f%{damagetest::%uuid of player%}% damage" and " " and "&eTotal Kills" and "&f%{kills::%uuid of player%}% Kills"
+			set slot 34 of {profile} to sugar named "&bSpeedruns" with lore "&7Obtain Versatile Yeezys: &e%{pb_vers::%uuid of player%}%" and "&7Kill Zombie Lord: &e%{pb_zl::%uuid of player%}%" and "&7Kill Vorpal Drifter: &e%{pb_vd::%uuid of player%}%" and " " and "&7Some people abuse bugs to get a better time," and "&7people with the &a[⌚] &7in tab are verified runners." and "&8To apply for this, go to https://forms.gle/136JKJXU454Lqazb9" and "" and "&c2 hours and 46.65 minutes is the unset time!"
+			set slot 39 of {profile} to painting named "&6Achievement Points" with lore "&f%{ach_points::%uuid of player%}%&7/170" and " " and "&7View achievements with /achievements"
+			open {profile} to player
+			
+
+#pocket bench===============
+on right click:
+	if name of player's held item contains "&ePocketbench™":
+		message "&cThis item is currently disabled due to a few problems!" to player
+		#set {pocketbench} to a new chest inventory with 4 row with name "&ePocketbench™"
+		#set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 of {pocketbench} to gray stained glass pane named " "
+		#set slot 12 of {pocketbench} to anvil with name "&bAnvil" with lore "&7Combine stuff in an anvil :)" and " " and "&fClick to open!"
+		#set slot 14 of {pocketbench} to lava bucket with name "&bTrash" with lore "&7A place to throw away garbage :D" and " " and "&fClick to open!"
+		#set slot 31 of {pocketbench} to barrier with name "&fClose Menu"
+		#open {pocketbench} to player
+on inventory click:
+	if name of event-inventory is "&ePocketbench™":
+		cancel event
+		if index of event-slot = 12:
+			open anvil to player
+		if index of event-slot = 14:
+			make player execute command "/trash"
+		if index of event-slot = 31:
+			cancel event
+			close player's inventory
+			
+command /guide:
+	trigger:
+		set {_guidegui} to a new chest inventory with 4 row with name "&6Guide"
+		
+		set slot 10 of {_guidegui} to gold ingot named "&6/dailyreward" with lore "&7Claim rewards every 24 hours!"
+		set slot 11 of {_guidegui} to ender pearl named "&b/warp" with lore "&7This is a useful command to explore new areas!"
+		set slot 12 of {_guidegui} to blaze powder named "&c/trash" with lore "&7Open a small trash can"
+		set slot 13 of {_guidegui} to experience bottle named "&a/gift" with lore "&7Gift &bbits &7and &aexperience &7using &6Clock Parts&7."
+		set slot 14 of {_guidegui} to light blue dye named "&bBits Explained" with lore "&7Ranks are determined by your &bBits&7. You can get" and "&bBits &7from /gift and welcoming new players!" and " " and "&aVIP &7= &b1000 Bits" and "&bPOG &7= &b2500 Bits" and "&5EPIC &7= &b5000 Bits" and "<##eb8a4a>MASTER &7= &b10000 Bits" and "&dGRANDMASTER &7= &b25000 Bits"
+		set slot 15 of {_guidegui} to player's skull named "&d/profile <username>" with lore "&7Shows a person's gear and stats..."
+		set slot 16 of {_guidegui} to book named "&6More Guides" with lore "&7For more guides, check out our discord!" and "&b/discord"
+		set slot 17 of {_guidegui} to chest named "&e/storage" with lore "&7Open a menu for accessing your avalible storage!"
+		
+		set slot 31 of {_guidegui} to barrier named "&fClose Menu"
+		open {_guidegui} to player
+ 
+on inventory click:
+	if name of event-inventory is "&6Guide":
+		cancel event
+		if index of event-slot = 10:
+			make player execute command "/guide"
+		if index of event-slot = 11:
+			make player execute command "/warp"
+		if index of event-slot = 12:
+			make player execute command "/trash"
+		if index of event-slot = 13:
+			make player execute command "/gift"
+		if index of event-slot = 15:
+			make player execute command "/profile"
+		if index of event-slot = 16:
+			close player's inventory
+			make player execute command "/discord"
+		if index of event-slot = 17:
+			make player execute command "/st"
+		if index of event-slot = 31:
+			close player's inventory

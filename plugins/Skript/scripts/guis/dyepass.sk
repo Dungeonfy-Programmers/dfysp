@@ -1,0 +1,20 @@
+command /dyepass:
+  permission: op
+  trigger:
+    set {dyepassgui} to a new chest inventory with 6 row with name "&cCosmetic Pass"
+    set slot 0 and 1 and 2 and 3 and 5 and 6 and 7 and 8 of {dyepassgui} to pink stained glass pane named "&cDye Pass" with lore "&6You have x Dye Points!", "&bYou have x Skin Points!"
+    set slot 4 of {dyepassgui} to red dye named "&cDye Pass" with lore "&6You have x Dye Points!", "&bYou have x Skin Points!"
+    set slot 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 and 36 and 37 and 38 and 39 and 40 and 41 and 42 and 43 and 44 and 45 and 46 and 47 and 48 and 50 and 51 and 52 and 53 and 54 of {dyepassgui} to black stained glass pane with name " "
+    set slot 18, 19, 21, 22, 24, 25 of {dyepassgui} to red dye named "&cReward #x (Locked)" with lore "&f&8&m+3 Dye Points"
+    set slot 20, 23, 26 of {dyepassgui} to red dye named "&cReward #x (Locked)" with lore "&f&8&m+3 Dye Points", "&f&8&m+1 Skin Point"
+    set slot 28, 29, 30, 31, 32, 33, 34, 35 of {dyepassgui} to red stained glass pane named "&cProgress (Locked)" with lore "&aPass XP: 0/100", "&cYou can't unlock this yet!"
+    set slot 27 of {dyepassgui} to yellow stained glass pane named "&eProgress" with lore "&aPass XP: 0/100", "&e0%%"
+    set slot 45 of {dyepassgui} to nether star named "&dCosmetic Shop" with lore "&f&7Click this to check out the &dCosmetic Shop&7!"
+    set slot 49 of {dyepassgui} to barrier named "&fClose Menu"
+    open {dyepassgui} to player
+
+on inventory click:
+  name of event-inventory is "&cCosmetic Pass"
+  cancel event
+  if index of event-slot is 45:
+    send "&dcosmetic shop"

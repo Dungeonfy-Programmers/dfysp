@@ -1,0 +1,42 @@
+command /squad:
+	trigger:
+		set {_gui} to a new chest inventory with 3 row with name "&c&lCHOOSE A SQUAD!"
+		set slot 11 of {_gui} to iron axe named "&9The Golem's Guild &8[&9☃&8]" with lore "&7This is purely cosmetic!" and " " and "&fClick to join %{bobguild}% other people!" and "&8You can change at anytime :)"
+		set slot 13 of {_gui} to villager spawn egg named "&4Greg Gang &8[&4&lʊ&8]" with lore "&7This is purely cosmetic!" and " " and "&fClick to join %{greggang}% other people!" and "&8You can change at anytime :)"
+		set slot 15 of {_gui} to wheat named "&ePadre Squad &8[&e☘&8]" with lore "&7This is purely cosmetic!" and " " and "&fClick to join %{padresquad}% other people!" and "&8You can change at anytime :)"
+		open {_gui} to player
+ 
+on inventory click:
+	if name of event-inventory is "&c&lCHOOSE A SQUAD!":
+		cancel event
+		close player's inventory
+		if index of event-slot = 11:
+			add 1 to {bobguild}
+			message "&aYou joined &9The Golem's Guild&a! (Now with a total of %{bobguild}% people)"
+			if {squad::%uuid of player%} = "butcher":
+				remove 1 from {bobguild}
+			if {squad::%uuid of player%} = "padre":
+				remove 1 from {padresquad}
+			if {squad::%uuid of player%} = "greg":
+				remove 1 from {greggang}
+			set {squad::%uuid of player%} to "butcher"
+		if index of event-slot = 13:
+			add 1 to {greggang}
+			message "&aYou joined &4Greg Gang&a! (Now with a total of %{greggang}% people)"
+			if {squad::%uuid of player%} = "butcher":
+				remove 1 from {bobguild}
+			if {squad::%uuid of player%} = "padre":
+				remove 1 from {padresquad}
+			if {squad::%uuid of player%} = "greg":
+				remove 1 from {greggang}
+			set {squad::%uuid of player%} to "greg"
+		if index of event-slot = 15:
+			add 1 to {padresquad}
+			message "&aYou joined &ePadre Squad&a! (Now with a total of %{padresquad}% people)"
+			if {squad::%uuid of player%} = "butcher":
+				remove 1 from {bobguild}
+			if {squad::%uuid of player%} = "padre":
+				remove 1 from {padresquad}
+			if {squad::%uuid of player%} = "greg":
+				remove 1 from {greggang}
+			set {squad::%uuid of player%} to "padre"

@@ -1,0 +1,15 @@
+{
+  "minecraft:adventure/root": {
+    "criteria": {
+      "killed_something": "2022-03-19 20:36:41 +0000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/food/cake": {
+    "criteria": {
+      "has_egg": "2022-03-19 20:36:44 +0000"
+    },
+    "done": true
+  },
+  "DataVersion": 2730
+}

@@ -1,0 +1,15 @@
+on consume of golden carrot:
+	if name of player's held item is "&6InfiniCarrot™":
+		set player's held item to golden carrot named "&6InfiniCarrot™" with lore "&7An infinite golden carrot!"
+on consume of golden carrot:
+	if name of player's offhand item is "&6InfiniCarrot™":
+		set player's offhand item to golden carrot named "&6InfiniCarrot™" with lore "&7An infinite golden carrot!"
+
+on consume of golden apple:
+	if name of player's held item is "&6InfiniGoldenApple™":
+		set player's held item to golden apple named "&6InfiniGoldenApple™" with lore "&7An infinite golden carrot!"
+on consume of golden apple:
+	if name of player's offhand item is "&6InfiniGoldenApple™":
+		set player's offhand item to golden apple named "&6InfiniGoldenApple™" with lore "&7An infinite golden carrot!"
+#Filtration Funnel
+#Actual item functionality

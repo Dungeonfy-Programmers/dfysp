@@ -1,0 +1,21 @@
+{
+  "minecraft:husbandry/balanced_diet": {
+    "criteria": {
+      "baked_potato": "2022-04-04 23:10:52 +0000"
+    },
+    "done": false
+  },
+  "minecraft:husbandry/root": {
+    "criteria": {
+      "consumed_item": "2022-04-04 23:10:52 +0000"
+    },
+    "done": true
+  },
+  "minecraft:adventure/root": {
+    "criteria": {
+      "killed_by_something": "2022-04-04 23:11:22 +0000"
+    },
+    "done": true
+  },
+  "DataVersion": 2730
+}

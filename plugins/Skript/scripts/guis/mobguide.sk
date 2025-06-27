@@ -1,0 +1,38 @@
+command /mobguide_mobs:
+	trigger:
+		set {mobguide} to a new chest inventory with 6 row with name "&6Mobs"
+		set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 of {mobguide} to yellow stained glass pane named "&eNormal Mobs" with lore "&7Below are mobs that can be found" and "&7around the map or from fishing." and " " and "&fDrops with &e✰ &fare affected by looting!"
+		set slot 9 of {mobguide} to pig spawn egg named "&dPig" with lore "&fLocation: &6Village" and " " and "&fDrops:" and "&f1-3 Raw Porkchops &e✰" and "&a1 Emerald &f(10%%)" and "&dPig Soul &f(0.02%%)"
+		set slot 10 of {mobguide} to chicken spawn egg named "&eChicken" with lore "&fLocation: &6Village" and " " and "&fDrops:" and "&a1 Emerald" and "&f1 Egg" and "&f1 Raw Chicken &e✰" and "&f0-2 Feathers &e✰"
+		set slot 11 of {mobguide} to zombie spawn egg named "&2Zombie" with lore "&fLocation: &6Village" and "&8Can only spawn at night!" and " " and "&fDrops:" and "&f0-2 Rotten Flesh &e✰" and "&a1 Emerald &f(50%%)" and "&fPotato (1%%) &e✰" and "&fCarrot (1%%) &e✰" and "&fIron Ingot (1%%)" and "&bWeak Feather &f(0.5%%)"
+		set slot 12 of {mobguide} to skeleton spawn egg named "&bSkeleton" with lore "&fLocation: &6Village" and "&35%% fishing spawn" and " " and "&fDrops:" and "&f0-2 Bones &e✰" and "&f0-2 Arrows &e✰" and "&a1 Emerald &f(50%%)"
+		set slot 13 of {mobguide} to sheep spawn egg named "&6Sheep" with lore "&fLocation: &bMountain" and " " and "&fDrops:" and "&f1-2 Raw Mutton &e✰" and "&f1-3 Wool &e✰" and "&a1 Emerald" and "&6Sheep Horn &f(0.5%%)"
+		set slot 14 of {mobguide} to enderman spawn egg named "&5Enderman" with lore "&fLocation: &dThe End" and " " and "&fDrops:" and "&f0-1 Ender Pearl &e✰" and "&b1 Diamond &f(25%%)" and "&fCooler Ender Pearl (10%%)"
+		set slot 15 of {mobguide} to blaze spawn egg named "&6Blaze" with lore "&fLocation: &cThe Nether" and " " and "&fDrops:" and "&fBlaze Rod (50%%) &e✰" and "&b1 Diamond &f(50%%)" and "&fBlaze Ashes (25%%)" and "&6Fire Dust &f(5%%)" and "&6Fuming Blaze &f(0.44%%)" and "&6Blaze Soul &f(0.02%%)"
+		set slot 16 of {mobguide} to campfire named "&6Fuming Blaze" with lore "&f0.44%% to spawn from killing blazes!" and " " and "&fDrops:" and "&eExpired Soup"
+		set slot 17 of {mobguide} to wither skeleton spawn egg named "&8Wither Skeleton" with lore "&fLocation: &cThe Nether" and " " and "&fDrops:" and "&f0-2 Bones &e✰" and "&fCoal (33.33%%) &e✰" and "&fWithered Button (25%%)" and "&fWither Skeleton Skull (2%%) &e✰"
+		set slot 18 of {mobguide} to creeper spawn egg named "&bCreeper" with lore "&fLocation: The Mist" and " " and "&fDrops:" and "&f0-2 Gunpowder &e✰" and "&b150 Bits &f(First Creeper Kill)" and "&b5 Bits &f(10%%)" and "&b5 Diamonds &f(10%%)" and "&bCreeper Charge &f(10%%)"
+		set slot 19 of {mobguide} to cow spawn egg named "&6Cow" with lore "&fLocation: &aTribe Camp" and " " and "&fDrops:" and "&f1-3 Raw Beef &e✰" and "&f0-2 Leather &e✰" and "&eGolden Nugget &f(10%%)"
+		set slot 20 of {mobguide} to guardian spawn egg named "&bGuardian" with lore "&32%% fishing spawn" and " " and "&fDrops:" and "&fTablets of the Ocean"
+		set slot 21 of {mobguide} to elder guardian spawn egg named "&eElder Guardian" with lore "&31%% fishing spawn" and " " and "&fDrops:" and "&f2 Tablets of the Ocean" and "&f32 Salmon" and "&f32 Cod"
+		set slot 22 of {mobguide} to drowned spawn egg named "&bDrowned" with lore "&35%% fishing spawn" and " " and "&fDrops:" and "&f0-2 Rotten Flesh" and "&fPotato (1%%)" and "&fCarrot (1%%)" and "&fIron Ingot (1%%)"
+		open {mobguide} to player
+
+command /mobguide_boss:
+	trigger:
+		set {mobguide} to a new chest inventory with 6 row with name "&6Bosses"
+		set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 of {mobguide} to orange stained glass pane named "&6Bosses" with lore "&7Below is a gallery of all" and "&7The bosses and their drops!" and " " and "&fDrops with &e✰ &fare affected by looting!"
+		set slot 9 of {mobguide} to zombie spawn egg named "&2Zombie Lord" with lore "&fLocation: &6Village" and "&fDifficulty: &a1&7/10" and " " and "&fDrops:" and "&bZombie Lord Flesh" and "&f0-2 Rotten Flesh &e✰" and "&a1 Emerald &f(50%%)" and "&fPotato (1%%) &e✰" and "&fCarrot (1%%) &e✰" and "&fIron Ingot (1%%) &e✰" and "&bWeak Feather &f(0.5%%)"
+		set slot 10 of {mobguide} to ice named "&1Frozen Climber" with lore "&fLocation: &bMountain" and "&fDifficulty: &a2.5&7/10" and " " and "&fDrops:" and "&fIce Pick" and "&dAspect of the Mountain &f(50%%)" and "&1Frozen Helmet &f(50%%) &e✰" and "&1Ragged Pants &f(50%%) &e✰" and "&f0-2 Rotten Flesh" and "&a1 Emerald &f(50%%)" and "&fPotato (1%%) &e✰" and "&fCarrot (1%%) &e✰" and "&fIron Ingot (1%%) &e✰" and "&bWeak Feather &f(0.5%%)"
+		set slot 11 of {mobguide} to snow block named "&bFrozen Giant" with lore "&fLocation: &bMountain" and "&fDifficulty: &a2.5&7/10" and " " and "&fDrops:" and "&bIce Steve Totem &f(10%%) &e✰" and "&dFrozen Staff &f(5%%) &e✰" and "&dGiant's Chestplate &f(5%%) &e✰" and "&dGiant's Leggings &f(5%%) &e✰" and "&dGiant's Boots &f(5%%) &e✰"
+		set slot 12 of {mobguide} to husk spawn egg named "&eSantiago" with lore "&fLocation: &6Desert Village" and "&fDifficulty: &e3.5&7/10" and " " and "&fDrops:" and "&6Alchemist's Gold"
+		set slot 13 of {mobguide} to spider spawn egg named "&8Spider Queen" with lore "&fLocation: &dCrystal Caverns" and "&fDifficulty: &e3.5&7/10" and " " and "&fDrops:" and "&7Silky Cobweb &f(20%%) &e✰"
+		set slot 14 of {mobguide} to ravager spawn egg named "&aBullfrog" with lore "&fLocation: &6Tribe Camp" and "&fDifficulty: &e4&7/10" and " " and "&fDrops:" and "&6Bullfrog Tusk"
+		set slot 15 of {mobguide} to iron helmet with name "&eErik" with lore "&fLocation: &6Hidden Sanctuary" and "&fDifficulty: &e4&7/10" and " " and "&fDrops:" and "&bViking Tears &f(20%%)" and "&bViking Helmet &f(12%%) &e✰" and "&bFreya &f(4%%) &e✰" and "&dBlue Flower &f(1%%)"
+		set slot 16 of {mobguide} to enderman spawn egg named "&5Vorpal Drifter" with lore "&fLocation: &dThe End" and "&fDifficulty: &c5&7/10" and " " and "&cCheese Spot Recommended" and "&8Check ##guide in the discord!" and " " and "&fDrops:" and "&5Shattered Soul &e✰" and "&5Shattered Soul Shield &f(10%%) &e✰" and "&5Vorpal Warp &f(10%%) &e✰" and "&5Soul Breaker Alloy &f(5%%) &e✰" and "&5Soul Guardian Alloy &f(5%%) &e✰" and "&5Soul Olympian Alloy&f(5%%) &e✰"
+		set slot 17 of {mobguide} to enchanted book with name "&5Corrupted Mage" with lore "&fLocation: &cThe Nether" and "&fDifficulty: &c5&7/10" and " " and "&fDrops:" and "&5Corrupted Mage's Tattered Notes" and "&5Purple Magic Shard &f(20%%)" and "&5Corrupted Mage Helmet &f(10%%) &e✰" and "&5Corrupted Mage Robes &f(10%%) &e✰" and "&5Corrupted Mage Pants &f(10%%) &e✰" and "&5Corrupted Mage Boots &f(10%%) &e✰"
+		open {mobguide} to player
+ 
+on inventory click:
+	if name of event-inventory is "&6Mobs" or "&6Bosses":
+		cancel event

@@ -1,0 +1,40 @@
+on break of dark prismarine:
+	if name of player's tool is "&3Teleportation Pickaxe":
+		cancel event
+		set player's held item to air
+		set {_confinedTP.%player%} to random integer between 1 to 5
+		if {_confinedTP.%player%} = 1:
+			set {_confinedTP.%player%} to location at (358.5, 37, -112.5)
+			set {_confinedTP.%player%}'s yaw to -90
+			set {_confinedTP.%player%}'s pitch to 0.01
+			teleport player to {_confinedTP.%player%}
+			delete {_confinedTP.%player%}
+			send title "&bMountain Range" with subtitle "&7Very cold D:" to player
+		if {_confinedTP.%player%} = 2: #358.5, 37, -102.5
+			set {_confinedTP.%player%} to location at (358.5, 37, -101.5)
+			set {_confinedTP.%player%}'s yaw to -90
+			set {_confinedTP.%player%}'s pitch to 0.01
+			teleport player to {_confinedTP.%player%}
+			delete {_confinedTP.%player%}
+			send title "&6Desert Village" with subtitle "&7Make sure to stay hydrated!" to player
+		if {_confinedTP.%player%} = 3: #358.5, 37, -102.5
+			set {_confinedTP.%player%} to location at (369.5, 37, -123.5)
+			set {_confinedTP.%player%}'s yaw to -90
+			set {_confinedTP.%player%}'s pitch to 0.01
+			teleport player to {_confinedTP.%player%}
+			delete {_confinedTP.%player%}
+			send title "&dThe End" with subtitle "&7Whatever remains of the ancient..." to player
+		if {_confinedTP.%player%} = 4:
+			set {_confinedTP.%player%} to location at (358.5, 37, -134.5)
+			set {_confinedTP.%player%}'s yaw to -90
+			set {_confinedTP.%player%}'s pitch to 0.01
+			teleport player to {_confinedTP.%player%}
+			delete {_confinedTP.%player%}
+			send title "&dCrystal Caverns" with subtitle "&7Discovered long before, finally dug up..." to player
+		if {_confinedTP.%player%} = 5:
+			set {_confinedTP.%player%} to location at (358.5, 37, -145.5)
+			set {_confinedTP.%player%}'s yaw to -90
+			set {_confinedTP.%player%}'s pitch to 0.01
+			teleport player to {_confinedTP.%player%}
+			delete {_confinedTP.%player%}
+			send title "&cThe Nether" with subtitle "&7A hot tourist destination :)" to player 

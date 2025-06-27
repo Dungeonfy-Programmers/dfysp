@@ -1,0 +1,40 @@
+on armor change:
+    set {_deltax_cos} to int tag "DeltaxCosmetic" of nbt compound of player's helmet
+    if {_deltax_cos} is set:
+        set metadata value "deltax_cos" of player to true
+        stop
+    else:
+        set metadata value "deltax_cos" of player to false
+        stop
+
+every 5 ticks:
+    loop all players:
+        set {_meta} to metadata value "deltax_cos" of loop-player
+        if {_meta} is true:
+            deltaxcos_crown(loop-player, 0.375, 60, 0.45)
+            chance of 12.5%:
+                play sound "ambient.soul_sand_valley.mood" with volume 0.25 at loop-player
+            chance of 6.25%:
+                play sound "ambient.basalt_deltas.mood" with volume 0.25 at loop-player
+
+function deltaxcos_crown(player: player, size: number = 1.0, step: number = 1, vo: number = 0.75):
+    set {_v} to spherical vector {_size}, ({_player}'s yaw), 0
+    set {_loc} to {_player}'s head's location ~ vector(0, {_vo}, 0)
+    loop 360 times:
+        draw 1 of dust using dustOption(rgb(0, 255, 255), 0.5) at {_loc} ~ {_v} ~ vector(0, -0.15, 0) with offset vector(0, 0, 0) with extra 0
+        if mod(loop-value, {_step}) is 0:
+            draw 1 of soul fire flame at {_loc} ~ {_v} with offset vector(0, 0, 0) with extra 0
+        increase yaw of {_v} by 1
+
+on inventory click:
+    if event-inventoryaction is swap with cursor:
+        set {_deltax_cos} to cursor slot of player
+        set {_deltax_item} to event-item
+        set {_deltax_nbt} to int tag "dca" of nbt compound of cursor slot of player
+        if {_deltax_nbt} is set:
+            cancel event
+            set cursor slot of player to air
+            set byte tag "DeltaxCosmetic" of nbt compound of {_deltax_item} to 1
+            add "" to lore of {_deltax_item}
+            add "&8DeltaxCosmetic: Crown" to lore of {_deltax_item}
+            set event-slot to {_deltax_item}

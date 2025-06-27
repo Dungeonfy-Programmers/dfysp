@@ -1,0 +1,24 @@
+command /menu:
+	permission: op
+	trigger:
+		set {_g} to a new chest inventory with 5 row with name "&6Guidebook"
+		
+		set slot 13 of {_g} to player's skull with name "&fYour Profile" with lore "&7Right click on other players to see their" and "&7profile, click on this item to see yours!"
+		
+		set slot 20 of {_g} to painting named "&eAchievements" with lore "&7Complete Achievements for achievement points (purely" and "&7for the flex). &8/achievements"
+		set slot 21 of {_g} to ender pearl named "&bWarp Menu" with lore "&7Explore vast areas with unique resources" and "&7to collect, mobs to fight, and" and "&7even more. &8/warp"
+		set slot 22 of {_g} to book and quill named "&6Community Wiki" with lore "&7Check out, edit and contribute pages to" and "&7to our community's wiki. &8/wiki"
+		set slot 23 of {_g} to experience bottle named "&aGift Shop" with lore "&7Gift all players online using &6Clock Parts&7," and "&7and support the server! &8/gift"
+		set slot 24 of {_g} to skeleton skull named "&cChallanges" with lore "&7Up for a challange? Try Hardcore mode! &8/challanges"
+		
+		set slot 43 of {_g} to dried kelp block named "&cTrash Bin" with lore "&7Click to open a trash bin to" and "&7throw items away. &8/trash"
+		set slot 44 of {_g} to ender chest named "&5Ender Chest" with lore "&7Click to view your ender chest" and "&7store items away. &8/ec"
+		
+		set slot 40 of {_g} to barrier named "&fClose Menu"
+		open {_g} to player
+ 
+on inventory click:
+	if name of event-inventory is "&6Guidebook":
+		cancel event
+		if index of event-slot = 40:
+			close player's inventory

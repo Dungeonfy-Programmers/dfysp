@@ -1,0 +1,198 @@
+on death:
+	if {in_sr::%uuid of attacker%} = true:
+		set {_drops::*} to drops
+		clear drops
+		give attacker {_drops::*}
+#=============CREEEPERS============
+on death of creeper:
+	if {firstcreeper::%uuid of attacker%} isn't set:
+		set {firstcreeper::%uuid of attacker%} to true
+		set {bits::%uuid of attacker%} to {bits::%uuid of attacker%} + 150
+		send message "&b&lFIRST CREEPER! &fYou got &b150 Bits &ffrom killing your first creeper!" to attacker
+every 2 ticks:
+	loop all creepers:
+		if loop-entity's name isn't set:
+			charge loop-entity
+			charge loop-entity
+			charge loop-entity
+			charge loop-entity
+			charge loop-entity
+			apply invisibility 1 to loop-entity for 4 ticks
+			apply resistance 4 to loop-entity for 4 ticks
+on explosion prime:
+	if event-entity is creeper:
+		cancel event
+every 2 ticks:
+	loop all creepers:
+		loop all players within radius 3 of loop-creeper:
+			damage loop-player by 5
+on death of creeper:
+	chance of 10%:
+		send message "&b&lNICE! &fYou got &b5 Bits&f! &7(10%%)" to attacker
+		set {bits::%uuid of attacker%} to {bits::%uuid of attacker%} + 5
+on death of creeper:
+	chance of 10%:
+		send message "&b&lNICE! &fYou got &bCreeper Charge&f! &7(10%%)" to attacker
+		give prismarine crystals of protection 1 named "&bCreeper Charge" with lore "&7The charge extracted from creepers" with item flag hide enchants to attacker
+on death of creeper:
+	chance of 10%:
+		send message "&b&lNICE! &fYou got &b5 Diamonds&f! &7(10%%)" to attacker
+		give 5 diamonds to attacker
+		
+
+		
+on death of zoglin:
+	drop 4 emeralds
+	give attacker leather with name "&fZoglin Hide" with lore "&7aquired from killing zoglins in the Pigpocolaypse"
+
+on death of enderman:
+    chance of 5%:
+        give attacker ender pearl named "&fCooler Ender Pearl"
+        send message "&l&5NICE!&r You got a &fCooler Ender Pearl &7(5%%)" to attacker
+		
+on death of pig:
+	chance of 0.02%:
+		broadcast "&d&ke &d%attacker% just dropped a pig soul! &d&ke &8(0.02%%)"
+		give pink dye with name "&dPig Soul" with lore "&7Right click to heal 30 hearts! &8(20 second cooldown)" and " " and "&fDropped by %attacker%" to attacker			
+		
+command /pigsoul:
+	permission: op
+	trigger:
+		broadcast "&d&ke &d%player% just dropped a pig soul! &d&ke &8(0.02%%)"
+		give pink dye with name "&dPig Soul" with lore "&7Right click to heal 30 hearts! &8(20 second cooldown)" and " " and "&fDropped by %player%" to player
+
+on right click with pink dye:
+	if name of player's held item is "&dPig Soul":
+		if metadata tag "pigsoul" of player isn't set:
+			set metadata tag "pigsoul" of player to false
+		if metadata tag "pigsoul" of player = false:
+			set metadata tag "pigsoul" of player to true
+			send message "&aYou used your Pig Soul ability!" to player
+			add 30 to player's health
+			wait 20 seconds
+			send message "&aYour Pig Soul ability is ready!" to player
+			set metadata tag "pigsoul" of player to false
+		else:
+			send message "&cThis ability is currently on a cooldown!" to player
+#===============NETHER MOBS============
+on death:
+	if victim is zombified piglin:
+		clear drops
+		give attacker rotten flesh with name "&fZombified Piglin Flesh"
+		chance of 25%:
+			give attacker diamond
+every 1 second:
+	loop all blazes:
+		if loop-entity's name isn't set:
+			apply resistance 2 to loop-entity for 500 seconds
+every 1 second:
+	loop all wither skeletons:
+		if loop-entity's name isn't set:
+			apply resistance 4 to loop-entity for 500 seconds
+on death of wither skeleton:
+	chance of 20%:
+		drop polished blackstone button with name "&fWithered Button" with lore "&8Wither Skeleton's elbow bones."
+on death of blaze:
+	chance of 25%:
+		give {blazeash} to attacker
+on death of blaze:
+	if name of attacker's held item is "&6Blazen Broadsword":
+		chance of 0.44%:
+			send title "&6FUMING BLAZE" to attacker
+			broadcast "&6&lFUMING BLAZE! &f%attacker% spawned a &6Fuming Blaze&f! &7(0.44%%)"
+			spawn 1 blaze at victim's location
+			set name of last spawned entity to "&6Fuming Blaze"
+	else:
+		chance of 0.34%:
+			send title "&6FUMING BLAZE" to attacker
+			broadcast "&6&lFUMING BLAZE! &f%attacker% spawned a &6Fuming Blaze&f! &7(0.34%%)"
+			spawn 1 blaze at victim's location
+			set name of last spawned entity to "&6Fuming Blaze"
+command /fumingblaze:
+	permission: op
+	trigger:
+		send title "&6FUMING BLAZE" to player
+		broadcast "&6&lFUMING BLAZE! &f%player% spawned a &6Fuming Blaze&f! &7(0.2%%)"
+		spawn 1 blaze at player's location
+		set name of last spawned entity to "&6Fuming Blaze"
+on death of blaze:
+	if name of victim is "&6Fuming Blaze":
+		give attacker suspicious stew with name "&cExpired Soup" with lore "&7Right click to summon &dAllumer&7." and " " and "&8One time use, this soup is 8 months old!"
+	
+on death of blaze:
+	chance of 5%:
+		give attacker glowstone dust with name "&6Fire Dust" with lore "&7A drop from blazes"
+on death of blaze:
+	chance of 0.02%:
+		give attacker orange dye with name "&6Blaze Soul" with lore "&7Right click to get a 20 minutes of fire resistance!" and " " and "&fdropped by %attacker%" and "&8* Effects do not stack *"
+		broadcast "&6&ke &6%attacker% just dropped a blaze soul! &6&ke &8(0.02%%)"
+on right click with orange dye:
+	if name of player's held item is "&6Blaze Soul":
+		remove fire resistance from player
+		apply fire resistance 1 to player for 1200 seconds
+command /blazesoul:
+	permission: op
+	trigger:
+		broadcast "&6&ke &6%player% just dropped a blaze soul! &6&ke &8(0.02%%)"
+		give player orange dye with name "&6Blaze Soul" with lore "&7Right click to get a 20 minutes of fire resistance!" and " " and "&fdropped by %player%" and "&8* Effects do not stack *"
+		
+on death of drowned:
+	chance of 20%:
+		drop tropical fish
+on death of sheep:
+	chance of 0.2%:
+		give attacker stone sword with name "&fSheep Horn" with lore "&7A rare drop from killing sheep."
+		broadcast "&6&lGOAT HORN! &f%attacker% found the odd sheep out! &7(0.2%%)"
+#zombie drops
+on death of zombie:
+	chance of 0.5%:
+		give attacker feather with name "&bWeak Feather" with lore "&7Right click to boost yourself a little bit" and "&7in the direction you are facing." and "&8(4s cooldown)"
+		send message "&b&lFEATHER! &fYou got a &bWeak Feather &ffrom killing a zombie! &7(0.5%%)" to attacker
+		
+#CURRENCY DROPS=============================================
+on death of pig:
+	if {in_sr::%uuid of attacker%} = true:
+		give attacker emerald
+	else:
+		drop emerald
+on death of cow:
+	give attacker golden nugget
+on death of chicken:
+	if {in_sr::%uuid of attacker%} = true:
+		give attacker emerald
+	else:
+		drop emerald
+on death of sheep:
+	if {in_sr::%uuid of attacker%} = true:
+		give attacker emerald
+	else:
+		drop emerald
+on death of llama:
+	clear drops
+	if {in_sr::%uuid of attacker%} = true:
+		give attacker emerald
+	else:
+		drop emerald
+	chance of 20%:
+		drop rabbit hide named "&eLlama Hide"
+on death of zombie:
+	if {in_sr::%uuid of attacker%} = true:
+		give attacker emerald
+	else:
+		drop emerald
+on death of skeleton:
+	if {in_sr::%uuid of attacker%} = true:
+		give attacker emerald
+	else:
+		drop emerald
+
+#diamond drops
+on death of enderman:
+    chance of 25%:
+        give diamond to attacker
+on death of blaze:
+    chance of 30%:
+        give diamond to attacker
+on death of creeper:
+	chance of 30%:
+		give diamond to attacker

@@ -1,0 +1,14 @@
+#on fishing:
+	if "%fishing state%" = "CAUGHT_FISH":
+		wait 30 ticks
+		send message "&d&lDFY DAY! &fYou caught a birthday fish!"
+		give player cooked cod with name "&fBirthday Fish" with lore "&7Fish that are gaming :D"
+command /dfyday2022:
+	trigger:
+		if {dfyday2022.%player%} isn't set:
+			give leather cap with name "&9Dirt Helmet+" with lore "&7%player%'s hat made of dirt... yum!" and " " and "&fCelebrating Dungeonfy's 1 Year Anniversary!" to player
+			broadcast "&b&lDFY DAY! &f%player% claimed their &9Dirt Helmet+ &fusing /dfyday2022"
+			set {cakehats} to {cakehats} + 1
+			set {dfyday2022.%player%} to true
+		else:
+			send message "&cYou've already claimed this item!"

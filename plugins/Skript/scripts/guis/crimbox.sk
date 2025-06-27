@@ -1,0 +1,43 @@
+on right click on weeping vine plant:
+	if block 2 blocks below clicked block is crimson nylium:
+		set {_cbox} to a new chest inventory with 6 row with name "&cCrimson Vine"
+
+
+		set slot 20 of {_cbox} to apple named "&cRed Orange %{hc_ro.%uuid of player%}%" with lore "&7You have a 5%% for &6%{hc_ro.%uuid of player%}%%nl%&6Shells &7on kill.%nl% %nl%&6%{hc_ro.%uuid of player%}% &f-> &6%{hc_ro.%uuid of player%}+1% Shells %nl%&eClick to upgrade!%nl%&7Cost: &6%{hc_ro.%uuid of player%} * 25% Shells"
+		set slot 21 of {_cbox} to stone sword named "&cItem Repair" with lore "&7You have a "
+
+		set slot 50 of {_cbox} to quartz named "&6%{shells.%uuid of player%}% Total Shells!"
+		set slot 49 of {_cbox} to barrier named "&fClose Menu"
+
+		open {_cbox} to player
+
+on inventory click:
+	if name of event-inventory is "&cCrimson Vine":
+		cancel event
+
+		if index of event-slot = 20:
+			close player's inventory
+			if {shells.%uuid of player%} >= {hc_ro.%uuid of player%} * 25:
+				set {shells.%uuid of player%} to {shells.%uuid of player%} - {hc_ro.%uuid of player%} * 25
+				set {hc_ro.%uuid of player%} to {hc_ro.%uuid of player%} + 1
+				message "&c&lRED ORANGE LEVEL UP! &f%{hc_ro.%uuid of player%} - 1% -> %{hc_ro.%uuid of player%}%"
+				play sound "block.note_block.pling"
+			else:
+				message "&cYou don't have enough shells to upgrade this!"
+
+		if index of event-slot = 49:
+			close player's inventory
+command /shell_add100:
+	permission: op
+	trigger:
+		add 100 to {shells.%uuid of player%}
+#on death:
+#	if {hardcore.%uuid of attacker%} = true:
+#		chance of 5%:
+#			add {hc_ro.%uuid of attacker%} to {shells.%uuid of attacker%}
+on login:
+	if {shells.%uuid of player%} isn't set:
+		set {shells.%uuid of player%} to 50
+on login:
+	if {hc_ro.%uuid of player%} isn't set:
+		set {hc_ro.%uuid of player%} to 1

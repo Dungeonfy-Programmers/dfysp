@@ -1,0 +1,412 @@
+#▒█░░▒█ ▀█▀ ▀▀█▀▀ ▒█░▒█ ▒█▀▀▀ ▒█▀▀█ ▀█▀ ▒█▀▀▀ ▒█▄░▒█ 
+#▒█▒█▒█ ▒█░ ░▒█░░ ▒█▀▀█ ▒█▀▀▀ ▒█▄▄▀ ▒█░ ▒█▀▀▀ ▒█▒█▒█ 
+#▒█▄▀▄█ ▄█▄ ░▒█░░ ▒█░▒█ ▒█▄▄▄ ▒█░▒█ ▄█▄ ▒█▄▄▄ ▒█░░▀█
+#v1.0 by enook for dungeonfy :D
+
+#{wither_starting} checks if there is already a witherien dungeon starting
+#{in_witherien::%uuid of player%} checks if the player is in a witherien run (lost on death and leave)
+command /wither_fix:
+	permission: wither_fix.sk
+	trigger:
+		set {wither_starting} to false
+		set {witherien_run} to false
+		set {phase3} to false
+		set {players_waiting} to 0
+		set {w_players} to 0
+
+on load:
+	set {wither_starting} to false
+	set {witherien_run} to false
+	set {phase3} to false
+	set {players_waiting} to 0
+	set {w_players} to 0
+on login:
+	if {witherruns::%uuid of player%} isn't set:
+		set {witherruns::%uuid of player%} to 0
+	if {witherkills::%uuid of player%} isn't set:
+		set {witherkills::%uuid of player%} to 0
+
+command /wither_true [<offline player>]:
+	permission: op
+	trigger:
+		if arg-1 is set:
+			set {_p} to arg-1
+			set {in_witherien::%uuid of {_p}%} to true
+			send message "&aYou are now considered in a wither run!" to arg-1
+		else:
+			message "&aYou are now considered in a wither run"
+			set {in_witherien::%uuid of player%} to true
+command /insanedungeonreq:
+	permission: op
+	trigger:
+		set {harddungeonbosskills::%uuid of player%} to 100.22
+command /witherplayersleft:
+	trigger:
+		message "&c%{w_players}%"
+on right click:
+	if name of player's held item is "&4Final Dungeon Booklet":
+		cancel event
+		close player's inventory
+		#if {harddungeonbosskills::%uuid of player%} >= 50:
+		if {_adwawd} is not set:
+			if {w_players} <= 1: #starting up a queue
+				set player's held item to air
+				if {in_witherien::%uuid of player%} != true:
+					set {w_players} to {w_players} + 1
+				set {in_witherien::%uuid of player%} to true
+				set {phase3} to false
+				set {players_waiting} to {players_waiting} + 1
+				message "&aYou are now in queue for this dungeon! %{players_waiting}%/2 players needed to start." to player
+				loop all players:
+					if {in_witherien::%uuid of loop-player%} = true:
+						send message "&a%player% joined your queue" to loop-player
+				if {players_waiting} = 2:
+					loop all players:
+						if {in_witherien::%uuid of loop-player%} = true:
+							send message "&aDungeon starts in 30 seconds!" to loop-player
+					wait 20 seconds
+					loop all players:
+						if {in_witherien::%uuid of loop-player%} = true:
+							send message "&aDungeon starts in 10 seconds!" to loop-player
+					wait 5 seconds
+					loop all players:
+						if {in_witherien::%uuid of loop-player%} = true:
+							send message "&aDungeon starts in 5 seconds!" to loop-player
+					wait 5 seconds
+					make console execute command "/phase1"
+					loop all players:
+						if {in_witherien::%uuid of loop-player%} = true:
+							set {_upsidedownspawn} to location at (-28.5, 119.5, -440)
+							set {_upsidedownspawn}'s yaw to 90
+							set {_upsidedownspawn}'s pitch to 0.01
+							teleport loop-player to {_upsidedownspawn}
+			else: #Joining mid run
+				if {phase3} = true:
+					message "&cYou can't join when the run is in Phase 3" to player
+				else:
+					set player's held item to air
+					set {in_witherien::%uuid of player%} to true
+					loop all players:
+						if {in_witherien::%uuid of loop-player%} = true:
+							teleport player to loop-player
+							send message "&a%player% joined this dungeon mid run! (%{w_players}% Players)" to loop-player
+					set {w_players} to {w_players} + 1
+		else: #Does not meet requirement
+			message "&cYou need 50 hard dungeon boss kills to enter this dungeon!" to player
+
+on death:
+	if {in_witherien::%uuid of victim%} = true:
+		set {in_witherien::%uuid of victim%} to false
+		set {w_players} to {w_players} - 1
+		if {w_players} = 0:
+			set {witherien_run} to false
+			send message "&cLooks like theres no more players in the final dungeon!" to victim
+			set {phase3} to false
+			set {w_players} to 0
+on leave:
+	if {in_witherien::%uuid of player%} = true:
+		set {in_witherien::%uuid of player%} to false
+		delete {in_witherien.%uuid of player%}
+		set {w_players} to {w_players} - 1
+		if {w_players} = 0:
+			set {witherien_run} to false
+			set {phase3} to false
+			set {w_players} to 0
+
+#██████╗░██╗░░██╗░█████╗░░██████╗███████╗  ░░███╗░░
+#██╔══██╗██║░░██║██╔══██╗██╔════╝██╔════╝  ░████║░░
+#██████╔╝███████║███████║╚█████╗░█████╗░░  ██╔██║░░
+#██╔═══╝░██╔══██║██╔══██║░╚═══██╗██╔══╝░░  ╚═╝██║░░
+#██║░░░░░██║░░██║██║░░██║██████╔╝███████╗  ███████╗
+#╚═╝░░░░░╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░╚══════╝  ╚══════╝
+command /phase1:
+	permission: op
+	trigger:
+		set {witherien_run} to true
+		set {players_waiting} to 0
+		make console execute command "/kill @e[type=minecraft:piglin]"
+		make console execute command "/kill @e[type=minecraft:piglin_brute]"
+		make console execute command "/setblock -71 124 -454 minecraft:air"
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&bTime Traveler: &8Looks like the pipes broke lose. We gotta defeat Witherien to fix this reality." to loop-player
+				play sound "mob.villager.idle" to loop-player
+				send title "&c[PHASE 1]" with subtitle "&6The Piglin Mafia" to loop-player
+		wait 4 seconds
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&6Angry Piglin: &8You'll have to kill us before you can fight &4Witherien&8!" to loop-player
+				play sound "entity.piglin.angry" to loop-player
+		wait 3 seconds
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&a&lOBJECTIVE: &fKill all the &6Piglins &fto open the portal at the end of the tunnel." to loop-player
+				play sound "entity.player.levelup" at pitch 5 to loop-player
+		set {piglincount} to 40
+		make console execute command "/setblock -71 124 -454 minecraft:redstone_block destroy"
+		wait 30 seconds
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&6Angry Piglin: &8Roll out gang!" to loop-player
+				play sound "entity.piglin.angry" to loop-player
+		wait 30 seconds
+		make console execute command "/setblock -71 124 -454 minecraft:redstone_block destroy"
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&6Angry Piglin: &8You shall not pass!" to loop-player
+				send message "&6Angry Piglin: &8You got games on your phone?" to loop-player
+				send message "&6Angry Piglin: &8SEIZE THEM QUICK!" to loop-player
+				send message "&eWar Hog: &8VIVA LA REVOLUTION" to loop-player
+				play sound "entity.piglin.angry" to loop-player
+		make console execute command "/setblock -71 124 -457 minecraft:redstone_block destroy" #WAR HOG
+		wait 30 seconds
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&6Angry Piglin: &8:)" to loop-player
+				send message "&6Angry Piglin: &8You ain't escaping this time buster!" to loop-player
+				send message "&6Angry Piglin: &8I can smell you *sniff sniff*" to loop-player
+				play sound "entity.piglin.angry" to loop-player
+		make console execute command "/setblock -71 124 -454 minecraft:redstone_block destroy"
+		make console execute command "/setblock -71 124 -457 minecraft:redstone_block destroy" #WAR HOG
+		wait 30 seconds
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&eWar Hog: &8ARGH!" to loop-player
+				play sound "entity.piglin.angry" to loop-player
+		make console execute command "/setblock -71 124 -454 minecraft:redstone_block destroy"
+		make console execute command "/setblock -71 124 -457 minecraft:redstone_block destroy" #WAR HOG
+		wait 30 seconds
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&eWar Hog: &8I am a rebel, this is fine!" to loop-player
+				play sound "entity.piglin.angry" to loop-player
+		make console execute command "/setblock -71 124 -454 minecraft:redstone_block destroy"
+		make console execute command "/setblock -71 124 -457 minecraft:redstone_block destroy" #WAR HOG
+
+on damage of piglin or piglin brute:
+	attacker is player
+	if attacker's held item isn't golden sword or golden axe or golden hoe or golden shovel:
+		cancel event
+		set damage to 0
+		send message "&cYou can only hit Piglins/Piglin Brutes with &6Gold Weapons &cD:" to attacker
+on death of piglin or piglin brute:
+	set {piglincount} to {piglincount} - 1
+	loop all players:
+		if {in_witherien::%uuid of loop-player%} = true:
+			send message "&c%attacker% killed a Piglin! %{piglincount}%/40 Piglins left." to loop-player
+	if {piglincount} = 0:
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send title "&a[PHASE 1]" with subtitle "&fCLEARED" to loop-player
+		wait 3 seconds
+		make console execute command "/phase2"
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send title "&c[PHASE 2]" with subtitle "&fGreg the Dictator" to loop-player
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				set {_greg} to location at (-162.5, 115, -455)
+				set {_greg}'s yaw to 90
+				set {_greg}'s pitch to 0.01
+				teleport loop-player to {_greg}
+
+#██████╗░██╗░░██╗░█████╗░░██████╗███████╗  ██████╗░
+#██╔══██╗██║░░██║██╔══██╗██╔════╝██╔════╝  ╚════██╗
+#██████╔╝███████║███████║╚█████╗░█████╗░░  ░░███╔═╝
+#██╔═══╝░██╔══██║██╔══██║░╚═══██╗██╔══╝░░  ██╔══╝░░
+#██║░░░░░██║░░██║██║░░██║██████╔╝███████╗  ███████╗
+#╚═╝░░░░░╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░╚══════╝  ╚══════╝
+every 10 ticks:
+	loop all villagers:
+		name of loop-villager is "&4Greg the Dictator":
+			loop all players in radius 5 of loop-villager:
+				make loop-villager shoot snowball
+				make loop-villager damage loop-player by 600
+every 2 seconds:
+	loop all zombies:
+		name of loop-zombie is "&4Greg the Dictator &2Zombie Mode":
+			loop blocks in radius 3 around loop-zombie:
+				if loop-block is air:
+					add loop-block's location to {_locs::*}
+			set {_loc} to random element of {_locs::*}
+			spawn a baby zombie at {_loc}
+			set {_gregzombmin} to last spawned baby zombie
+			apply strength 400 to {_gregzombmin} for 9999 days
+			set name of {_gregzombmin} to "&4Greg's Goon"
+every 10 ticks:
+	loop all zombies:
+		name of loop-zombie is "&4Greg the Dictator &2Zombie Mode":
+			loop all players in radius 5 of loop-zombie:
+				strike lightning effect at the loop-player
+				make loop-zombie damage loop-player by 700
+on death of baby zombie:
+	if name of victim is "&4Greg's Goon":
+		clear drops
+on damage of villager:
+	if name of victim is "&4Greg the Dictator":
+		if {bombsleft} > 1:
+			cancel event
+			send message "&cYou must defuse all 5 bombs before you can damage &4Greg&c!" to attacker
+on death of villager:
+	attacker is player
+	if name of victim is "&4Greg the Dictator":
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&2Zombie Greg: &8Argh- arhdff-" to loop-player
+				wait 2 seconds
+		
+		set {bombsleft} to 5
+		set {craft_bomb} to false
+		set {fuel_bomb} to false
+		set {note_bomb} to false
+		set {anchor_bomb} to false
+		make console execute command "/setblock -205 115 -456 tnt" #command block
+		make console execute command "/setblock -201 115 -469 tnt" #respawn anchor
+		make console execute command "/setblock -189 115 -443 tnt" #noteblock
+		make console execute command "/setblock -201 115 -443 tnt" #crafting table
+		make console execute command "/setblock -189 115 -469 tnt" #blast furnace
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&a&lOBJECTIVE: &fDefuse all &c5 TNT &fand kill &2Zombie Greg&f!" to loop-player
+				play sound "entity.player.levelup" at pitch 5 to loop-player
+		make console execute command "/setblock -194 120 -456 redstone_block"
+on damage:
+	if name of victim is "&4Greg the Dictator &2Zombie Mode":
+		if {bombsleft} > 1:
+			cancel event
+			send message "&cYou must defuse all 5 bombs before you can damage &2Zombie Greg&c!" to attacker
+on death:
+	if name of victim is "&4Greg the Dictator &2Zombie Mode":
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send title "&a[PHASE 2]" with subtitle "&fCLEARED" to loop-player
+		wait 3 seconds
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				set {_wtp} to location at (-297.5, 151, -432.5)
+				set {_wtp}'s yaw to 180
+				set {_wtp}'s pitch to 0.01
+				teleport loop-player to {_wtp}
+		make console execute command "/phase3"
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send title "&c[PHASE 3]" with subtitle "&4- Witherien -" to loop-player
+
+command /phase2:
+	permission: op
+	trigger:
+		#Kill Greg Variants
+		loop all villagers:
+			if name of loop-entity contains "&4Greg the Dictator":
+				kill loop-entity
+		make console execute command "/kill @e[type=zombie_villager]"
+		make console execute command "/setblock -194 120 -456 air"
+		make console execute command "/setblock -192 120 -456 air"
+		
+		#Replace TNT
+		set {bombsleft} to 5
+		set {craft_bomb} to false
+		set {fuel_bomb} to false
+		set {note_bomb} to false
+		set {anchor_bomb} to false
+		set {craft_bomb} to false
+		make console execute command "/setblock -205 115 -456 tnt" #command block
+		make console execute command "/setblock -201 115 -469 tnt" #respawn anchor
+		make console execute command "/setblock -189 115 -443 tnt" #noteblock
+		make console execute command "/setblock -201 115 -443 tnt" #crafting table
+		make console execute command "/setblock -189 115 -469 tnt" #blast furnace
+		
+		#Dialogue
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&bTime Traveler: &8Good job! There's still some hope left." to loop-player
+				play sound "mob.villager.idle" to loop-player
+		wait 3 seconds
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&4Greg: &8Listen closely, you must defuse my &aBomb &8before fighting me >:)" to loop-player
+		wait 4 seconds
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&a&lOBJECTIVE: &fDefuse all &c5 TNT &fand kill &4Greg&f!" to loop-player
+				play sound "entity.player.levelup" at pitch 5 to loop-player
+		make console execute command "/setblock -192 120 -456 redstone_block"
+
+#██████╗░██╗░░██╗░█████╗░░██████╗███████╗  ██████╗░
+#██╔══██╗██║░░██║██╔══██╗██╔════╝██╔════╝  ╚════██╗
+#██████╔╝███████║███████║╚█████╗░█████╗░░  ░█████╔╝
+#██╔═══╝░██╔══██║██╔══██║░╚═══██╗██╔══╝░░  ░╚═══██╗
+#██║░░░░░██║░░██║██║░░██║██████╔╝███████╗  ██████╔╝
+#╚═╝░░░░░╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░╚══════╝  ╚═════╝░	
+command /phase3:
+	permission: op
+	trigger:
+		make console execute command "/soulsoil_remove"
+		make console execute command "/soulsand_remove"
+		set {phase3} to false
+		set {soulsoil_shield} to true
+		set {soulsand_shield} to true
+		make console execute command "/kill @e[type=wither]"
+		make console execute command "/kill @e[type=wither_skeleton]"
+		make console execute command "/kill @e[type=end_crystal]"
+		set {phase3} to true
+		make console execute command "/setblock -298 140 -455 minecraft:redstone_block destroy" #spawns witherien
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&bTime Traveler: &8Well, this is it!" to loop-player
+				play sound "mob.villager.idle" to loop-player
+		wait 3 seconds
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&c&kWitherien&c: &8What do you think you're doing?" to loop-player
+				play sound "entity.wither.ambient" at pitch 0.5 to loop-player
+		wait 4 seconds
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&c&kWitherien&c: &8DO YOU REALIZE HOW MANY INNOCENT MOBS YOU'VE KILLED?" to loop-player
+				play sound "entity.wither.ambient" at pitch 0.5 to loop-player
+		wait 3 seconds
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&c&kWitherien&c: &8You think you're hero?" to loop-player
+				send message "&cWITHERIEN HAS SPAWNED!" to loop-player
+				play sound "entity.generic.explode" at pitch 0.5 to loop-player
+				play sound "block.anvil.land" at pitch 0.5 to loop-player
+				play sound "entity.wither.ambient" at pitch 0.5 to loop-player
+		make console execute command "/setblock -298 140 -454 minecraft:redstone_block destroy" #Spawns Shields
+		make console execute command "/soulsoil_add"
+		make console execute command "/soulsand_add"
+		wait 3 seconds
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&a&lOBJECTIVE: &fDestroy the &6Soul Sand/Soil Shields &fto use &6Soul Sand/Soil &fto damage &cWitherien&f!" to loop-player
+				play sound "entity.player.levelup" at pitch 5 to loop-player
+
+command /finaldungeonend:
+	permission: op
+	trigger:
+		set {witherien_run} to false
+		set {phase3} to false
+		set {w_players} to 0
+every 2 seconds:
+	loop all piglins:
+		apply glowing to loop-piglin for 2 seconds
+	loop all piglin brutes:
+		apply glowing to loop-entity for 2 seconds
+		
+command /soulsoil_add:
+	permission: op
+	trigger:
+		make console execute command "/setblock -279 141 -456 minecraft:soul_soil" and "/setblock -279 141 -455 minecraft:soul_soil" and "/setblock -279 141 -454 minecraft:soul_soil" and "/setblock -278 141 -456 minecraft:soul_soil" and "/setblock -278 141 -455 minecraft:soul_soil" and "/setblock -278 141 -454 minecraft:soul_soil" and "/setblock -277 141 -456 minecraft:soul_soil" and "/setblock -277 141 -455 minecraft:soul_soil" and "/setblock -277 141 -454 minecraft:soul_soil"
+command /soulsoil_remove:
+	permission: op
+	trigger:
+		make console execute command "/setblock -279 141 -456 minecraft:air" and "/setblock -279 141 -455 minecraft:air" and "/setblock -279 141 -454 minecraft:air" and "/setblock -278 141 -456 minecraft:air" and "/setblock -278 141 -455 minecraft:air" and "/setblock -278 141 -454 minecraft:air" and "/setblock -277 141 -456 minecraft:air" and "/setblock -277 141 -455 minecraft:air" and "/setblock -277 141 -454 minecraft:air"
+command /soulsand_add:
+	permission: op
+	trigger:
+		make console execute command "/setblock -317 141 -454 minecraft:soul_sand" and "/setblock -317 141 -455 minecraft:soul_sand" and "/setblock -317 141 -456 minecraft:soul_sand" and "/setblock -318 141 -454 minecraft:soul_sand" and "/setblock -318 141 -455 minecraft:soul_sand" and "/setblock -318 141 -456 minecraft:soul_sand" and "/setblock -319 141 -454 minecraft:soul_sand" and "/setblock -319 141 -455 minecraft:soul_sand" and "/setblock -319 141 -456 minecraft:soul_sand"
+command /soulsand_remove:
+	permission: op
+	trigger:
+		make console execute command "/setblock -317 141 -454 minecraft:air" and "/setblock -317 141 -455 minecraft:air" and "/setblock -317 141 -456 minecraft:air" and "/setblock -318 141 -454 minecraft:air" and "/setblock -318 141 -455 minecraft:air" and "/setblock -318 141 -456 minecraft:air" and "/setblock -319 141 -454 minecraft:air" and "/setblock -319 141 -455 minecraft:air" and "/setblock -319 141 -456 minecraft:air"

@@ -1,0 +1,734 @@
+on death:
+	attacker is player
+	if name of attacker's held item is "&bSamuel's Sword":
+		chance of 20%:
+			give attacker slime ball
+
+on damage:
+	attacker is player
+	name of attacker's held item is "&cWoosh Shovel":
+		#thrust attacker up at speed 0.5
+		thrust victim up at speed 0.3
+		thrust attacker forward at speed 0.7
+		wait 6 ticks
+		heal attacker by (damage * 0.02)
+
+on left click with bow:
+	name of player's held item is "&cPowerain":
+		if metadata tag "powerrain" of player isn't set:
+			set metadata tag "powerrain" of player to false
+		if metadata tag "powerrain" of player = false:
+			set metadata tag "powerrain" of player to true
+			loop all creatures in radius 5 of player:
+				if loop-creatures is not a player or a armor stand or a item:
+					summon falling anvil 3 blocks above loop-creature
+			wait 10 ticks
+			set metadata tag "powerrain" of player to false
+		else:
+			cancel event
+#on block land:
+#	cancel event
+#	delete event-entity
+#	loop all creatures in radius 1.5 of event-entity:
+#		if loop-creature is not a player or armor stand or villager or item:
+#			damage loop-creature by 5000
+
+on damage:
+	if name of attacker's held item is "&cWarbringer":
+		if metadata tag "warbringercd" of attacker isn't set:
+			set metadata tag "warbringercd" of attacker to false
+		if metadata tag "warbringercd" of attacker = false:
+			set metadata tag "warbringercd" of attacker to true
+			strike lightning effect at the victim
+			play sound "block.anvil.land" at pitch -2 to attacker
+			loop all creatures in radius 5 of victim:
+				make attacker damage loop-creature by damage
+			wait 10 seconds
+			send message "&aYour warbringer ability is ready!" to attacker
+			set metadata tag "warbringercd" of attacker to false
+		else:
+			cancel event
+			send message "&cYour warbringer is still on cooldown!" to attacker
+on right click with wither rose:
+	if name of player's helmet contains "&d☠":
+		if metadata tag "witherslayerhelm" of player isn't set:
+			set metadata tag "witherslayerhelm" of player to false
+		if metadata tag "witherslayerhelm" of player = false:
+			set metadata tag "witherslayerhelm" of player to true
+			set metadata tag "finalslay_buff" of player to true
+			message "&aYou activated your &dFinal Slay Buff Ability&a!" to player
+			wait 20 seconds
+			set metadata tag "finalslay_buff" of player to false
+			wait 25 seconds
+			set metadata tag "witherslayerhelm" of player to false
+			message "&aYour &dWither Slayer Helmet's Unique Piece Ability &ais ready!" to player
+		else:
+			message "&cYour &dWither Slayer Helmet's Unique Piece Ability &cis on cooldown!" to player
+on damage:
+	if name of attacker's held item contains "&cFinal Slay":
+		if metadata tag "finalslay_buff" of attacker = true:
+			increase damage by 200
+			remove glowing from victim
+			apply glowing 1 to victim for 1 second
+on damage:
+	if name of attacker's helmet contains "&d☠":
+		if name of attacker's chestplate contains "&d☠":
+			if name of attacker's leggings contains "&d☠":
+				if name of attacker's boots contains "&d☠":
+					heal attacker by damage * 0.025
+on damage:
+	damage cause isn't thorns
+	if name of attacker's held item contains "&cFinal Slay":
+		heal attacker by damage * 0.05
+on damage:
+	if name of attacker's held item contains "&d☠":
+		if victim is a zombie or skeleton or zombie villager or drowned or husk or stray or skeleton horse or zombie horse or wither or wither skeleton or zombified piglin or zoglin:
+			add damage * 2 to damage
+
+on right click:
+	if name of player's held item is "&cCellphone":
+		if metadata tag "cellphone" of player = true:
+			message "&cYou can't call Saul this often!" to player
+		else:
+			set metadata tag "cellphone" of player to true
+			set {_a} to random integer between 1 to 9
+			if {_a} = 1:
+				message "&8[&cCELLPHONE&8] &f<link:https://www.youtube.com/watch?v=z9_OX1WVXXU>https://www.youtube.com/watch?v=z9_OX1WVXXU" to player
+			if {_a} = 2:
+				message "&8[&cCELLPHONE&8] &fAYO MISTAH WHITE!" to player
+			if {_a} = 3:
+				message "&8[&cCELLPHONE&8] &fJesse, we need to cook." to player
+			if {_a} = 4:
+				message "&8[&cCELLPHONE&8] &fHi. I'm Saul Goodman. Did you know that you have rights? The Constitution says you do. And so do I. I believe that until proven guilty, every man, woman, and child in this country is innocent." to player
+			if {_a} = 5:
+				message "&8[&cCELLPHONE&8] &fMy name is Walter Hartwell White. I live at 308 Negra Arroyo Lane, Albuquerque, New Mexico, 87104. This is my confession." to player
+			if {_a} = 6:
+				message "&8[&cCELLPHONE&8] &fYeah, Mr. White! Yeah, Science!" to player
+			if {_a} = 7:
+				message "&8[&cCELLPHONE&8] &fThe White Residence, located at 108 Negra Arroyo Lane, was the home of the White family including Walter, his wife Skyler, their son Walt Jr. and their infant daughter, Holly." to player
+			if {_a} = 8:
+				message "&8[&cCELLPHONE&8] &fWell, technically, chemistry is the study of matter. But I prefer to see it as the study of change." to player
+			if {_a} = 9:
+				message "&8[&cCELLPHONE&8] &fBelieve me, money laundering ain’t what it used to be. God do I miss the 80s." to player
+			wait 20 seconds
+			set metadata tag "cellphone" of player to false
+			message "&aYou can call Saul again!" to player
+#Blacksmith's Armor
+every 10 second:
+	loop all players:
+		if name of loop-player's helmet is "&fBlacksmith's Helmet":
+			if name of loop-player's chestplate is "&fBlacksmith's Chestplate":
+				if name of loop-player's leggings is "&fBlacksmith's Leggings":
+					if name of loop-player's boots is "&fBlacksmith's Boots":
+						apply resistance 1 to loop-player for 10 seconds replacing the existing effect
+
+#WILD WEST CRATES
+on inventory click:
+	inventory action is place all or nothing
+	name of cursor slot of player is "&bStandard Crate" or "&bReinforced Crate"
+	event-slot is chestplate slot of event-player # Check that player clicked the helmet
+	cancel the event
+	set {_old chestplate} to chestplate of player # Store old helmet
+	set chestplate of player to cursor slot of player # Set new helmet to item in player's cursor
+	set cursor slot of player to {_old chestplate} # Set player's cursor to old helmet, possibly air
+
+on right click:
+	name of player's tool is "&bStandard Crate" or "&bReinforced Crate"
+	chestplate of player is air
+	cancel the event
+	set chestplate of player to tool of player
+	set tool of player to air
+
+#BIG CHOMP
+on damage:
+    attacker is player:
+        if name of attacker's helmet is "&5Dragnov's Head":
+            if metadata tag "chomp" of attacker is not set:
+                set metadata tag "chomp" of attacker to 0
+				
+            if metadata tag "chompcounter" of attacker is not set:
+                set metadata tag "chompcounter" of attacker to 0
+				
+            if metadata tag "chompbonusdmg" of attacker is not set:
+                set metadata tag "chompbonusdmg" of attacker to 1
+				
+			
+            set metadata tag "chompbonusdmg" of attacker to metadata tag "chompcounter" of attacker / 7
+            set metadata tag "chompcounter" of attacker to metadata tag "chompcounter" of attacker + 1 
+            send title " " with subtitle "&6%metadata tag "chompcounter" of attacker%&8/&67 Hits" to attacker
+            if metadata tag "chompcounter" of attacker >= 7:
+                send title " " with subtitle "&6&lCHOMP" to attacker for 1 seconds
+                increase damage by damage
+                wait 6 tick
+                spawn evoker fangs at the victim
+                set metadata tag "chompcounter" of attacker to 0
+on damage:
+	if name of attacker's tool is "&5The Dragon Piercer":
+		victim isn't a phantom:
+			cancel event
+			send message "&cYou can only hit Dragnov with this weapon!" to attacker
+
+#acidic items
+on damage:
+	if name of attacker's held item is "&aAcidic Sword":
+		apply poison 4 to victim for 5 seconds
+#lightningsword
+on damage:
+	if name of attacker's weapon is "&5Dwarven Axe":
+		wait 1 ticks
+		set {damagetest.%uuid of attacker%} to {damagetest.%uuid of attacker%} + damage * 25
+		if the health of victim = the max health of victim:
+			set {damage} to damage * 25
+			damage victim by {damage} hearts
+on death:
+	damage cause isn't thorns
+	if name of attacker's offhand item isn't "&dRecast Blaze":
+		if name of attacker's helmet is "&5Dwarven Helmet":
+			if name of attacker's chestplate is "&5Dwarven Chestplate":
+				if name of attacker's leggings is "&5Dwarven Leggings":
+					if name of attacker's boots is "&5Dwarven Boots":
+						if name of victim isn't "&6The Grandfather":
+							give attacker 6 diamonds
+on damage:
+	if name of attacker's weapon is "&eRobotic Mastermind's Lightning Sword":
+		if metadata tag "lndonusdmg" of attacker is not set:
+			set metadata tag "lndonusdmg" of attacker to 1
+		if metadata tag "lncounter" of attacker is not set:
+			set metadata tag "lncounter" of attacker to 0
+			
+			
+		set metadata tag "lndonusdmg" of attacker to metadata tag "lncounter" of attacker / 5
+		set metadata tag "lncounter" of attacker to metadata tag "lncounter" of attacker + 1 
+		if metadata tag "lncounter" of attacker >= 5:
+			set metadata tag "lncounter" of attacker to 0
+			apply glowing 1 to victim for 1 second
+			play sound "item.trident.thunder" to attacker
+			increase damage by 1000
+			set metadata tag "lncounter" of attacker to 0
+			
+#shadowless scythe
+on rightclick:
+    name of player's held item is "&5Shadowless Scythe":
+        distance between target of player and player is less than 8:
+            make player swing their main hand
+            set {d::*} to blocks between target of player and player
+            set {d2::*} to blocks above {d::*}
+            set {d3::*} to blocks 0.5 blocks above {d::*}
+            play white ash at {d3::*}
+            play light purple dust at {d3::*}
+            play purple dust at {d3::*}
+            play light purple dust at {d2::*}
+            play purple dust at {d2::*}
+            play crit at {d2::*}
+            make player damage target of player by 1250
+
+on death:
+	if name of attacker's held item is "&dPiglin's Sword":
+		give attacker 4 gold ingots
+on damage:
+	if name of attacker's held item is "&dBrute's Axe":
+		chance of 10%:
+			make attacker damage victim by damage
+
+
+variables:
+	{finalshotcounter::%player%} = 0
+
+on damage:
+    attacker is player:
+        name of attacker's held item is "&bFreya" or "&dDreya":
+            if metadata tag "bloodstrikecounter" of attacker is not set:
+                set metadata tag "bloodstrikecounter" of attacker to 0
+			
+		
+            set metadata tag "bsbonusdamage" of attacker to metadata tag "bloodstrikecounter" of attacker / 10 + 1.10
+            set damage to damage * metadata tag "bsbonusdamage" of attacker
+            set metadata tag "bloodstrike" of attacker to damage * 2
+            set metadata tag "bloodstrikecounter" of attacker to metadata tag "bloodstrikecounter" of attacker + 1
+            send title " " with subtitle "&c%metadata tag "bloodstrikecounter" of attacker%&8/&c10 &c%metadata tag "bloodstrike" of attacker%⚔" to attacker
+            if metadata tag "bloodstrikecounter" of attacker >= 10:
+                send title "&c&l///" with subtitle "&c&lBLOODSTRIKE" to attacker for 1 seconds
+                increase damage by damage
+                set metadata tag "bloodstrikecounter" of attacker to 0
+
+on sneak toggle:
+    player is sneaking:
+        uncolored name of player's helmet is "Viking Helmet":
+            if metadata tag "oncwld" of player is not set:
+                set metadata tag "oncwld" of player to 0
+			
+            metadata tag "oncwld" of player is equal to 0:
+                push player forward at speed 2.5
+                set metadata tag "oncwld" of player to 1
+                send "&aYou used your &6Viking Rush &aability!"
+                loop all entities in radius 3 around player:
+                    if loop-entity isn't a player:
+                        damage loop-entity by 150
+                wait 5 seconds
+                set metadata tag "oncwld" of player to 0
+                send "&6Viking Rush &ais ready!"
+            metadata tag "oncwld" of player is equal to 1:
+                send "&cYou cannot use this yet!" to player
+
+command /picketset:
+	permission: op
+	trigger:
+		set {picket1} to player's held item
+
+on right click with golden shovel:
+	if name of player's held item is "&6Picket &8(Shovel Mode)":
+		set {_nbt} to nbt of player's tool
+		set {_item} to golden pickaxe with nbt {_nbt}
+		set name of {_item} to "&6Picket &8(Pickaxe Mode)"
+		set player's tool to {_item}
+on right click with golden pickaxe:
+	if name of player's held item is "&6Picket &8(Pickaxe Mode)":
+		set {_nbt} to nbt of player's tool
+		set {_item} to golden shovel with nbt {_nbt}
+		set name of {_item} to "&6Picket &8(Shovel Mode)"
+		set player's tool to {_item}
+	
+on death of wither skeleton:
+	if name of attacker's held item is "&bWither Skeleton's Longsword":
+		chance of 20%:
+			give attacker wither skeleton skull
+on right click with minecart with chest:
+	cancel event
+	if name of player's held item is "&eMogdonalds Happy Meal":
+		set player's held item to air
+		remove strength from player
+		apply strength 20 to player for 600 seconds
+on damage:
+	if victim is blaze or wither skeleton or magma cube or zombified piglin:
+		if name of attacker's held item is "&dSword of the Magma":
+			wait 10 ticks
+			make attacker damage victim by damage
+on right click with golden shovel:
+	if name of player's held item is "&6Kindlefire":
+		if metadata tag "kindle" of player isn't set:
+			set metadata tag "kindle" of player to false
+		if metadata tag "kindle" of player = false:
+			set metadata tag "kindle" of player to true
+			play sound "block.deepslate.place" at volume 2 at pitch 5 to player
+			loop all entities in radius 6 around player:
+				if name of player's offhand item is "&dDidgeridoo":
+					make player damage loop-entity by 400
+				else:
+					make player damage loop-entity by 200
+			wait 10 ticks
+			set metadata tag "kindle" of player to false
+		else:
+			cancel event
+on right click with stone shovel:
+	if name of player's held item is "&6Burntfire":
+		if metadata tag "burntfire" of player isn't set:
+			set metadata tag "burntfire" of player to false
+		if metadata tag "burntfire" of player = false:
+			set metadata tag "burntfire" of player to true
+			play sound "block.deepslate.place" at volume 2 at pitch 5 to player
+			loop all entities in radius 4 around player:
+				if name of player's offhand item is "&dDidgeridoo":
+					make player damage loop-entity by 240
+				else:
+					make player damage loop-entity by 120
+			wait 10 ticks
+			set metadata tag "burntfire" of player to false
+		else:
+			cancel event
+on death:
+	if name of attacker's held item is "&dBejeweled Axe":
+		chance of 50%:
+			give attacker diamond
+on damage:
+	if name of attacker's held item is "&eBear Trap":
+		wait 0.5 second
+		play critical hit at location of victim
+
+#==================SOUL SEEKER GEAR=============
+on damage:
+	if name of attacker's helmet contains "&1Soul Seeker":
+		apply slowness 3 to victim
+		set {soulseekerability} to victim's location
+		if name of attacker's offhand item isn't "&dAllay":
+			summon evoker fangs at {soulseekerability}
+on death:
+	if name of attacker's helmet contains "&1Soul Seeker":
+		give attacker gold ingot
+
+#====================CLASS ABILITY=================
+#on sneak toggle:
+	#if name of player is "enook":
+		#loop all entities in radius 4 around location of executor:
+			#if loop-entities isn't a player:
+				#set {swordsmanability} to location of loop-entity
+				#damage loop-entity by 50 hearts
+				#teleport player to {swordsmanability}
+
+#==========TRIDENT================
+on right click with trident:
+	if name of player's held item is "&dPointy Fork":
+		if metadata tag "netherflame" of player isn't set:
+			set metadata tag "netherflame" of player to false
+		if metadata tag "netherflame" of player = false:
+			set metadata tag "netherflame" of player to true
+			push player forward at velocity 2
+			wait 4 seconds
+			delete metadata tag "netherflame" of player
+		else:
+			cancel event
+			send message "&cThis ability is on a cooldown!" to player
+#==================weak feather================
+on right click with feather:
+	if name of player's held item is "&bWeak Feather":
+		if metadata tag "weakfeather" of player isn't set:
+			set metadata tag "weakfeather" of player to false
+		if metadata tag "weakfeather" of player = false:
+			set metadata tag "weakfeather" of player to true
+			push player forward at velocity 1.5
+			wait 4 seconds
+			set metadata tag "weakfeather" of player to false
+		else:
+			cancel event
+			send message "&cThis ability is on a cooldown!" to player
+#(push|thrust) %entities% %direction% [(at|with) (speed|velocity|force) %number%]
+#===========blaze net===========
+on right click with cobweb:
+	if name of player's held item is "&6Blaze Net":
+		if metadata tag "blazenet" of player isn't set:
+			set metadata tag "blazenet" of player to false
+		if metadata tag "blazenet" of player = false:
+			set metadata tag "blazenet" of player to true
+			loop all blazes in radius 5 of player:
+				set {blazenetloc} to player's location
+				teleport loop-entity to {blazenetloc}
+			wait 10 seconds
+			set metadata tag "blazenet" of player to false
+		else:
+			message "&cThis ability is on a cooldown!" to player
+
+on right click:
+    if name of player's held item is "&8Mogdonalds Sad Meal":
+        set player's held item to air
+        apply wither 20 to player for 10 minutes
+        apply weakness 20 to player for 10 minutes
+
+#======================DARK WIZARD STAFF===================
+			
+on right click with stone shovel:
+	if name of player's held item is "&5Dark Wizard's Staff":
+		if metadata tag "darkwizard" of player isn't set:
+			set metadata tag "darkwizard" of player to false
+		if metadata tag "darkwizard" of player = false:
+			set metadata tag "darkwizard" of player to true
+			loop all entities in radius 3 around player:
+				if loop-entity is a player or item:
+					cancel event
+				else:
+					damage loop-entity by 10
+					play sound "entity.evoker.cast_spell" to player
+			wait 10 ticks
+			set metadata tag "darkwizard" of player to false
+		else:
+			cancel event
+			
+#============GOLEM'S GRACE===============
+on right click with golden shovel:
+	if name of player's held item is "&dGolem's Grace":
+		if metadata tag "golemgrace" of player isn't set:
+			set metadata tag "golemgrace" of player to false
+		if metadata tag "golemgrace" of player = false:
+			set metadata tag "golemgrace" of player to true
+			add 20 to player's health
+			send message "&aYou used your Golem's Grace ability!" to player
+			add 20 to all players in radius 5 of the player's health
+			wait 20 seconds
+			send message "&aYour Golem's Grace ability is ready!" to player
+			set metadata tag "golemgrace" of player to false
+		else:
+			send message "&cThis ability is currently on a cooldown!" to player
+			#corn
+on right click with golden carrot:
+	if name of player's held item is "&6Corn™":
+		cancel event
+		if metadata tag "corncooldown" of player isn't set:
+			set metadata tag "corncooldown" of player to false
+		if metadata tag "corncooldown" of player = false:
+			set metadata tag "corncooldown" of player to true
+			add 10 to player's health
+			remove absorption from player
+			apply absorption 4 to player for 60 second
+			send message "&aYou used your Corn™ ability!" to player
+			add 10 to all players in radius 4 of the player's health
+			remove absorption from all players in radius 4 of the player
+			apply absorption 4 to all players in radius 4 of the player for 60 second
+			wait 15 seconds
+			send message "&aYour Corn™ ability is ready!" to player
+			set metadata tag "corncooldown" of player to false
+		else:
+			send message "&cThis ability is currently on a cooldown!" to player
+			
+#LIFESTEAL WEAPONS====================
+on damage:
+	damage cause isn't thorns
+	if name of attacker's held item is "&6Wildfire":
+		wait 6 ticks
+		heal attacker by 5 + (damage * 0.05)
+on damage:
+	damage cause isn't thorns
+	if name of attacker's helmet is "&aTurtle Helmet":
+		wait 6 ticks
+		heal attacker by 5 + (damage * 0.025)
+				
+on damage:
+	if name of attacker's held item is "&eFinal Sting":
+		remove poison from victim
+		apply poison 5 to victim for 5 seconds
+on damage:
+	if name of attacker's held item is "&dFractured Faded Dagger":
+		remove weakness from victim
+		apply weakness 5 to victim for 5 seconds
+on damage:
+	if name of attacker's held item is "&dMended Faded Dagger":
+		remove weakness from victim
+		apply weakness 10 to victim for 5 seconds
+on damage:
+	if name of attacker's held item is "&dSharpened Faded Dagger":
+		remove weakness from victim
+		apply weakness 15 to victim for 5 seconds
+on damage:
+	if name of attacker's held item is "&bCrystalized Faded Dagger":
+		remove weakness from victim
+		apply weakness 25 to victim for 5 seconds
+		
+on damage:
+    name of attacker's tool is "&bFrozen Wand"
+    if victim is a monster:
+        apply slowness 5 to the victim for 10 seconds
+        apply glowing 5 to the victim for 10 seconds
+        play sound "block.glass.break" with volume 1 and pitch 1 at attacker
+				
+on damage:
+	projectile exists
+	if projectile is a arrow:
+		if name of attacker's held item is "&6Slingshot":
+			play sound "entity.experience_orb.pickup" to attacker
+			if victim is iron golem:
+				cancel event
+				send message "&cJoe cannot be damaged by bow!" to attacker
+			else:
+				make attacker damage victim by 250
+				chance of 50%:
+					give attacker diamond
+					send message "&b&lDIAMOND! &fYour &6Slingshot &fjust gave you a &bDiamond! &8(50%%)" to attacker
+			
+	
+#butchersaxe
+on death:
+	if name of attacker's tool is "&bButcher's Axe":
+		chance of 25%:
+			drop 1 emerald at event-location
+	if name of attacker's tool is "&bHunter's Spear":
+		chance of 25%:
+			drop 1 golden nugget at event-location
+	if name of attacker's tool is "&dTrapper's Spear":
+		chance of 50%:
+			drop 1 golden nugget at event-location
+
+on right click:
+	if name of player's tool is "&dWitherien's AK-47" or "&dWitherien's Glock-19":
+		make player shoot arrow
+on damage:
+    name of attacker's tool is "&dAspect of the Mountain":
+        apply slowness 2 to the victim for 10 seconds
+        apply glowing 5 to the victim for 10 seconds
+        play sound "block.glass.break" with volume 1 and pitch 1 at attacker
+
+on damage:
+    name of attacker's tool is "&dFrozen Staff":
+        apply slowness 4 to the victim for 10 seconds
+        apply glowing 5 to the victim for 10 seconds
+        play sound "block.glass.break" with volume 1 and pitch 1 at attacker
+on damage:
+    name of attacker's tool is "&8Decayed Axe":
+        apply wither 2 to the victim for 10 seconds
+        play sound "block.soulsand.break" with volume 1 and pitch 1 at attacker
+on damage:
+	victim is enderman or endermite or shulker
+	name of attacker's tool contains "&5Voidcast Dagger":
+		increase damage by damage #2x damage
+	victim is enderman or endermite or shulker
+	name of attacker's tool contains "&dVoidheld Dagger":
+		increase damage by damage * 1.5 #2.5x damage
+	name of attacker's tool is "&dDagger of the Sun":
+		apply regeneration 3 to all players in radius 10 of the attacker for 2 seconds
+on left click:
+  player has arrow
+  if name of player's tool contains "&dWooden Shortbow":
+    send message "&cThis ability no longer works, thanks for being an og :)" to player
+on damage:
+  if name of attacker's held item contains "&5Soul Gauntlet ✦":
+    if victim isn't iron golem:
+      apply slowness 4 to victim for 5 seconds
+      apply glowing 1 to victim for 5 seconds
+      apply wither 3 to victim for 5 seconds
+on damage:
+    attacker is player
+    if victim is a guardian:
+        if name of attacker's tool is "&3Prismarine Blade" or "&dPointy Fork":
+            cancel event
+            damage victim by damage * 1
+        else:
+            cancel event
+            send message "&cA &3Prismarine Blade&c/&dPointy Fork &cis required to damage this mob" to attacker
+on death:
+    name of attacker's tool is "&dExecutioner's Axe"
+    chance of 50%:
+        drop emerald at event-location
+#==========================ARMOR==============================
+#freeking helmet
+on death of player:
+	if name of victim's helmet is "&bFreeking Helmet":
+		chance of 25%:
+			cancel event
+			set victim's helmet to air
+			send message "&cYour life was saved by your &bFreeking Helmet&c!" to victim
+			play sound "entity.item.break" to victim
+
+
+#mercenary armor
+on death:
+	if name of attacker's helmet is "&bMercenary Helmet":
+		if name of attacker's chestplate is "&bMercenary Chestplate":
+			if name of attacker's leggings is "&bMercenary Leggings":
+				if name of attacker's boots is "&bMercenary Boots":
+					give attacker diamond
+
+#helm
+on damage:
+	if name of attacker's helmet contains "&dAustralian Spider Helmet":
+		chance of 10%:
+			increase damage by damage
+			send title " " with subtitle "&d[⚔] x2" to attacker
+on damage:
+	if name of victim's leggings contains "&dAustralian Spider Leggings":
+		chance of 10%:
+			cancel event
+			send message "&fYour &dAustralian Spider Leggings &fjust negated damage!" to victim			
+#axe of the nether and underworld
+on death:
+	name of attacker's held item contains "&dAxe of the Nether"
+	chance of 25%:
+		give diamond to attacker
+	name of attacker's held item contains "&dAxe of the Underworld"
+	chance of 10%:
+		give diamond to attacker
+	if name of attacker's tool is "&cMushroom Smacker":
+		give attacker red mushroom
+		
+#blaze druid
+on death:
+    if name of victim contains "&c&lBlaze Druid":
+        drop 16 blaze rods at event-location
+		
+#silken blade
+on damage:
+	if name of attacker's held item is "&dSilken Blade":
+		if victim is spider:
+			set damage to damage * 2
+		
+#flame coat
+every 10 second:
+	loop all players:
+		if name of loop-player's chestplate contains "&dPurified Chestplate":
+			remove resistance from loop-player
+			apply resistance 2 to loop-player for 10 seconds
+		if name of loop-player's boots contains "&dAustralian Spider Boots":
+			remove speed from loop-player
+			remove jump boost from loop-player
+			apply speed 5 to loop-player for 11 seconds
+			apply jump boost 5 to loop-player for 11 seconds
+		if name of loop-player's helmet contains "&dCheese Guardian Helmet":
+			remove strength from loop-player
+			apply strength 3 to loop-player for 11 seconds			
+		if name of loop-player's helmet contains "&dAncient Skull":
+			remove regeneration from loop-player
+			apply regeneration 5 to loop-player for 11 seconds
+		if name of loop-player's chestplate contains "&dAustralian Spider Chestplate":
+			remove strength from loop-player
+			apply strength 5 to loop-player for 11 seconds
+		if name of loop-player's chestplate contains "&dFlame Coat":
+			apply fire resistance 1 to loop-player for 11 seconds replacing the existing effect
+			apply strength 5 to loop-player for 11 seconds replacing the existing effect
+every 10 second:
+	loop all players:
+		if name of loop-player's helmet contains "&dEverest Helmet":
+			remove haste from loop-player
+			apply haste 2 to loop-player for 11 seconds
+		if name of loop-player's boots contains "&5Dwarven Boots" or "&5Soul Breaker Boots" or "&5Soul Guardian Boots":
+			remove speed from loop-player
+			remove jump boost from loop-player
+			apply speed 5 without particles to loop-player for 11 seconds
+			apply jump boost 5 without particles to loop-player for 2 seconds
+		if name of loop-player's chestplate contains "&dEverest Chestplate":
+			remove resistance from loop-player
+			apply resistance 1 to loop-player for 11 seconds
+		if name of loop-player's leggings contains "&dEverest Leggings":
+			remove regeneration from loop-player
+			apply regeneration 1 to loop-player for 11 seconds
+		if name of loop-player's boots contains "&dEverest Boots":
+			remove speed from loop-player
+			apply speed 1 to loop-player for 11 seconds
+		if name of loop-player's helmet contains "&6Dorado Crown":
+			remove strength from loop-player
+			remove hunger from loop-player
+			apply strength 3 to loop-player for 11 seconds
+			apply hunger 1 to loop-player for 11 seconds
+		if name of loop-player's chestplate contains "&6Dorado Blazer":
+			remove haste from loop-player
+			remove resistance from loop-player
+			apply haste 3 to loop-player for 11 seconds
+			apply resistance 1 to loop-player for 11 seconds
+		if name of loop-player's held item is "&dCompressed Exceedingly Shiny Gold":
+			remove blindness from loop-player
+			apply blindness 1 without particles to loop-player for 11 seconds
+		if name of loop-player's boots contains "&bVapor Boots":
+			remove jump boost from loop-player
+			apply jump boost 3 to loop-player for 11 seconds
+#Hot Potato
+on rightclick with baked potato:
+	if name of player's held item is "&cHot Potato":
+		if metadata tag "hpcd" of player isn't set:
+			set metadata tag "hpcd" of player to false
+		if metadata tag "hpcd" of player = false:
+			set metadata tag "hpcd" of player to true
+			set player's health to player's health - player's max health * 0.5
+			apply strength of tier 50 to player for 120 seconds replacing the existing effect
+			message "&cHOT POTATO! &4+Strength 50" to player
+			wait 60 seconds
+			set metadata tag "hpcd" of player to false
+			message "&aYour Hot Potato ability is now ready!" to player
+		if metadata tag "hpcd" of player = true:
+			message "&cHot Potato is on cooldown :(" to player
+
+#=========BOBBUCKS========
+on rightclick:
+	name of player's held item contains "&6Restoration Potion":
+		play sound "entity.generic.drink" with volume 1 and pitch 1 at player
+		add 200 to player's health
+		remove event-item from player
+	name of player's held item contains "&8Cola-Coca™️":
+		play sound "entity.generic.drink" with volume 1 and pitch 1 at player
+		apply strength 5 to player for 20 seconds
+		remove event-item from player
+	name of player's held item contains "&9Glass of Oil and Water":
+		play sound "entity.generic.drink" with volume 1 and pitch 1 at player
+		apply poison 10 to player for 20 seconds
+		remove event-item from player
+	name of player's held item contains "&4Beer Keg":
+		play sound "entity.generic.drink" with volume 1 and pitch 1 at player
+		apply strength 5 to player for 20 seconds
+		remove event-item from player
+	name of player's held item is "&aGreen Eggs and Ham":
+		remove slime spawn egg from player
+		apply saturation 10 to player for 10 minutes
+		play sound "entity.strider.eat" with volume 1 and pitch 1 at player

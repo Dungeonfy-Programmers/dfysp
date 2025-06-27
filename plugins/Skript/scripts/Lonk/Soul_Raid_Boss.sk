@@ -1,0 +1,540 @@
+command /bosstest <int> <int> <int> [<int>] [<int>] [<int>] [<string>]:
+	permission: op
+	trigger:
+		if arg-4 is set:
+			set x coord of {_loc} to 1420
+			set y coord of {_loc} to 128
+			set z coord of {_loc} to 1748
+			set world of {_loc} to "%arg-7%" parsed as a world
+			summon adult zombie at {_loc}
+		else:
+			summon 1 adult zombie at location(0,0,0)
+		set {_boss} to last spawned zombie
+		set max health of {_boss} to arg-2
+		set health of {_boss} to arg-2
+		set {BossDamageSoul} to arg-1
+
+
+		set helmet of last spawned zombie to {SoulRaidBossHelm}
+		set chestplate of last spawned zombie to {SoulRaidBosschestplate}
+		set leggings of last spawned zombie to {SoulRaidBossleggings}
+		set boots of last spawned zombie to {SoulRaidBossBoots}		
+
+		set display name of {_boss} to "&b&lWraithwarden &a%health of {_boss}% &7/ &c%max health of {_boss}%"
+		apply potion of fire resistance of tier 255 without particles to {_boss}
+
+		apply potion of speed of tier arg-3 without particles to {_boss}
+		teleport last spawned zombie to location(1420,128,1748)
+
+command /set-soul-mini-boss-armor:
+	permission: op
+	trigger:
+		set {SoulRaidBossHelm} to player's helmet 
+		set {SoulRaidBosschestplate} to player's chestplate 
+		set {SoulRaidBossleggings} to player's leggings 
+		set {SoulRaidBossBoots} to player's boots 
+
+on combust:
+	if name of event-entity contains "&b&lWraithwarden":
+		cancel event
+	if name of event-entity contains "&b&lSpectral Sentinel":
+		cancel event
+on death:
+	victim is a player:
+		name of attacker contains "&b&lWraithwarden"
+		metadata tag "in-1v1" of attacker is true
+		delete metadata tag "in-1v1" of attacker
+		teleport attacker to {loc-soulboss}
+		increase health of attacker by max health of attacker / 4	
+		set {BossDamageSoul} to {BossDamageSoul} * 1.5
+		loop all players in radius 30 around attacker:
+			send "%display name of attacker%&f: I can't belive you all are so WEAK thanks for the souls..." to loop-player
+			send "%display name of attacker%&f: SO THIS IS THE POWER OF A PLAYER'S SOUL I'M STRONGER THAN EVER BEFORE!!!!!" to loop-player
+
+every 15 seconds:
+	loop all creatures:
+		if name of loop-creature contains "&b&lWraithwarden":
+			if metadata tag "in-1v1" of loop-creature is true:
+				loop all players in radius 5 around loop-creature:
+					teleport loop-creature to loop-player
+					send "%display name of loop-creature%&f: You can run but you can't hide..." to loop-player
+
+
+
+on damage:
+	if name of attacker contains "&b&lWraithwarden":
+		set damage to {BossDamageSoul}
+		chance of 20%:
+			metadata tag "in-1v1" of attacker is not set
+			health of attacker < max health of attacker /2
+			set {_block} to location(1326,217,1967)
+			set {loc2-soulboss} to location of victim
+			loop all players in radius 30 around attacker:
+				send "%display name of attacker%&f: Im taking %victim% with me good luck fighting my assistant HAHAHAHAH" to loop-player
+			teleport victim to {_block}
+			summon 1 adult zombie at location of attacker
+			set {loc-soulboss} to location of attacker
+			set {_mini} to last spawned zombie
+
+			set helmet of last spawned zombie to {SoulRaidMiniBossHelm}
+			set chestplate of last spawned zombie to {SoulRaidMiniBosschestplate}
+			set leggings of last spawned zombie to {SoulRaidMiniBossleggings}
+			set boots of last spawned zombie to {SoulRaidMiniBossBoots}
+			
+			set display name of {_mini} to "&b&lSpectral Sentinel"
+			set max health of {_mini} to max health of attacker / 4
+			set health of {_mini} to max health of {_mini}
+			set {MiniDamageSoul} to {BossDamageSoul} / 1.5
+			teleport attacker to block 5 blocks infront of {_block}
+			set metadata tag "in-1v1" of attacker to true
+			wait 30 seconds
+			metadata tag "in-1v1" of attacker is true
+			delete metadata tag "in-1v1" of attacker
+			teleport attacker to {loc-soulboss}
+			teleport victim to {loc2-soulboss}
+
+
+	if name of victim contains "&b&lWraithwarden":
+		extinguish victim
+		set display name of victim to "&b&lWraithwarden &c%rounded health of victim% &7/&a %max health of victim%"
+on damage:
+	if name of attacker contains "&b&lSpectral Sentinel":
+		set damage to {MiniDamageSoul}
+
+every 5 seconds:
+	loop all creatures:
+		if {_a} is not set:
+			if name of loop-creature contains "&b&lSpectral Sentinel":
+				loop-creature is alive
+				loop all blocks in radius 30 around loop-creature:
+					if loop-block is lime wool:
+						chance of 25%:
+							loop-creature is alive
+							set {_block} to block 2.5 blocks above loop-block
+							loop 3 times:
+								loop 180 times:
+									loop-creature is alive
+									set {_z} to spherical vector radius 3, yaw (loop-value-4*2), pitch 0
+									set {_y} to spherical vector radius 2, yaw (loop-value-4*2), pitch 0
+									set {_x} to spherical vector radius 1, yaw (loop-value-4*2), pitch 0
+									set {_w} to spherical vector radius 0, yaw (loop-value-4*2), pitch 0
+									set {_v} to spherical vector radius 0, yaw (loop-value-4*2), pitch 0
+									set {_u} to spherical vector radius 0, yaw (loop-value-4*2), pitch 0
+									draw 1 of dust using dustOption(black, 1) at {_block} ~ {_z}
+									draw 1 of dust using dustOption(white, 1) at {_block} ~ {_y}
+									draw 1 of dust using dustOption(black, 1) at {_block} ~ {_x}
+									draw 1 of dust using dustOption(white, 1) at {_block} ~ {_w}
+									draw 1 of dust using dustOption(black, 1) at {_block} ~ {_v}
+									draw 1 of dust using dustOption(white, 1) at {_block} ~ {_u}
+								wait 0.5 seconds
+							
+							wait 1 second
+
+							loop 3 times:
+								loop 180 times:
+									loop-creature is alive
+									set {_z} to spherical vector radius 3, yaw (loop-value-4*2), pitch 0
+									set {_y} to spherical vector radius 2, yaw (loop-value-4*2), pitch 0
+									set {_x} to spherical vector radius 1, yaw (loop-value-4*2), pitch 0
+									set {_w} to spherical vector radius 0, yaw (loop-value-4*2), pitch 0
+									set {_v} to spherical vector radius 0, yaw (loop-value-4*2), pitch 0
+									set {_u} to spherical vector radius 0, yaw (loop-value-4*2), pitch 0
+									draw 1 of dust using dustOption(dark blue, 1) at {_block} ~ {_z}
+									draw 1 of dust using dustOption(dark blue, 1) at {_block} ~ {_y}
+									draw 1 of dust using dustOption(light blue, 1) at {_block} ~ {_x}
+									draw 1 of dust using dustOption(light blue, 1) at {_block} ~ {_w}
+									draw 1 of dust using dustOption(cyan, 1) at {_block} ~ {_v}
+									draw 1 of dust using dustOption(cyan, 1) at {_block} ~ {_u}
+									loop all players in radius 3 around {_block}:
+										damage loop-player by {MiniDamageSoul} * 1.5
+										draw 1 of soul at location of loop-player
+										set {_v} to vector from location of loop-player to {_block} 
+										set {_v} to {_v}/8
+										set loop-player's velocity to {_v}
+		
+
+								wait 0.5 seconds
+
+every 5 seconds:
+	loop all creatures:
+		if {_a} is not set:
+			if name of loop-creature contains "&b&lWraithwarden":
+				loop-creature is alive
+				loop all blocks in radius 30 around loop-creature:
+					if loop-block is lime wool:
+						chance of 10%:
+							loop-creature is alive
+							set {_block} to block 2.5 blocks above loop-block
+							loop 3 times:
+								loop 180 times:
+									loop-creature is alive
+									set {_z} to spherical vector radius 5, yaw (loop-value-4*2), pitch 0
+									set {_y} to spherical vector radius 4, yaw (loop-value-4*2), pitch 0
+									set {_x} to spherical vector radius 3, yaw (loop-value-4*2), pitch 0
+									set {_w} to spherical vector radius 2, yaw (loop-value-4*2), pitch 0
+									set {_v} to spherical vector radius 1, yaw (loop-value-4*2), pitch 0
+									set {_u} to spherical vector radius 0, yaw (loop-value-4*2), pitch 0
+									draw 1 of dust using dustOption(black, 1) at {_block} ~ {_z}
+									draw 1 of dust using dustOption(white, 1) at {_block} ~ {_y}
+									draw 1 of dust using dustOption(black, 1) at {_block} ~ {_x}
+									draw 1 of dust using dustOption(white, 1) at {_block} ~ {_w}
+									draw 1 of dust using dustOption(black, 1) at {_block} ~ {_v}
+									draw 1 of dust using dustOption(white, 1) at {_block} ~ {_u}
+								wait 0.5 seconds
+															
+							wait 1 second
+								
+							loop 3 times:
+								loop 180 times:
+									loop-creature is alive
+									set {_z} to spherical vector radius 5, yaw (loop-value-4*2), pitch 0
+									set {_y} to spherical vector radius 4, yaw (loop-value-4*2), pitch 0
+									set {_x} to spherical vector radius 3, yaw (loop-value-4*2), pitch 0
+									set {_w} to spherical vector radius 2, yaw (loop-value-4*2), pitch 0
+									set {_v} to spherical vector radius 1, yaw (loop-value-4*2), pitch 0
+									set {_u} to spherical vector radius 0, yaw (loop-value-4*2), pitch 0
+									draw 1 of dust using dustOption(dark blue, 1) at {_block} ~ {_z}
+									draw 1 of dust using dustOption(dark blue, 1) at {_block} ~ {_y}
+									draw 1 of dust using dustOption(light blue, 1) at {_block} ~ {_x}
+									draw 1 of dust using dustOption(light blue, 1) at {_block} ~ {_w}
+									draw 1 of dust using dustOption(cyan, 1) at {_block} ~ {_v}
+									draw 1 of dust using dustOption(cyan, 1) at {_block} ~ {_u}
+									loop all players in radius 5 around {_block}:
+										damage loop-player by {BossDamageSoul} * 1.5
+										draw 1 of soul at location of loop-player
+										set {_v} to vector from location of loop-player to {_block} 
+										set {_v} to {_v}/8
+										set loop-player's velocity to {_v}
+										
+								
+								wait 0.5 seconds
+
+every 10 seconds:
+	loop all creatures:
+		if {_a} is not set:
+			if name of loop-creature contains "&b&lWraithwarden":
+				loop all blocks in radius 30 around loop-creature:
+					health of loop-creature > max health of loop-creature / 2
+					if loop-block is red wool:
+						chance of 10%:
+							set {_block} to block 2.5 blocks above loop-block
+							loop 3 times:
+								loop 180 times:
+									set {_z} to spherical vector radius 10, yaw (loop-value-4*2), pitch 0
+									set {_y} to spherical vector radius 8, yaw (loop-value-4*2), pitch 0
+									set {_x} to spherical vector radius 6, yaw (loop-value-4*2), pitch 0
+									set {_w} to spherical vector radius 4, yaw (loop-value-4*2), pitch 0
+									set {_v} to spherical vector radius 2, yaw (loop-value-4*2), pitch 0
+									set {_u} to spherical vector radius 0, yaw (loop-value-4*2), pitch 0
+									draw 1 of dust using dustOption(black, 1) at {_block} ~ {_z}
+									draw 1 of dust using dustOption(white, 1) at {_block} ~ {_y}
+									draw 1 of dust using dustOption(black, 1) at {_block} ~ {_x}
+									draw 1 of dust using dustOption(white, 1) at {_block} ~ {_w}
+									draw 1 of dust using dustOption(black, 1) at {_block} ~ {_v}
+									draw 1 of dust using dustOption(white, 1) at {_block} ~ {_u}
+								wait 0.5 seconds
+							
+							wait 1 second
+
+							loop 3 times:
+								loop 180 times:
+									set {_z} to spherical vector radius 10, yaw (loop-value-4*2), pitch 0
+									set {_y} to spherical vector radius 8, yaw (loop-value-4*2), pitch 0
+									set {_x} to spherical vector radius 6, yaw (loop-value-4*2), pitch 0
+									set {_w} to spherical vector radius 4, yaw (loop-value-4*2), pitch 0
+									set {_v} to spherical vector radius 2, yaw (loop-value-4*2), pitch 0
+									set {_u} to spherical vector radius 0, yaw (loop-value-4*2), pitch 0
+									draw 1 of dust using dustOption(dark blue, 1) at {_block} ~ {_z}
+									draw 1 of dust using dustOption(dark blue, 1) at {_block} ~ {_y}
+									draw 1 of dust using dustOption(light blue, 1) at {_block} ~ {_x}
+									draw 1 of dust using dustOption(light blue, 1) at {_block} ~ {_w}
+									draw 1 of dust using dustOption(cyan, 1) at {_block} ~ {_v}
+									draw 1 of dust using dustOption(cyan, 1) at {_block} ~ {_u}
+									loop all players in radius 10 around {_block}:
+										damage loop-player by {BossDamageSoul} * 2.5
+										draw 1 of soul_fire_flame at location of loop-player
+										set {_v} to vector from location of loop-player to {_block} 
+										set {_v} to {_v}/8
+										set loop-player's velocity to {_v}
+			
+	
+								wait 0.5 seconds
+
+
+every 20 seconds:
+	loop all creatures:
+		if {_a} is not set:
+			if name of loop-creature contains "&b&lSpectral Sentinel":
+				loop all blocks in radius 30 around loop-creature:
+					health of loop-creature > max health of loop-creature / 2
+					if loop-block is red wool:
+						chance of 25%:
+							set {_block} to block 2.5 blocks above loop-block
+							if {_block} is air:
+								set {_block} to light block
+							loop 3 times:
+								loop 180 times:
+									set {_z} to spherical vector radius 6, yaw (loop-value-4*2), pitch 0
+									set {_y} to spherical vector radius 4, yaw (loop-value-4*2), pitch 0
+									set {_x} to spherical vector radius 2, yaw (loop-value-4*2), pitch 0
+									set {_w} to spherical vector radius 0, yaw (loop-value-4*2), pitch 0
+									set {_v} to spherical vector radius 0, yaw (loop-value-4*2), pitch 0
+									set {_u} to spherical vector radius 0, yaw (loop-value-4*2), pitch 0
+									draw 1 of dust using dustOption(black, 1) at {_block} ~ {_z}
+									draw 1 of dust using dustOption(white, 1) at {_block} ~ {_y}
+									draw 1 of dust using dustOption(black, 1) at {_block} ~ {_x}
+									draw 1 of dust using dustOption(white, 1) at {_block} ~ {_w}
+									draw 1 of dust using dustOption(black, 1) at {_block} ~ {_v}
+									draw 1 of dust using dustOption(white, 1) at {_block} ~ {_u}
+								wait 0.5 seconds
+							
+							wait 1 second
+
+							loop 3 times:
+								loop 180 times:
+									set {_z} to spherical vector radius 6, yaw (loop-value-4*2), pitch 0
+									set {_y} to spherical vector radius 4, yaw (loop-value-4*2), pitch 0
+									set {_x} to spherical vector radius 2, yaw (loop-value-4*2), pitch 0
+									set {_w} to spherical vector radius 0, yaw (loop-value-4*2), pitch 0
+									set {_v} to spherical vector radius 0, yaw (loop-value-4*2), pitch 0
+									set {_u} to spherical vector radius 0, yaw (loop-value-4*2), pitch 0
+									draw 1 of dust using dustOption(dark blue, 1) at {_block} ~ {_z}
+									draw 1 of dust using dustOption(dark blue, 1) at {_block} ~ {_y}
+									draw 1 of dust using dustOption(light blue, 1) at {_block} ~ {_x}
+									draw 1 of dust using dustOption(light blue, 1) at {_block} ~ {_w}
+									draw 1 of dust using dustOption(cyan, 1) at {_block} ~ {_v}
+									draw 1 of dust using dustOption(cyan, 1) at {_block} ~ {_u}
+									loop all players in radius 6 around {_block}:
+										damage loop-player by {MiniDamageSoul} * 2.5
+										draw 1 of soul_fire_flame at location of loop-player
+										set {_v} to vector from location of loop-player to {_block} 
+										set {_v} to {_v}/8
+										set loop-player's velocity to {_v}
+			
+	
+								wait 0.5 seconds
+							if {_block} is air:
+								set {_block} to light block
+every 5 seconds:
+	loop all creatures:
+		if {_a} is not set:
+			if name of loop-creature contains "&b&lWraithwarden":
+				health of loop-creature > max health of loop-creature/2
+				loop all players in radius 30 around loop-creature:
+					gamemode of loop-player is adventure
+					set {_v} to vector from location of loop-creature to loop-player
+					set velocity of loop-creature to {_v}/4
+					send "%display name of loop-creature%&f: I can't belive you really thought you could run from me" to loop-player
+
+every 15 seconds:
+	loop all creatures:
+		if {_a} is not set:
+			if name of loop-creature contains "&b&lSpectral Sentinel":
+				health of loop-creature > max health of loop-creature/2
+				loop all players in radius 30 around loop-creature:
+					gamemode of loop-player is adventure
+					set {_v} to vector from location of loop-creature to loop-player
+					set velocity of loop-creature to {_v}/4
+					send "%display name of loop-creature%&f: YOU THOUGHT YOU COULD RUN AWAY FROM ME THINK AGAIN!!!!" to loop-player
+
+
+
+every 20 seconds:
+	loop all creatures:
+		if name of loop-creature contains "&b&lWraithwarden":
+			loop-creature is alive
+			if health of loop-creature < max health of loop-creature / 2:
+				set {_l} to 0
+				
+				loop all creatures in radius 30 around loop-creature:
+					if name of loop-creature-2 is "&dSouls of the Damnd":
+						add 1 to {_l}
+				if {_l} < 5:
+					loop all players in radius 30 around loop-creature:
+						send "%display name of loop-creature%&f: COME TO MY AID, SOULS OF THE DAMNED!!!!" to loop-player
+				loop all blocks in radius 10 around loop-creature:
+					chance of 1%:
+						if loop-block is not air or sandstone:
+							if block above loop-block is air:
+								set {_l} to 0
+								loop all creatures in radius 30 around loop-creature:
+									if name of loop-creature-2 is "&dSouls of the Damnd":
+										add 1 to {_l}
+								if {_l} < 5:
+									summon 1 adult zombie at block above loop-block
+
+									set chestplate of last spawned zombie to leather chestplate
+									set leggings of last spawned zombie to leather pants
+									set boots of last spawned zombie to leather boots
+									set helmet of last spawned zombie to {soulOFDAMNEDHELM}
+
+									set display name of last spawned zombie to "&dSouls of the Damned" 
+
+
+
+every 25 seconds:
+	loop all creatures:
+		if name of loop-creature contains "&b&lSpectral Sentinel":
+			loop-creature is alive
+			if health of loop-creature < max health of loop-creature / 2:
+				set {_l} to 0
+				loop all players in radius 30 around loop-creature:
+					loop all creatures in radius 30 around loop-creature:
+						if name of loop-creature-2 is "&dSouls of the Damnd":
+							add 1 to {_l}
+					if {_l} < 2:
+						send "%display name of loop-creature%&f: COME TO MY AID, SOULS OF THE DAMNED!!!!" to loop-player
+				loop all blocks in radius 5 around loop-creature:
+					chance of 5%:
+						if loop-block is not air:
+							if block above loop-block is air:
+								set {_l} to 0
+								loop all creatures in radius 30 around loop-creature:
+									if name of loop-creature-2 is "&dSouls of the Damnd":
+										add 1 to {_l}
+								if {_l} < 2:
+									summon 1 adult zombie at block above loop-block
+									set display name of last spawned zombie to "&dSouls of the Damned"
+
+every 15 seconds:
+	loop all creatures:
+		if name of loop-creature contains "&b&lWraithwarden":
+			chance of 20%:
+				make loop-creature invisible
+				loop all players in radius 30 around loop-creature:
+					send "%display name of loop-creature%&f: I have become one with the soul energy of the universe good luck finding me now!!!!!!" to loop-player
+					
+				extinguish loop-creature
+				loop 180 times:
+					draw 1 of soul_fire_flame at location of loop-creature
+				wait 1 second
+				loop 180 times:
+					draw 1 of soul at location of loop-creature
+				wait 1 second
+				loop 180 times:
+					draw 1 of soul_fire_flame at location of loop-creature
+				wait 1 second
+				loop 180 times:
+					draw 1 of soul at location of loop-creature
+				wait 1 second
+				loop 180 times:
+					draw 1 of soul_fire_flame at location of loop-creature
+				wait 1 second
+				loop 180 times:
+					draw 1 of soul at location of loop-creature
+				wait 1 second
+				loop 180 times:
+					draw 1 of soul at location of loop-creature
+				wait 1 second
+				loop 180 times:
+					draw 1 of soul_fire_flame at location of loop-creature
+				wait 1 second
+				loop 180 times:
+					draw 1 of soul at location of loop-creature
+				wait 1 second
+				loop 180 times:
+					draw 1 of soul_fire_flame at location of loop-creature
+				wait 1 second
+				loop 180 times:
+					draw 1 of soul at location of loop-creature
+				make loop-creature visible
+
+every 20 seconds:
+	loop all creatures:
+		if name of loop-creature contains "&b&lSpectral Sentinel":
+			chance of 20%:
+				make loop-creature invisible
+				loop all players in radius 30 around loop-creature:
+					send "%display name of loop-creature%&f: Good luck hitting me now fools!!!!" to loop-player
+				extinguish loop-creature
+				loop 180 times:
+					draw 1 of soul_fire_flame at location of loop-creature
+				wait 1 second
+				loop 180 times:
+					draw 1 of soul at location of loop-creature
+				wait 1 second
+				loop 180 times:
+					draw 1 of soul_fire_flame at location of loop-creature
+				wait 1 second
+				loop 180 times:
+					draw 1 of soul at location of loop-creature
+				wait 1 second
+				loop 180 times:
+					draw 1 of soul_fire_flame at location of loop-creature
+				make loop-creature visible
+				
+
+on death:
+	if name of victim is "&dSouls of the Damned":
+		clear drops
+		loop 180 times:
+			set {_z} to spherical vector radius 3, yaw (loop-value*2), pitch 0
+			set {_y} to spherical vector radius 2, yaw (loop-value*2), pitch 0
+			set {_x} to spherical vector radius 1, yaw (loop-value*2), pitch 0
+			draw 1 of dust using dustOption(lime, 1) at victim ~ {_z}
+			draw 1 of dust using dustOption(green, 1) at victim ~ {_y}
+			draw 1 of dust using dustOption(dark blue, 1) at victim ~ {_x}
+		loop all players in radius 3 around victim:
+			set metadata tag "no-move" of loop-player to true
+			wait 0.5 seconds
+			delete metadata tag "no-move" of loop-player
+		loop all players in radius 30 around victim:
+			send "%display name of victim%&f: &kIT HURTSSSSSS" to loop-player
+	if name of victim contains "&b&lWraithwarden":
+		teleport attacker to location(1420,128,1748)
+
+on player move:
+	if metadata tag "no-move" of player is true:
+		cancel event
+
+on damage:
+	name of victim contains "&b&lWraithwarden"
+	attacker is a player
+	add damage to {mummy_leaderboard::%attacker's uuid%}
+	if {mummy_damage::*} doesn't contain attacker:
+		add attacker to {mummy_damage::*}
+
+on death:
+	name of victim contains "&b&lSpectral Sentinel"
+	clear drops
+
+on death:
+	name of victim contains "&b&lWraithwarden" #USE NBT DATA
+	clear drops
+	send "&d&l-----------------------------" to {mummy_damage::*}
+	send "&b&lWraithwarden Down! &6☠" to {mummy_damage::*}
+	loop {mummy_leaderboard::*}:
+		set {mummy_leaderboard::%loop-index%} to "%loop-value%:%loop-index%"
+	set {mummy_leaderboard::*} to alphabetically sorted {mummy_leaderboard::*}
+	set {_li} to 0
+
+
+	loop {mummy_leaderboard::*}:
+		set {_temp::*} to "%loop-value%" split at ":"
+		send "&a%{_temp::2} parsed as offline player% &c- %floor({_temp::1} parsed as number * 2)% &cDamage" to {mummy_damage::*}
+		add 1 to {_li}
+		#broadcast "%{mummy_damage::*}%"
+		#broadcast "%{mummy_leaderboard::*}%"
+		exit loop if {_li} is 3
+	send "&d&l-----------------------------" to {mummy_damage::*}
+
+	set {_loop-time} to size of {mummy_leaderboard::*}
+	loop {_loop-time} times:
+		#loop {mummy_leaderboard::*}:
+		#LOOT HERE
+	   # change_xp({mummy_damage::%loop-value-1%}, 10)
+	   ## drop_loot({mummy_damage::%loop-value-1%}, 0.75, item from nbt grabFromIndex("MUMMY",6), 1, "&6&lCURSED", location of victim, false, false)
+	   # drop_loot({mummy_damage::%loop-value-1%}, 0.25, item from nbt grabFromIndex("MUMMY",7), 1, "&6&lCURSED",location of victim, true, true)
+		chance of 200%:
+			give {mummy_damage::%loop-value-1%} 1 of blue dye named "&bSoul Nexus"
+	
+		
+	
+			
+
+	
+
+	delete {mummy_damage::*}
+	delete {mummy_leaderboard::*}
+			
+						

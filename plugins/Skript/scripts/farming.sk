@@ -1,0 +1,603 @@
+#███████╗░█████╗░██████╗░███╗░░░███╗██╗███╗░░██╗░██████╗░
+#██╔════╝██╔══██╗██╔══██╗████╗░████║██║████╗░██║██╔════╝░
+#█████╗░░███████║██████╔╝██╔████╔██║██║██╔██╗██║██║░░██╗░
+#██╔══╝░░██╔══██║██╔══██╗██║╚██╔╝██║██║██║╚████║██║░░╚██╗
+#██║░░░░░██║░░██║██║░░██║██║░╚═╝░██║██║██║░╚███║╚██████╔╝
+#╚═╝░░░░░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝╚═╝░░╚══╝░╚═════╝░
+#██╗░░░░░██╗░░░██╗░█████╗░██╗░░██╗
+#██║░░░░░██║░░░██║██╔══██╗██║░██╔╝
+#██║░░░░░██║░░░██║██║░░╚═╝█████═╝░ by enook, for dungeonfy :D
+#██║░░░░░██║░░░██║██║░░██╗██╔═██╗░
+#███████╗╚██████╔╝╚█████╔╝██║░╚██╗
+#╚══════╝░╚═════╝░░╚════╝░╚═╝░░╚═╝
+on login:
+	if {farmingluck::%uuid of player%} isn't set:
+		set {farmingluck::%uuid of player%} to 0
+command /flmax:
+	permission: op
+	trigger:
+		set {farmingluck::%uuid of player%} to 80
+		send message "&aYour farming luck is now set at %{farmingluck::%uuid of player%}%" to player
+command /flset [<offline player>] <int>:
+	permission: op
+	trigger:
+		set {farmingluck::%uuid of arg-1%} to arg-2
+		send message "&aSet %arg-1%'s farming luck to %arg-2%." to player
+command /flreset:
+	permission: op
+	trigger:
+		set {farmingluck::%uuid of player%} to 0
+		message "&aYour farming luck is now set at %{farmingluck::%uuid of player%}%" to player
+command /fl-give-items:
+	permission: op	
+	trigger:
+		give 20 + {farmingluck::%uuid of player%} * 3 of hay bale to player
+		give 20 + {farmingluck::%uuid of player%} * 3 of glowstone dust named "&6Brown Sugar" to player
+		give 20 + {farmingluck::%uuid of player%} * 3 of orange dye named "&6Abnormal Pumpkin" to player
+		give 20 + {farmingluck::%uuid of player%} * 3 of nether wart block to player
+		give 20 + {farmingluck::%uuid of player%} * 3 of baked potato to player
+		give 2 diamond named "&dExceedingly Shiny Diamond" to player
+
+command /convert-abnormalpumpkin:
+	trigger:
+		loop all items in player's inventory:
+			if name of loop-slot is "&6Abnormal Pumpkin":
+				set loop-slot to item amount of loop-slot of orange dye named "&6Abnormal Pumpkin"
+
+	
+on right click on lodestone:
+	if block under event-block is water:
+		set {_fl} to a new chest inventory with 6 row with name "&6FARMING LUCK"
+		if {farmingluck::%uuid of player%} >= 80:
+			set slot 22 of {_fl} to wheat named "&a%{farmingluck::%uuid of player%}% Farming Luck" with lore "&7Every 2 farming luck level grants &a+1" and "&7additional crop! &8(Capped at 80)" and " " and "&aCongrats, you've reached the max level!"
+		else:
+			set {_nwFL} to {farmingluck::%uuid of player%} + 1
+			set slot 22 of {_fl} to wheat named "&a%{farmingluck::%uuid of player%}% -> %{farmingluck::%uuid of player%} + 1% Farming Luck" with lore "&7Every 2 farming luck level grants &a+1" and "&7additional crop! &8(Capped at 80)" and " " and "&fUpgrade Cost:" and "&7%20 + {farmingluck::%uuid of player%} * 3% Haybale" and "&7%20 + {farmingluck::%uuid of player%} * 3% Nether Wart Block" and "&7%20 + {farmingluck::%uuid of player%} * 3% Abnormal Pumpkin" and "&7%20 + {farmingluck::%uuid of player%} * 3% Baked Potato" and "&7%20 + {farmingluck::%uuid of player%} * 3% Brown Sugar" and "&72 Exceedingly Shiny Diamonds" and " " and "&eClick to upgrade!"
+		
+		set slot 49 of {_fl} to barrier named "&fClose Menu"
+		open {_fl} to player
+
+ 
+on inventory click:
+	if name of event-inventory is "&6FARMING LUCK":
+		cancel event
+		if index of event-slot = 22:
+			close player's inventory
+			if {farmingluck::%uuid of player%} >= 80:
+				message "&aYou're already at max farming luck!" to player
+			else:
+
+				
+				if player has 20 + {farmingluck::%uuid of player%} * 3 of hay bale:
+					if player has 20 + {farmingluck::%uuid of player%} * 3 of glowstone dust named "&6Brown Sugar":						
+						if player's inventory contains 20 + {farmingluck::%uuid of player%} * 3 of orange dye named "&6Abnormal Pumpkin":
+							if player has 20 + {farmingluck::%uuid of player%} * 3 of nether wart block:
+								if player has 20 + {farmingluck::%uuid of player%} * 3 of baked potato:
+									if player has 2 diamond named "&dExceedingly Shiny Diamond":
+										remove 20 + {farmingluck::%uuid of player%} * 3 of hay bale from player
+										remove 20 + {farmingluck::%uuid of player%} * 3 of glowstone dust named "&6Brown Sugar" from player	
+										remove 20 + {farmingluck::%uuid of player%} * 3 of orange dye named "&6Abnormal Pumpkin" from player
+										remove 20 + {farmingluck::%uuid of player%} * 3 of nether wart block from player
+										remove 20 + {farmingluck::%uuid of player%} * 3 of baked potato from player
+										remove 2 diamond named "&dExceedingly Shiny Diamond" from player
+										set {farmingluck::%uuid of player%} to {farmingluck::%uuid of player%} + 1
+										close player's inventory
+										broadcast "&a&ke &a%player% reached &e%{farmingluck::%uuid of player%}% &aFarming Luck &a&ke"
+										play sound "entity.player.levelup" to player
+										if {farmingluck::%uuid of player%} = 80:
+											play sound "ui.toast.challenge_complete" to player
+											add 1 to {farmcap}
+											give player turtle helmet named "&aFarmer's Cap" with lore "&7It takes a lot of dedication" and "&7to become like &eFred&7." and " " and "&8Edition ##%{farmcap}% given to %player%"
+											broadcast "&6%player% got ##%{farmcap}% Farmer's Cap!"
+									else:
+										message "&cYou don't have the required materials" to player
+								else:
+									message "&cYou don't have the required materials" to player
+							else:
+								message "&cYou don't have the required materials" to player
+						else:
+							message "&cYou don't have the required materials" to player
+					else:
+						message "&cYou don't have the required materials" to player
+				else:
+					message "&cYou don't have the required materials" to player
+		if index of event-slot = 49:
+			close player's inventory
+on break of pumpkin or sugar cane or nether wart or potato plant or wheat plant or carrot plant or cactus or melon:
+	chance of 0.0002%:
+		give player jukebox named "&dVibing Trail Effect" with lore "&7Shift while holding this in your", "&7offhand and the helmet you want", "&7to apply this to in your mainhand", "", "&7Music notes start appearing above your head!", "", "&cCan only be put on helmets!", "&8Very rare drop from farming!"
+		broadcast "&d&lVIBING! &f%player% just got a &dVibing Trail Effect &ffrom farming! &8(0.002%%)"
+on break of pumpkin:
+	if {in_sr::%uuid of player%} != true:
+		set {_d} to "%{farmingluck::%uuid of player%}%" parsed as an integer
+		give "%round({_d}/2)% pumpkin" parsed as item to player
+on break of sugar cane:
+	if {in_sr::%uuid of player%} != true:
+		set {_d} to "%{farmingluck::%uuid of player%}%" parsed as an integer
+		give "%round({_d}/2)% sugar cane" parsed as item to player
+on break of nether wart:
+	if {in_sr::%uuid of player%} != true:
+		set {_d} to "%{farmingluck::%uuid of player%}%" parsed as an integer
+		give "%round({_d}/2)% nether wart" parsed as item to player
+on break of potato plant:
+	if {in_sr::%uuid of player%} != true:
+		set {_d} to "%{farmingluck::%uuid of player%}%" parsed as an integer
+		give "%round({_d}/2)% potato" parsed as item to player
+on break of wheat plant:
+	if {in_sr::%uuid of player%} != true:
+		set {_d} to "%{farmingluck::%uuid of player%}%" parsed as an integer
+		give "%round({_d}/2)% wheat" parsed as item to player
+on break of carrot plant:
+	if {in_sr::%uuid of player%} != true:
+		set {_d} to "%{farmingluck::%uuid of player%}%" parsed as an integer
+		give "%round({_d}/2)% carrot" parsed as item to player
+on break of cactus:
+	if {in_sr::%uuid of player%} != true:
+		set {_d} to "%{farmingluck::%uuid of player%}%" parsed as an integer
+		give "%round({_d}/2)% cactus" parsed as item to player
+on break of melon:
+	if {in_sr::%uuid of player%} != true:
+		set {_d} to "%{farmingluck::%uuid of player%}%" parsed as an integer
+		give "%round({_d}/2)% melon slice" parsed as item to player
+#=========TOMATOES!!!!=========
+on break of rose bush:
+	if player's gamemode is adventure:
+		cancel event
+		set {tomatoplant} to a new chest inventory with 3 row with name "&cTomato Plant"
+		set {crystalbox_slot} to random integer between 0 to 27
+		set slot {crystalbox_slot} of {tomatoplant} to rose bush named "&eRed Tomatoes"
+		set {crystalbox_slot} to random integer between 0 to 27
+		set slot {crystalbox_slot} of {tomatoplant} to rose bush named "&eRed Tomatoes"
+		set {crystalbox_slot} to random integer between 0 to 27
+		set slot {crystalbox_slot} of {tomatoplant} to rose bush named "&eRed Tomatoes"
+		chance of 25%:
+			set {crystalbox_slot} to random integer between 0 to 27
+			set slot {crystalbox_slot} of {tomatoplant} to oak leaves named "&eTomato Leaves"
+		open {tomatoplant} to player
+		delete {tomatoplant}
+
+#=============================POTATOES==========================
+on break:
+	if event-block is fully grown potato plant:
+		set {_var} to 1
+		if {_var} = 1:
+			clear drops
+			give potato to player
+			play sound "block.composter.empty" to player
+			wait 1 seconds
+			set event-block to freshly planted potato plant
+			wait 10 ticks
+			set event-block to stage 2 potato plant
+			wait 10 ticks
+			set event-block to fully grown potato plant
+on break:
+	if event-block is fully grown potato plant:
+		if name of player's boots is "&ePotato Yeezys":
+			give player 2 potato
+every 1 ticks:
+	loop all players:
+		if name of loop-player's boots is "&ePotato Yeezys":
+			if loop-player has 64 potato:
+				remove 64 potato from loop-player
+				give loop-player baked potato
+on break:
+	if name of player's tool is "&6Potato Hoe &5[PADRE]":
+		give player 2 potato
+on break:
+	event-block is fully grown potato plant:
+		chance of 2%:
+			give player 10 potatoes
+			send message "&e&lYUM! &fYou got 10 Potatoes! &8(2%%)" to player
+			send title "&e10 Potatoes :>" with subtitle "&72%%" to player
+on break:
+	event-block is fully grown potato plant:
+		chance of 0.02%:
+			give player 20 poisonous potatoes
+			broadcast "&e&l&ke &ePOTATOPOCOLAUPSESPELTWRONG &l&ke &f%player% just got 20 Poisonous Potatoes! &8(&d0.02%%&8)"
+			send title "&e&l&ke &ePOTATOPOCOLAUPSESPELTWRONG &l&ke" with subtitle "&8(&d0.02%%&8)" to player
+
+#============CARROT=============
+on break:
+	if event-block is fully grown carrot plant:
+		clear drops
+		give carrot to player
+		play sound "block.composter.empty" to player
+		wait 2 seconds
+		set event-block to freshly planted carrot plant
+		wait 2 seconds
+		set event-block to fully grown carrot plant
+on break:
+	event-block is fully grown carrot plant:
+		chance of 2%:
+			give player 10 carrots
+			send message "&6&lHIPPITY HOPPITY! &fYou got 10 Carrots! &8(2%%)" to player
+			send title "&610 Carrots :D" with subtitle "&72%%" to player
+			play sound "entity.rabbit.jump" to player
+on break:
+	event-block is fully grown carrot plant:
+		chance of 0.5%:
+			give player {carrotbag}
+			send message "&6&lBALLING! &fYou got a &6Bag of Carrots!! &8(0.5%%)" to player
+			send title "&6Carrot Bag" with subtitle "&70.5%%" to player
+			play sound "entity.rabbit.jump" to player
+on break:
+	if event-block is fully grown carrot plant:
+		chance of 0.08%:
+			give player golden carrot with name "&6Corn™" with lore "&7Right click to heal 10 hearts and get &6Absorption 4" and "&7to all players within 4 blocks" and "&8(15 second cooldown)"
+			broadcast "&6&lCORN! &f%player% just dropped &6Corn™&f! &8(0.08%%)"
+			send title "&6Corn™" with subtitle "&70.08%%" to player
+on break:
+	if event-block is fully grown carrot plant:
+		if name of player's offhand item is "&eRabbit":
+			give player 4 carrots
+every 2 ticks:
+	loop all players:
+		if name of loop-player's offhand item is "&eRabbit":
+			if loop-player has 96 carrots:
+				remove 96 carrots from loop-player
+				give loop-player {carrotbag}
+#{carrotbag}			
+on break:
+	if event-block is fully grown carrot plant:
+		if name of player's helmet is "&6Carrot Helmet":
+			if name of player's chestplate is "&6Carrot Chestplate":
+				if name of player's leggings is "&6Carrot Leggings":
+					if name of player's boots is "&6Carrot Boots":
+						give player 4 carrots
+#==================WHEAT====================
+on break:
+	event-block is stage eight wheat plant:
+		clear drops
+		give wheat to player
+		wait 2 seconds
+		set event-block to freshly planted wheat plant
+		wait 1 seconds
+		set event-block to stage 3 wheat plant
+		wait 1 seconds
+		set event-block to stage 6 wheat plant
+		wait 1 seconds
+		set event-block to fully grown wheat plant
+on break of wheat plant:
+	if name of player's tool is "&eWheat Hoe &5[PADRE]":
+		give player 2 wheat
+on mine of wheat plant:
+	if name of player's boots is "&6Wheat Yeezys":
+		give player 2 wheat
+every 1 ticks:
+	loop all players:
+		if name of loop-player's boots is "&6Wheat Yeezys":
+			if loop-player has 32 wheat:
+				remove 32 wheat from loop-player
+				give loop-player hay bale
+on break:
+	event-block is stage eight wheat plant:
+		chance of 2%:
+			give player 10 wheat
+			send title "&f10x Wheat" with subtitle "&72%%" to player
+			send message "&e&lSLAY! &fYou got 10x Wheat &8(2%%)" to player
+
+on break:
+	event-block is stage eight wheat plant:
+		chance of 0.5%:
+			give player hay bale
+			send title "&6Haybale" with subtitle "&70.5%%" to player
+			send message "&6&lSLICK! &fYou got a Haybale &8(0.5%%)" to player
+
+#netherwart
+on break of nether wart:
+	if name of player's tool is "&cWart Hoe &5[PADRE]":
+		give player 2 nether wart
+on break of nether wart:
+	play sound "block.stone.break" to player
+	clear drops
+	give player nether wart
+	wait 2 seconds
+	set event-block to nether wart
+on break of nether wart:
+	if name of player's boots is "&cRed Fungus Yeezys":
+		give player 2 nether wart
+every 1 ticks:
+	loop all players:
+		if name of loop-player's boots is "&cRed Fungus Yeezys":
+			if loop-player has 64 nether wart:
+				remove 64 nether wart from loop-player
+				give loop-player nether wart block
+on mine of nether wart:
+	chance of 1%:
+		play sound "entity.player.levelup" to player
+		make console execute command "/experience add %player% 2 levels"
+		send "&c&lNICE! &r&fYou got &a2 Experience Levels &7(1%%)" to player
+		send title " " with subtitle "&a+2 Experience Levels" to player
+
+#sugar cane
+on break of sugar cane:
+	if name of player's tool is "&bSugar Cane Hoe &5[PADRE]":
+		give player 4 sugar cane
+on break of sugar cane:
+	clear drops
+	give player sugar cane
+	wait 4 seconds
+	if block below event-block isn't sugar cane or air:
+		set event-block to sugar cane
+		set block 1 block above event-block to sugar cane
+		set block 2 blocks above to sugar cane
+on mine of sugar cane:
+	if name of player's boots is "&fSweet Yeezys":
+		give player 4 sugar cane
+every 1 ticks:
+	loop all players:
+		if name of loop-player's boots is "&fSweet Yeezys":
+			if loop-player has 64 sugar cane:
+				remove 64 sugar cane from loop-player
+				give loop-player glowstone dust named "&6Brown Sugar"
+on mine of sugar cane:
+     chance of 2%
+     name of player's tool is "&bSugar Cane Hoe":
+          give 1 sugar named "&bI am Speed" with lore "right click to consume to player" to player
+          send "&b&lSweet! &r&fYou got &bI am Speed &7(2%%)" to player
+          send title "&bI am Speed" with subtitle "&72%%" to player for 3 seconds
+on right click:
+	name of player's tool is "&bI am speed":
+		remove 1 sugar from player
+		apply speed 5 to player for 10 seconds
+
+#cactus
+on break of cactus:
+    wait 5 seconds
+    set event-block to cactus
+on break of cactus:
+    chance of 5%:
+        give player green dye named "&dCactus Soul" with lore "&7right click to use"
+        send "&d&lSICK! &r&fYou got &dCactus Soul &7(5%%)" to player
+        send title "&dCactus Soul" with subtitle "&75%%" to player for 3 seconds
+on right click:
+      name of player's tool is "&dCactus Soul":
+            remove 1 green dye from player
+            apply absorption 5 to player for 120 seconds
+on break of cactus:
+    chance of 20%:
+        give player 10 Cactus
+        send "&2&lNICE! &r&fYou got &eBonus Cactus &7(20%%)" to player
+        send title "&eBonus Cactus" with subtitle "&720%%" to player for 1 seconds
+    chance of 5%:
+        give player 64 Cactus
+        send "&c&lEPIC! &r&fYou got &eLots of Bonus Cactus &7(5%%)" to player
+        send title "&eLots of Bonus Cactus" with subtitle "&75%%" to player for 1 seconds
+		
+#MELONS
+on mine of melon:
+	clear drops
+	set event-block to air
+	give 1 melon slice to player
+	play sound "entity.item.pickup" to player
+	play sound "block.wood.break" to player
+	wait 4 seconds
+	set event-block to melon
+on mine of melon:
+    chance of 5%:
+        name of player's tool is "&aMelon Axe"
+        give 10 melon slices to player
+        send "&a&lBONUS! &r&fYou got 10 bonus Melon Slices &8(5%%)" to player
+        send title "&a10 Melon Slices!" with subtitle "&75%%" to player for 3 seconds
+        play sound "entity.player.levelup" to player
+on mine of melon:
+	chance of 2%:
+		if name of player's tool is "&aMelon Axe":
+			give 1 glistering melon slice with name "&6Glistering Melon Slice" to player
+			send "&6&lSHINY! &r&fYou got &6Glistering Melon Slice &8(2%%)" to player
+			send title "&6Glistering Melon Slice" with subtitle "&72%%" to player for 3 seconds
+			play sound "entity.player.levelup" to player
+on mine of melon:
+	chance of 2%:
+		if name of player's tool is "&aMelon Axe":
+			give 1 melon to player
+			send "&a&lMELON! &r&fYou got a Melon &8(2%%)" to player
+			send title "&aMelon" with subtitle "&72%%" to player for 3 seconds
+			play sound "entity.player.levelup" to player
+on mine of melon:
+	if name of player's boots is "&aMelon Yeezys":
+		give 4 melon slices to player
+on mine of melon:
+	chance of 0.02%:
+		give player lime dye with name "&aMelon Soul" with lore "&7Right click to gain &fSpeed 10&7. &8(15s cooldown)"
+		broadcast "&a&lSOUL! &f%player% just got a &aMelon Soul! &8(0.02%%)"
+		send title "&aMelon Soul" with subtitle "&70.02%%"
+		play sound "entity.item.pickup" to player		
+on right click with lime dye:
+	if name of player's held item is "&aMelon Soul":
+		if {melonsoul::%player%} isn't set:
+			set {melonsoul::%player%} to false
+		if {melonsoul::%player%} = false:
+			set {melonsoul::%player%} to true
+			apply speed 10 to player for 12 seconds
+			wait 15 seconds
+			set {melonsoul::%player%} to false
+		else:
+			send message "&cThis ability is on a cooldown!" to player
+		
+#pumpkins
+every 2 ticks:
+	loop all players:
+		if name of loop-player's helmet is "&6Pumpkin Reaper Helmet":
+			if loop-player has 64 pumpkins:
+				remove 64 pumpkins from loop-player
+				give loop-player {abnormalpumpkin}
+on break of pumpkin:
+	if name of player's helmet is "&6Pumpkin Reaper Helmet":
+		give player 4 pumpkins
+on break of pumpkin:
+	if name of player's tool is "&6Pumpkin Hatchet &5[PADRE]":
+		give player 4 pumpkins
+on mine of pumpkin:
+	clear drops
+	set event-block to air
+	give pumpkin to player
+	wait 4 seconds
+	set event-block to pumpkin
+on mine of pumpkin:
+    chance of 1%:
+        give 64 pumpkins to player
+        send "&e&lBONUS! &r&fYou got 64 bonus &6Pumpkins &8(1%%)" to player
+        send title "&6BONUS PUMPKINS" with subtitle "&71%%" to player for 3 seconds
+on mine of pumpkin:
+    chance of 0.5%:
+        name of player's tool is "&6Pumpkin Hatchet"
+        give 1 pumpkin pie named "&6Sweet Pie" with lore "&7right click to consume" to player
+        send "&e&lYUM! &r&fYou got &6Sweet Pie &8(0.5%%)" to player
+        send title "&6SWEET PIE" with subtitle "&70.5%%" to player for 3 seconds
+on right click:
+      name of player's tool is "&6Sweet Pie":
+            remove 1 pumpkin pie from player
+            apply speed 2 to player for 120 seconds
+            apply absorption 3 to player for 120 seconds
+on mine of pumpkin:
+	chance of 0.2%:
+		give 1 dead bush with name "&dPumpkin Stem" with lore "&7Rare drop from farming pumpkins!" to player
+		send "&d&lLUCKY! &fYou got a &6Pumpkin Stem&f! &8(0.2%%)" to player
+		send title "&d&lPUMPKIN STEM" with subtitle "&70.2%%"
+on right click on pumpkin:
+    if player's held item is shears:
+        cancel event
+		
+variables:
+	{genichirofirstkill} = false
+
+on break of bamboo:
+	clear drops
+	give player 1 bamboo
+on break of bamboo:
+	if name of player's offhand item is "&aPanda":
+		give player 2 bamboo
+	if name of player's offhand item is "&aBrown Panda":
+		give player 4 bamboo
+#bamboo choppers		
+on break of bamboo:
+	if name of player's held item is "&fBamboo Chopper 3070":
+		give player 1 bamboo
+	if name of player's held item is "&fBamboo Chopper 3080":
+		give player 2 bamboo
+	if name of player's held item is "&fBamboo Chopper 3090":
+		give player 3 bamboo
+#bamboo compressor		
+every 2 tick:
+	loop all players:
+		if name of loop-player's offhand item is "&aPanda" or "&aBrown Panda":
+			if loop-player has 96 bamboo:
+				remove 96 bamboo from loop-player
+				give loop-player {bamboo_bundle}
+#bamboo soul			
+on break of bamboo:
+	if slot 7 of player's inventory is lime dye named "&aBamboo Soul":
+		give player 1 bamboo
+#bamboo soul drop		
+on break of bamboo:
+	chance of 0.02%:
+		give player lime dye named "&aBamboo Soul" with lore "&7Gain an extra &abamboo &7when" and "&7farming bamboo." and "" and "&7Necklace: 8th Hotbar Slot for effect" and "&fDropped by %player%"
+		broadcast "&a&lBAMBOO SOUL! &f%player% dropped a &aBamboo Soul! <tooltip:&fThis is a 1/5000 drop!>&8(&d0.02%%&8)<reset>"
+#brown panda food drop		
+on break of bamboo:
+	chance of 0.1%:
+		give player brown dye named "&6Brown Panda Food" with lore "&7&7Special food used to attract &6Brown Pandas&7!"
+		broadcast "&6&lPANDA FOOD! &f%player% dropped &6Brown Panda Food! <tooltip:&fThis is a 1/1000 drop!>&8(&d0.1%%&8)<reset>"
+#bamboo bundle drop		
+on break of bamboo:
+	chance of 1%:
+		give player {bamboo_bundle}
+		send message "&2&lSLAY!! &fYou got a &2Bamboo Bundle! &7(1%%)" to player
+#48 bamboo drop		
+on break of bamboo:
+	chance of 2%:
+		give player 32 bamboo
+
+on break of bamboo:
+	set event-block to air
+	wait 5 seconds
+	set event-block to bamboo
+
+#Fresh produce enchant
+on sneak toggle:
+	if name of player's offhand item is "&dMystical Fresh Netherwart Book":
+		if player's held item is any chestplate:
+			if lore of player's held item contains "&6Fresh Netherwart" or "&6Fresh Pumpkins" or "&6Fresh Wheat" or "&6Fresh Potatoes" or "&6Fresh Cane":
+				message "&cYou already have this enchant/an enchant that conflicts on this item!"
+			else:
+				set player's offhand item to air
+				add " " and "&6Fresh Netherwart" and "&7Get &a+1 Bonus Nether Wart &7when farming!" to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith Fresh Netherwart!"
+				play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou can only apply this book to chestplate!" to player
+on break:
+	if event-block is nether wart:
+		if lore of player's chestplate contains "&6Fresh Netherwart":
+			give player 1 nether wart
+on sneak toggle:
+	if name of player's offhand item is "&dMystical Fresh Potatoes Book":
+		if player's held item is any chestplate:
+			if lore of player's held item contains "&6Fresh Netherwart" or "&6Fresh Pumpkins" or "&6Fresh Wheat" or "&6Fresh Potatoes" or "&6Fresh Cane":
+				message "&cYou already have this enchant/an enchant that conflicts on this item!"
+			else:
+				set player's offhand item to air
+				add " " and "&6Fresh Potatoes" and "&7Get &a+1 Bonus Potato &7when farming!" to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith Fresh Potatoes!"
+				play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou can only apply this book to chestplate!" to player
+on break:
+	if event-block is potato plant:
+		if lore of player's chestplate contains "&6Fresh Potatoes":
+			give player 1 potatoes
+on sneak toggle:
+	if name of player's offhand item is "&dMystical Fresh Wheat Book":
+		if player's held item is any chestplate:
+			if lore of player's held item contains "&6Fresh Netherwart" or "&6Fresh Pumpkins" or "&6Fresh Wheat" or "&6Fresh Potatoes" or "&6Fresh Cane":
+				message "&cYou already have this enchant/an enchant that conflicts on this item!"
+			else:
+				set player's offhand item to air
+				add " " and "&6Fresh Wheat" and "&7Get &a+1 Bonus Wheat &7when farming!" to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith Fresh Wheat!"
+				play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou can only apply this book to chestplate!" to player
+on break:
+	if event-block is wheat plant:
+		if lore of player's chestplate contains "&6Fresh Wheat":
+			give player 1 wheat
+on sneak toggle:
+	if name of player's offhand item is "&dMystical Fresh Cane Book":
+		if player's held item is any chestplate:
+			if lore of player's held item contains "&6Fresh Netherwart" or "&6Fresh Pumpkins" or "&6Fresh Wheat" or "&6Fresh Potatoes" or "&6Fresh Cane":
+				message "&cYou already have this enchant/an enchant that conflicts on this item!"
+			else:
+				set player's offhand item to air
+				add " " and "&6Fresh Cane" and "&7Get &a+1 Bonus Sugar Cane &7when farming!" to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith Fresh Cane!"
+				play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou can only apply this book to chestplate!" to player
+on break:
+	if event-block is sugar cane:
+		if lore of player's chestplate contains "&6Fresh Cane":
+			give player 1 sugar cane
+			
+on sneak toggle:
+	if name of player's offhand item is "&dMystical Fresh Pumpkins Book":
+		if player's held item is any chestplate:
+			if lore of player's held item contains "&6Fresh Netherwart" or "&6Fresh Pumpkins" or "&6Fresh Wheat" or "&6Fresh Potatoes" or "&6Fresh Cane":
+				message "&cYou already have this enchant/an enchant that conflicts on this item!"
+			else:
+				set player's offhand item to air
+				add " " and "&6Fresh Pumpkins" and "&7Get &a+1 Bonus Pumpkin &7when farming!" to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith Fresh Pumpkins!"
+				play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou can only apply this book to chestplate!" to player
+on break:
+	if event-block is pumpkin:
+		if lore of player's chestplate contains "&6Fresh Pumpkins":
+			give player 1 pumpkin

@@ -1,0 +1,128 @@
+#wither slayer
+on damage:
+	if name of attacker's leggings is "&cWither Slayer Leggings &d☠":
+		if metadata tag "supersayin" of attacker is true:
+			chance of 20%:
+				increase damage by damage * 3
+				send title "" with subtitle "&4[4x⚔]" to attacker
+on sneak toggle:
+	if name of player's leggings is "&cWither Slayer Leggings &d☠":
+		if metadata tag "witherlegs" of player isn't set:
+			set metadata tag "witherlegs" of player to false
+		if metadata tag "witherlegs" of player = false:
+			set metadata tag "witherlegs" of player to true
+			set metadata tag "supersayin" of player to true
+			message "&aYou activated your &eSuper Saiyan &aability for 15 seconds!"
+			apply strength 30 to player for 15 seconds replacing the existing effect
+			wait 15 seconds
+			set metadata tag "supersayin" of player to false
+			wait 75 seconds
+			set metadata tag "witherlegs" of player to false
+			message "&aYour &eSuper Saiyan &aability is ready!"
+on damage of player:
+	if name of victim's boots is "&cWither Slayer Boots &d☠":
+		attacker is not a wither
+		chance of 3%:
+			increase damage by damage
+on armor change:
+    if name of event-item contains "&d☠":
+        set {_armorCheck} to 0
+        loop armor of player:
+            name of loop-slot contains "&d☠"
+            add 1 to {_armorCheck}
+        while {_armorCheck} >= 4:
+            set {_armorCheck} to 0
+            loop armor of player:
+                name of loop-slot contains "&d☠"
+                add 1 to {_armorCheck}
+            if {_armorCheck} >= 4:
+                remove resistance from player
+                apply resistance 3 without particles to player for 6 seconds
+                wait 5 seconds		
+
+on damage:
+	victim is wither or wither skeleton
+	if name of attacker's helmet contains "&d☠":
+		if name of attacker's chestplate contains "&d☠":
+			if name of attacker's leggings contains "&d☠":
+				if name of attacker's boots contains "&d☠":
+					increase damage by damage * 3
+
+#yoroi full set bonus
+on sneak toggle:
+	if name of player's helmet is "&4Yoroi Helmet":
+		if name of player's chestplate is "&4Yoroi Chestplate":
+			if name of player's leggings is "&4Yoroi Leggings":
+				if name of player's boots is "&4Yoroi Boots":
+					if metadata tag "yoroiCD" of player isn't set:
+						set  metadata tag "yoroiCD" of player to false
+					if  metadata tag "yoroiCD" of player is false:
+						set metadata tag "yoroiCD" of player to true
+						set metadata tag "yoroiCD" of player to true
+						send message "&aYou used your &6Devious Dodge &aability."
+						apply speed 15 to player for 15 seconds
+						wait 15 seconds
+						set metadata tag "yoroiCD" of player to false
+						send message "&aYour &6Devious Dodge &aability is no longer in affect." to player
+						wait 15 seconds
+						set metadata tag "yoroiCD" of player to false
+						send message "&aYour &6Devious Dodge &aability is ready." to player
+#yoroi boots speed/jump						
+on damage:
+	if victim is player:
+		if {yoroiinv.%uuid of victim%} is true:
+			chance of 20%:
+				cancel event
+				send message "&aYour &4Yoroi Set Ability &anegated damage!" to victim
+on armor change:
+    if name of event-item contains "&4Yoroi Boots":
+        set {_armorCheck} to 0
+        loop armor of player:
+            name of loop-slot contains "&4Yoroi Boots"
+            add 1 to {_armorCheck}
+        while {_armorCheck} >= 1:
+            set {_armorCheck} to 0
+            loop armor of player:
+                name of loop-slot contains "&4Yoroi Boots"
+                add 1 to {_armorCheck}
+            if {_armorCheck} >= 1:
+                remove jump boost from player
+                apply jump boost 3 without particles to player for 6 seconds
+                remove swiftness from player
+                apply swiftness 3 without particles to player for 6 seconds
+                wait 5 seconds
+#full set bonus
+on damage:
+	if victim is player:
+		if name of victim's helmet is "&9Ninja's Helmet":
+			if name of victim's chestplate is "&9Ninja's Chestplate":
+				if name of victim's leggings is "&9Ninja's Leggings":
+					if name of victim's boots is "&9Ninja's Boots":
+						chance of 10%:
+							cancel event
+							play sound "item.firecharge.use" at victim
+							send message "&aYour &9Ninja's Set &anegated damage!" to victim
+#ninja boots speed/jump							
+on armor change:
+    if name of event-item contains "&9Ninja's Boots":
+        set {_armorCheck} to 0
+        loop armor of player:
+            name of loop-slot contains "&9Ninja's Boots"
+            add 1 to {_armorCheck}
+        while {_armorCheck} >= 1:
+            set {_armorCheck} to 0
+            loop armor of player:
+                name of loop-slot contains "&9Ninja's Boots"
+                add 1 to {_armorCheck}
+            if {_armorCheck} >= 1:
+                remove jump boost from player
+                apply jump boost 5 without particles to player for 6 seconds
+                remove swiftness from player
+                apply swiftness 5 without particles to player for 6 seconds
+                wait 5 seconds
+#kunai ability		
+on death:
+	if attacker is player:
+		if name of attacker's held item is "&fKunai":
+			remove absorption from attacker
+			apply absorption 5 to attacker for 10 seconds

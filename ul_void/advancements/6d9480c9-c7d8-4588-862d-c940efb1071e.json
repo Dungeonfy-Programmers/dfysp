@@ -1,0 +1,28 @@
+{
+  "minecraft:adventure/root": {
+    "criteria": {
+      "killed_something": "2022-03-24 08:53:24 +0000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/emerald_block": {
+    "criteria": {
+      "has_emerald": "2022-03-24 08:53:28 +0000"
+    },
+    "done": true
+  },
+  "minecraft:adventure/kill_a_mob": {
+    "criteria": {
+      "minecraft:zombie": "2022-03-24 08:53:24 +0000"
+    },
+    "done": true
+  },
+  "minecraft:adventure/kill_all_mobs": {
+    "criteria": {
+      "minecraft:skeleton": "2022-03-24 08:53:36 +0000",
+      "minecraft:zombie": "2022-03-24 08:53:24 +0000"
+    },
+    "done": false
+  },
+  "DataVersion": 2730
+}

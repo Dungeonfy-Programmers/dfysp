@@ -1,0 +1,49 @@
+command /testseasonpass:
+	permission: op
+	trigger:
+		if {pumpkins_farmed::%uuid of player%} isn't set:
+			set {pumpkins_farmed::%uuid of player%} to 0
+		set {passgui} to a new chest inventory with 6 row with name "&5Spooky Season Pass"
+		set slot 0 and 1 and 2 and 3 and 5 and 6 and 7 and 8 of {passgui} to purple stained glass pane with name " "
+		set slot 4 of {passgui} to carved pumpkin named "&5Spooky Season (Season III)" with lore "&7Each season lasts 1-2 months, this" and "&7season is themed around &6Pumpkins&7! :)" and " " and "&7This season started 10/22/2022"
+		set slot 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 and 36 and 37 and 38 and 39 and 40 and 41 and 42 and 43 and 44 and 45 and 46 and 47 and 48 and 50 and 51 and 52 and 53 and 54 of {passgui} to gray stained glass pane with name " "
+		#Tier 1
+		if {pumpkins_farmed::%uuid of player%} >= 50:
+			set slot 18 of {passgui} to lime stained glass pane with name "&aTier I" with lore "&7Unlocked at &650 &7Pumpkins Farmed" and " " and "&7Reward: &b200 Bits" and " " and "&aUNLOCKED"
+		else:
+			set slot 18 of {passgui} to red stained glass pane with name "&cTier I" with lore "&7Unlocked at &650 &7Pumpkins Farmed" and " " and "&7Reward: &b200 Bits" and " " and "&cLOCKED"
+		if {pumpkins_farmed::%uuid of player%} >= 200:
+			set slot 19 of {passgui} to 2 lime stained glass pane with name "&aTier II" with lore "&7Unlocked at &6200 &7Pumpkins Farmed" and " " and "&7Reward: &68 Gold Blocks" and " " and "&aUNLOCKED"
+		else:
+			set slot 19 of {passgui} to 2 red stained glass pane with name "&cTier II" with lore "&7Unlocked at &6200 &7Pumpkins Farmed" and " " and "&7Reward: &68 Gold Blocks" and " " and "&cLOCKED"
+		if {pumpkins_farmed::%uuid of player%} >= 500:
+			set slot 20 of {passgui} to 3 lime stained glass pane with name "&aTier III" with lore "&7Unlocked at &6500 &7Pumpkins Farmed" and " " and "&7Reward: &b8 Diamond Blocks" and " " and "&aUNLOCKED"
+		else:
+			set slot 20 of {passgui} to 3 red stained glass pane with name "&cTier III" with lore "&7Unlocked at &6500 &7Pumpkins Farmed" and " " and "&7Reward: &b8 Diamond Blocks" and " " and "&cLOCKED"
+		if {pumpkins_farmed::%uuid of player%} >= 1000:
+			set slot 21 of {passgui} to 4 lime stained glass pane with name "&aTier IV" with lore "&7Unlocked at &61000 &7Pumpkins Farmed" and " " and "&7Reward: &5Seasonal Hatchet" and "&7Used to farm Season Coins!" and " " and "&aUNLOCKED"
+		else:
+			set slot 21 of {passgui} to 4 red stained glass pane with name "&cTier IV" with lore "&7Unlocked at &61000 &7Pumpkins Farmed" and " " and "&7Reward: &6Seasonal Axe" and "&7Used to grind Season Coins!" and " " and "&cLOCKED"
+		if {pumpkins_farmed::%uuid of player%} >= 2000:
+			set slot 22 of {passgui} to 5 lime stained glass pane with name "&aTier V" with lore "&7Unlocked at &62000 &7Pumpkins Farmed" and " " and "&7Reward: &e4 Voting Points" and " " and "&aUNLOCKED"
+		else:
+			set slot 22 of {passgui} to 5 red stained glass pane with name "&cTier V" with lore "&7Unlocked at &62000 &7Pumpkins Farmed" and " " and "&7Reward: &e4 Voting Points" and " " and "&cLOCKED"
+		if {pumpkins_farmed::%uuid of player%} >= 3000:
+			set slot 23 of {passgui} to 6 lime stained glass pane with name "&aTier VI" with lore "&7Unlocked at &63000 &7Pumpkins Farmed" and " " and "&7Reward: &b50 Diamond Blocks" and " " and "&aUNLOCKED"
+		else:
+			set slot 23 of {passgui} to 6 red stained glass pane with name "&cTier VI" with lore "&7Unlocked at &63000 &7Pumpkins Farmed" and " " and "&7Reward: &b50 Diamond Blocks" and " " and "&cLOCKED"
+		if {pumpkins_farmed::%uuid of player%} >= 4000:
+			set slot 24 of {passgui} to 7 lime stained glass pane with name "&aTier VII" with lore "&7Unlocked at &64000 &7Pumpkins Farmed" and " " and "&7Reward: &650 Gold Blocks" and " " and "&aUNLOCKED"
+		else:
+			set slot 24 of {passgui} to 7 red stained glass pane with name "&cTier VII" with lore "&7Unlocked at &64000 &7Pumpkins Farmed" and " " and "&7Reward: &650 Gold Blocks" and " " and "&cLOCKED"
+		if {pumpkins_farmed::%uuid of player%} >= 6000:
+			set slot 25 of {passgui} to 8 lime stained glass pane with name "&aTier VIII" with lore "&7Unlocked at &66000 &7Pumpkins Farmed" and " " and "&7Reward: &e8 Voting Points" and " " and "&aUNLOCKED"
+		else:
+			set slot 25 of {passgui} to 8 red stained glass pane with name "&cTier VIII" with lore "&7Unlocked at &66000 &7Pumpkins Farmed" and " " and "&7Reward: &e8 Voting Points" and " " and "&cLOCKED"
+		if {pumpkins_farmed::%uuid of player%} >= 8000:
+			set slot 26 of {passgui} to 9 lime stained glass pane with name "&aTier IX" with lore "&7Unlocked at &68000 &7Pumpkins Farmed" and " " and "&7Reward: &bEnchanted Trail Effect" and " " and "&aUNLOCKED"
+		else:
+			set slot 26 of {passgui} to 9 red stained glass pane with name "&cTier IX" with lore "&7Unlocked at &68000 &7Pumpkins Farmed" and " " and "&7Reward: &bEnchanted Trail Effect" and " " and "&cLOCKED"
+		set slot 53 of {passgui} to redstone torch of protection 1 with item flag hide enchants named "&cInformation" with lore "&7Farm &6Pumpkins &7to unlock tiers of the reward" and "&7while the season is active!" and " " and "&6Season Coins &7can be spent in" and "&7the season shop! (at spawn)" and " " and "&fYou have %{season2kills::%uuid of player%}% season kills!"
+		set slot 49 of {passgui} to barrier with name "&fClose Menu"
+		open {passgui} to player

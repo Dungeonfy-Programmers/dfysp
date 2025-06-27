@@ -1,0 +1,44 @@
+command /quest_forgottenweaponry:
+	trigger:
+		if {indungeon::%uuid of player%} or {in_witherien::%uuid of player%} = true:
+			message "&cYou can't use this while in a dungeon!"
+		else:
+			set {_questtp} to location at (991.5, 78, 75.5)
+			set {_questtp}'s yaw to 27
+			set {_questtp}'s pitch to 0.01
+			teleport player to {_questtp}
+			send title "&6Forgotten Weaponry Quest" with subtitle "&7Start at Yamato" to player
+command /quest_lostlove:
+	trigger:
+		if {indungeon::%uuid of player%} or {in_witherien::%uuid of player%} = true:
+			message "&cYou can't use this while in a dungeon!"
+		else:
+			set {_questtp} to location at (-57.5, 8, -266.5)
+			set {_questtp}'s yaw to -90
+			set {_questtp}'s pitch to 0.01
+			teleport player to {_questtp}
+			send title "&6Lost Love Quest" with subtitle "&7Start at Time Traveler" to player
+command /quest_togsbee:
+	trigger:
+		if {indungeon.%uuid of player%} or {in_witherien.%uuid of player%} = true:
+			message "&cYou can't use this while in a dungeon!"
+		else:
+			set {_questtp} to location at (174.5, 56, 520.5)
+			set {_questtp}'s yaw to 0.01
+			set {_questtp}'s pitch to 0.01
+			teleport player to {_questtp}
+			send title "&6Tog's Bee Quest" with subtitle "&7Start at Tog" to player
+command /quest_lonely:
+	trigger:
+		if {indungeon::%uuid of player%} or {in_witherien::%uuid of player%} = true:
+			message "&cYou can't use this while in a dungeon!"
+		else:
+			set {_questtp} to location at (2.5, 29, 3.5)
+			set {_questtp}'s yaw to 90
+			set {_questtp}'s pitch to 0.01
+			teleport player to {_questtp}
+			send title "&6Lonely Kid Quest" with subtitle "&7Start at Lonely Kid" to player
+on consume:
+	if name of player's held item is "&eUnconsumable Cod":
+		cancel event
+		message "&cYou can't eat Unconsumable Cod, it is unconsumable."

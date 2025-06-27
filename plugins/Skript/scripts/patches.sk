@@ -1,0 +1,174 @@
+on damage:
+	attacker is player
+	if victim is player:
+		if {_mhp::*} contains victim:
+		else:
+			cancel event
+		#send message "&cYou can't hurt other players D:" to attacker
+on damage:
+	victim is player
+	if damage cause is suffocation:
+		cancel event
+		make victim execute command "/spawn"
+on rightclick on entity:
+    player's tool is nametag:
+        cancel event
+on damage of item frame:
+	if attacker's gamemode isn't creative:
+		cancel event
+on command:
+	if command contains "trade":
+		if {hardcore.%uuid of player%} = true:
+			cancel event
+			message "&cYou can't use this command in hardcore mode!"
+		loop all players:
+			if name of loop-player is "enook":
+				send message "&a%player% just used &6/trade"
+#fix trade+ dupe?
+on inventory click:
+	if name of player's inventory contains "Your Items":
+		if click type is right mouse button:
+			cancel event
+			close player's inventory
+
+command /nightvis:
+	trigger:
+		apply night vision 1 without particles to player for 9999 days
+		message "&aYou got &1Night Vision&a! Redo this command if you die!"
+
+#thorns
+on damage:
+	victim is player
+	if damage cause is thorns:
+		set damage to damage * 0.2
+
+#frost walker
+every 60 seconds:
+	loop all players:
+		if loop-player's boots are enchanted with frost walker:
+			disenchant loop-player's boots
+			message "&cRemoved your enchants from your boots because of frost walker!" to loop-player
+#when arrow land on block disappear
+on projectile hit:
+	event-projectile is a arrow or a spectral arrow or fireball:
+		delete event-projectile
+on rightclick on campfire:
+	if gamemode of player isn't creative:
+		cancel event
+on damage:
+	gamemode of attacker isn't creative:
+		victim is item frame or glow item frame:
+			cancel event
+on projectile hit:
+	victim is item frame or glow item frame:
+		cancel event
+		
+on death of wither skeleton:
+	if name of victim isn't set:
+		remove all swords from the drops
+on death of skeleton:
+	if name of victim isn't set:
+		remove bow from the drops
+		
+on login:
+	delete {kindle.%uuid of player%}
+	delete {burntfire.%uuid of player%}
+	delete {netherflame.%uuid of player%}
+	delete {blazenet.%uuid of player%}
+	delete {ak.%player%}
+	delete {golemgrace.%uuid of player%}
+	delete {pigsoul.%uuid of player%}
+	delete {allaycd.%uuid of player%}
+	delete {weakfeather.%uuid of player%}
+	delete {indungeon.%uuid of player%}
+	delete {hpcd.%uuid of player%}
+	delete {cellphone.%player%}
+	delete {forgorcd.%uuid of player%}
+	delete {warbringcd.%player%}
+	delete {witherslayerhelm.%player%}
+	delete {tntlauncher.%uuid of player%}
+	delete {hpantst5.%uuid of player%}
+
+on teleport:
+	if teleport cause is ender pearl:
+		if player isn't op:
+			cancel event
+on projectile hit:
+	victim is a player
+	if event-projectile is fish hook:
+		delete event-projectile
+		
+on right click on barrel or chest or spruce trapdoor or furnace or smoker or blast furnace or flower pot or jungle trapdoor or acacia trapdoor or dark oak trapdoor:
+	if gamemode of player isn't creative:
+		close player's inventory
+		cancel event
+on right click with knowledge book:
+  cancel event
+on craft:
+	if gamemode of player isn't creative:
+		cancel event
+		close player's inventory
+on login:
+	if {luckofcave.%uuid of player%} isn't set:
+		set {luckofcave.%uuid of player%} to 5
+on fuel burn:
+    cancel event
+on walk on black concrete:
+    kill player
+on drink of potion:
+	wait 2 ticks
+	remove bottle from player
+on right click with bottle:
+	cancel event
+	set player's held item to air
+on right click on smoker:
+	cancel event
+	if player's held item is raw porkchop:
+		remove raw porkchop from player
+		give player cooked porkchop
+		message "&aYou cooked a porkchop!" to player
+on break:
+	if gamemode of player isn't creative:
+		set gamemode of player to adventure
+on place:
+	if gamemode of player isn't creative:
+		cancel event
+		set gamemode of player to adventure
+on login:
+	if player isn't op:
+		set gamemode of player to adventure
+on damage:
+	attacker is player:
+		victim is a player:
+			cancel event
+			
+#ANTI BOOK AND QUILL
+on book sign:
+	if player isn't op:
+		cancel event
+on book edit:
+	if player isn't op:
+		cancel event
+
+#ANTI FARMLAND TRAMPLE
+on block trample:
+	gamemode of player is not creative
+	if type of event-block is farmland:
+		cancel event
+
+#ANTI DROPPING
+on drop:
+	if event-item is a end crystal or honey bottle:
+		cancel event
+		message "&cPlease right click this boss summon item to use it!" to player
+	else:
+		if gamemode of player isn't creative:
+			cancel event
+			send message "&cDropping items is disabled (except for boss spawn items). If you want to throw something away, use /trash" to player
+
+on right click on sign:
+	player is not op:
+		cancel event
+
+on sign change:
+	add "%event-player% (%event-player's uuid%) edited a sign at %event-location% with text ""%line 1%"", ""%line 2%"", ""%line 3%"", ""%line 4%"" at %now%." to {ajfhklasjfklsajfklasjf::*}

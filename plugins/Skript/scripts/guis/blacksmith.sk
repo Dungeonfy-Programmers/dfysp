@@ -1,0 +1,27 @@
+command /blacksmith:
+	permission: op
+	trigger:
+		set {blacksmith_gui} to a new chest inventory with 6 row with name "&6Blacksmith"
+		set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 and 36 and 37 and 38 and 39 and 40  and 41 and 42 and 43 and 44 and 45 and 46 and 47 and 48 and 50 and 51 and 52 and 53 of {blacksmith_gui} to gray stained glass pane named " "
+		set slot 49 of {blacksmith_gui} to barrier named "&fClose Menu"
+		set slot 13 of {blacksmith_gui} to anvil with name "&eApplying enhancements to:"
+		if player's held item is air:
+			set slot 22 of {blacksmith_gui} to barrier with name "&cERROR" with lore "&cYou need to be holding something to" and "&capply enhancements onto!"
+		else:
+			set slot 22 of {blacksmith_gui} to player's held item
+		
+		set slot 10 of {blacksmith_gui} to lime dye named "&aEmerald Tip" with lore "&750%% chance to get an emerald on kill." and " " and "&7Cost: 4 Emeralds"
+		
+		open {blacksmith_gui} to player
+ 
+on inventory click:
+	if name of event-inventory is "&6Blacksmith":
+		cancel event
+		if index of event-slot = 49: #CLOSE MENU
+			close player's inventory
+		if index of event-slot = 10:
+			close player's inventory
+			if player has 4 emeralds:
+				remove 4 emeralds from player
+				add " " and "&aEmerald Tip&7: 50%% for an emerald on kill" and "&8Tip Added" to player's held item's lore
+			

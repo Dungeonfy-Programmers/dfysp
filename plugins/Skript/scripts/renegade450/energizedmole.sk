@@ -1,0 +1,425 @@
+on right click:
+	player is sneaking
+	name of player's offhand item is "&eEnergized Mole"
+	set {_moleupg} to a new chest inventory with 3 row with name "&6Gem Milestones"
+	set slot 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26 of {_moleupg} to black stained glass pane
+	set {_ruby-ms} to "%string tag "RUBY-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_ruby-ms} <= 99:
+		set slot 10 of {_moleupg} to {rubygemstone} with lore "&7Current Bonus: &e0", "&7Next Milestone: &e%{_ruby-ms}%&7/&e100"
+	if {_ruby-ms} >= 100:
+		set slot 10 of {_moleupg} to {rubygemstone} with lore "&7Current Bonus: &e1", "&7Next Milestone: &e%{_ruby-ms}%&7/&e1000"	
+	if {_ruby-ms} >= 1000:
+		set slot 10 of {_moleupg} to {rubygemstone} with lore "&7Current Bonus: &e2", "&7Next Milestone: &e%{_ruby-ms}%&7/&e10000"	
+	if {_ruby-ms} >= 10000:
+		set slot 10 of {_moleupg} to {rubygemstone} with lore "&7Current Bonus: &e3", "&7Next Milestone: &e%{_ruby-ms}%&7/&e100000"	
+	if {_ruby-ms} >= 100000:
+		set slot 10 of {_moleupg} to {rubygemstone} with lore "&7Current Bonus: &e4", "&7Next Milestone: &e%{_ruby-ms}%&7/&e1000000"	
+	if {_ruby-ms} >= 1000000:
+		set slot 10 of {_moleupg} to {rubygemstone} with lore "&7Current Bonus: &e5", "&7Next Milestone: &e%{_ruby-ms}%&7/&eMAXED OUT!"
+	set {_amethyst-ms} to "%string tag "AMETHYST-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_amethyst-ms} <= 99:
+		set slot 11 of {_moleupg} to {amethystgemstone} with lore "&7Current Bonus: &e0", "&7Next Milestone: &e%{_amethyst-ms}%&7/&e100"
+	if {_amethyst-ms} >= 100:
+		set slot 11 of {_moleupg} to {amethystgemstone} with lore "&7Current Bonus: &e1", "&7Next Milestone: &e%{_amethyst-ms}%&7/&e1000"	
+	if {_amethyst-ms} >= 1000:
+		set slot 11 of {_moleupg} to {amethystgemstone} with lore "&7Current Bonus: &e2", "&7Next Milestone: &e%{_amethyst-ms}%&7/&e10000"	
+	if {_amethyst-ms} >= 10000:
+		set slot 11 of {_moleupg} to {amethystgemstone} with lore "&7Current Bonus: &e3", "&7Next Milestone: &e%{_amethyst-ms}%&7/&e100000"	
+	if {_amethyst-ms} >= 100000:
+		set slot 11 of {_moleupg} to {amethystgemstone} with lore "&7Current Bonus: &e4", "&7Next Milestone: &e%{_amethyst-ms}%&7/&e1000000"	
+	if {_amethyst-ms} >= 1000000:
+		set slot 11 of {_moleupg} to {amethystgemstone} with lore "&7Current Bonus: &e5", "&7Next Milestone: &e%{_amethyst-ms}%&7/&eMAXED OUT!"
+	set {_sapphire-ms} to "%string tag "SAPPHIRE-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_sapphire-ms} <= 99:
+		set slot 12 of {_moleupg} to {sapphiregemstone} with lore "&7Current Bonus: &e0", "&7Next Milestone: &e%{_sapphire-ms}%&7/&e100"
+	if {_sapphire-ms} >= 100:
+		set slot 12 of {_moleupg} to {sapphiregemstone} with lore "&7Current Bonus: &e1", "&7Next Milestone: &e%{_sapphire-ms}%&7/&e1000"	
+	if {_sapphire-ms} >= 1000:
+		set slot 12 of {_moleupg} to {sapphiregemstone} with lore "&7Current Bonus: &e2", "&7Next Milestone: &e%{_sapphire-ms}%&7/&e10000"	
+	if {_sapphire-ms} >= 10000:
+		set slot 12 of {_moleupg} to {sapphiregemstone} with lore "&7Current Bonus: &e3", "&7Next Milestone: &e%{_sapphire-ms}%&7/&e100000"	
+	if {_sapphire-ms} >= 100000:
+		set slot 12 of {_moleupg} to {sapphiregemstone} with lore "&7Current Bonus: &e4", "&7Next Milestone: &e%{_sapphire-ms}%&7/&e1000000"	
+	if {_sapphire-ms} >= 1000000:
+		set slot 12 of {_moleupg} to {sapphiregemstone} with lore "&7Current Bonus: &e5", "&7Next Milestone: &e%{_sapphire-ms}%&7/&eMAXED OUT!"
+	set {_amber-ms} to "%string tag "AMBER-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_amber-ms} <= 99:
+		set slot 13 of {_moleupg} to {ambergemstone} with lore "&7Current Bonus: &e0", "&7Next Milestone: &e%{_amber-ms}%&7/&e100"
+	if {_amber-ms} >= 100:
+		set slot 13 of {_moleupg} to {ambergemstone} with lore "&7Current Bonus: &e1", "&7Next Milestone: &e%{_amber-ms}%&7/&e1000"	
+	if {_amber-ms} >= 1000:
+		set slot 13 of {_moleupg} to {ambergemstone} with lore "&7Current Bonus: &e2", "&7Next Milestone: &e%{_amber-ms}%&7/&e10000"	
+	if {_amber-ms} >= 10000:
+		set slot 13 of {_moleupg} to {ambergemstone} with lore "&7Current Bonus: &e3", "&7Next Milestone: &e%{_amber-ms}%&7/&e100000"	
+	if {_amber-ms} >= 100000:
+		set slot 13 of {_moleupg} to {ambergemstone} with lore "&7Current Bonus: &e4", "&7Next Milestone: &e%{_amber-ms}%&7/&e1000000"	
+	if {_amber-ms} >= 1000000:
+		set slot 13 of {_moleupg} to {ambergemstone} with lore "&7Current Bonus: &e5", "&7Next Milestone: &e%{_amber-ms}%&7/&eMAXED OUT!"
+	set {_jade-ms} to "%string tag "JADE-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_jade-ms} <= 99:
+		set slot 14 of {_moleupg} to {jadegemstone} with lore "&7Current Bonus: &e0", "&7Next Milestone: &e%{_jade-ms}%&7/&e100"
+	if {_jade-ms} >= 100:
+		set slot 14 of {_moleupg} to {jadegemstone} with lore "&7Current Bonus: &e1", "&7Next Milestone: &e%{_jade-ms}%&7/&e1000"	
+	if {_jade-ms} >= 1000:
+		set slot 14 of {_moleupg} to {jadegemstone} with lore "&7Current Bonus: &e2", "&7Next Milestone: &e%{_jade-ms}%&7/&e10000"	
+	if {_jade-ms} >= 10000:
+		set slot 14 of {_moleupg} to {jadegemstone} with lore "&7Current Bonus: &e3", "&7Next Milestone: &e%{_jade-ms}%&7/&e100000"	
+	if {_jade-ms} >= 100000:
+		set slot 14 of {_moleupg} to {jadegemstone} with lore "&7Current Bonus: &e4", "&7Next Milestone: &e%{_jade-ms}%&7/&e1000000"	
+	if {_jade-ms} >= 1000000:
+		set slot 14 of {_moleupg} to {jadegemstone} with lore "&7Current Bonus: &e5", "&7Next Milestone: &e%{_jade-ms}%&7/&eMAXED OUT!"
+	set {_quartz-ms} to "%string tag "QUARTZ-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_quartz-ms} <= 99:
+		set slot 15 of {_moleupg} to {quartzgemstone} with lore "&7Current Bonus: &e0", "&7Next Milestone: &e%{_quartz-ms}%&7/&e100"
+	if {_quartz-ms} >= 100:
+		set slot 15 of {_moleupg} to {quartzgemstone} with lore "&7Current Bonus: &e1", "&7Next Milestone: &e%{_quartz-ms}%&7/&e1000"	
+	if {_quartz-ms} >= 1000:
+		set slot 15 of {_moleupg} to {quartzgemstone} with lore "&7Current Bonus: &e2", "&7Next Milestone: &e%{_quartz-ms}%&7/&e10000"	
+	if {_quartz-ms} >= 10000:
+		set slot 15 of {_moleupg} to {quartzgemstone} with lore "&7Current Bonus: &e3", "&7Next Milestone: &e%{_quartz-ms}%&7/&e100000"	
+	if {_quartz-ms} >= 100000:
+		set slot 15 of {_moleupg} to {quartzgemstone} with lore "&7Current Bonus: &e4", "&7Next Milestone: &e%{_quartz-ms}%&7/&e1000000"	
+	if {_quartz-ms} >= 1000000:
+		set slot 15 of {_moleupg} to {quartzgemstone} with lore "&7Current Bonus: &e5", "&7Next Milestone: &e%{_quartz-ms}%&7/&eMAXED OUT!"
+	set {_hema-ms} to "%string tag "HEMA-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_hema-ms} <= 99:
+		set slot 16 of {_moleupg} to {hematitegem} with lore "&7Current Bonus: &e0", "&7Next Milestone: &e%string tag "HEMA-MS" of nbt compound of player's offhand tool%&7/&e100"
+	if {_hema-ms} >= 100:
+		set slot 16 of {_moleupg} to {hematitegem} with lore "&7Current Bonus: &e1", "&7Next Milestone: &e%string tag "HEMA-MS" of nbt compound of player's offhand tool%&7/&e1000"
+	if {_hema-ms} >= 1000:
+		set slot 16 of {_moleupg} to {hematitegem} with lore "&7Current Bonus: &e2", "&7Next Milestone: &e%string tag "HEMA-MS" of nbt compound of player's offhand tool%&7/&e10000"
+	if {_hema-ms} >= 10000:
+		set slot 16 of {_moleupg} to {hematitegem} with lore "&7Current Bonus: &e3", "&7Next Milestone: &e%string tag "HEMA-MS" of nbt compound of player's offhand tool%&7/&e100000"	
+	if {_hema-ms} >= 100000:
+		set slot 16 of {_moleupg} to {hematitegem} with lore "&7Current Bonus: &e4", "&7Next Milestone: &e%string tag "HEMA-MS" of nbt compound of player's offhand tool%&7/&e1000000"	
+	if {_hema-ms} >= 1000000:
+		set slot 16 of {_moleupg} to {hematitegem} with lore "&7Current Bonus: &e5", "&7Next Milestone: &e%string tag "HEMA-MS" of nbt compound of player's offhand tool%&7/&eMAXED OUT!"			
+	open {_moleupg} to player
+
+
+#ＢＲＥＡＫＩＮＧ ＢＬＯＣＫＳ
+
+#--------------HEMATITE--------------
+on break of black stained glass or black stained glass pane:
+	name of player's offhand item is "&eEnergized Mole"
+	if string tag "HEMA-MS" of nbt compound of player's offhand tool is not set:
+		set string tag "HEMA-MS" of nbt compound of player's offhand tool to "0"
+
+	set {_a} to "%string tag "HEMA-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_a} >= 100:
+		give player 1 black stained glass named "&fHematite Crystal"
+	if {_a} >= 1000:
+		give player 1 black stained glass named "&fHematite Crystal"
+	if {_a} >= 10000:
+		give player 1 black stained glass named "&fHematite Crystal"
+	if {_a} >= 100000:
+		give player 1 black stained glass named "&fHematite Crystal"
+	if {_a} >= 1000000:
+		give player 1 black stained glass named "&fHematite Crystal"
+	
+	add 1 to {_a}
+	set {_a} to "%{_a}%"
+	set string tag "HEMA-MS" of nbt compound of player's offhand tool to {_a}
+
+#--------------QUARTZ--------------
+on break of white stained glass or white stained glass pane:
+	name of player's offhand item is "&eEnergized Mole"
+	if string tag "QUARTZ-MS" of nbt compound of player's offhand tool is not set:
+		set string tag "QUARTZ-MS" of nbt compound of player's offhand tool to "0"
+
+	set {_a} to "%string tag "QUARTZ-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_a} >= 100:
+		give player 1 white stained glass named "&fQuartz Crystal"
+	if {_a} >= 1000:
+		give player 1 white stained glass named "&fQuartz Crystal"
+	if {_a} >= 10000:
+		give player 1 white stained glass named "&fQuartz Crystal"
+	if {_a} >= 100000:
+		give player 1 white stained glass named "&fQuartz Crystal"
+	if {_a} >= 1000000:
+		give player 1 white stained glass named "&fQuartz Crystal"
+	
+	add 1 to {_a}
+	set {_a} to "%{_a}%"
+	set string tag "QUARTZ-MS" of nbt compound of player's offhand tool to {_a}
+	
+
+#--------------JADE--------------
+on break of lime stained glass or lime stained glass pane:
+	name of player's offhand item is "&eEnergized Mole"
+	if string tag "JADE-MS" of nbt compound of player's offhand tool is not set:
+		set string tag "JADE-MS" of nbt compound of player's offhand tool to "0"
+
+	set {_a} to "%string tag "JADE-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_a} >= 100:
+		give player 1 lime stained glass named "&fJade Crystal"
+	if {_a} >= 1000:
+		give player 1 lime stained glass named "&fJade Crystal"
+	if {_a} >= 10000:
+		give player 1 lime stained glass named "&fJade Crystal"
+	if {_a} >= 100000:
+		give player 1 lime stained glass named "&fJade Crystal"
+	if {_a} >= 1000000:
+		give player 1 lime stained glass named "&fJade Crystal"
+	
+	add 1 to {_a}
+	set {_a} to "%{_a}%"
+	set string tag "JADE-MS" of nbt compound of player's offhand tool to {_a}
+
+#--------------AMBER--------------
+on break of orange stained glass or orange stained glass pane:
+	name of player's offhand item is "&eEnergized Mole"
+	if string tag "AMBER-MS" of nbt compound of player's offhand tool is not set:
+		set string tag "AMBER-MS" of nbt compound of player's offhand tool to "0"
+
+	set {_a} to "%string tag "AMBER-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_a} >= 100:
+		give player 1 orange stained glass named "&fAmber Crystal"
+	if {_a} >= 1000:
+		give player 1 orange stained glass named "&fAmber Crystal"
+	if {_a} >= 10000:
+		give player 1 orange stained glass named "&fAmber Crystal"
+	if {_a} >= 100000:
+		give player 1 orange stained glass named "&fAmber Crystal"
+	if {_a} >= 1000000:
+		give player 1 orange stained glass named "&fAmber Crystal"
+	
+	add 1 to {_a}
+	set {_a} to "%{_a}%"
+	set string tag "AMBER-MS" of nbt compound of player's offhand tool to {_a}
+
+	
+#--------------SAPPHIRE--------------
+on break of light blue stained glass or light blue stained glass pane:
+	name of player's offhand item is "&eEnergized Mole"
+	if string tag "SAPPHIRE-MS" of nbt compound of player's offhand tool is not set:
+		set string tag "SAPPHIRE-MS" of nbt compound of player's offhand tool to "0"
+
+	set {_a} to "%string tag "SAPPHIRE-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_a} >= 100:
+		give player 1 light blue stained glass named "&fSapphire Crystal"
+	if {_a} >= 1000:
+		give player 1 light blue stained glass named "&fSapphire Crystal"
+	if {_a} >= 10000:
+		give player 1 light blue stained glass named "&fSapphire Crystal"
+	if {_a} >= 100000:
+		give player 1 light blue stained glass named "&fSapphire Crystal"
+	if {_a} >= 1000000:
+		give player 1 light blue stained glass named "&fSapphire Crystal"
+	
+	add 1 to {_a}
+	set {_a} to "%{_a}%"
+	set string tag "SAPPHIRE-MS" of nbt compound of player's offhand tool to {_a}
+	
+#--------------AMETHYST--------------
+on break of purple stained glass or purple stained glass pane:
+	name of player's offhand item is "&eEnergized Mole"
+	if string tag "AMETHYST-MS" of nbt compound of player's offhand tool is not set:
+		set string tag "AMETHYST-MS" of nbt compound of player's offhand tool to "0"
+
+	set {_a} to "%string tag "AMETHYST-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_a} >= 100:
+		give player 1 purple stained glass named "&fAmethyst Crystal"
+	if {_a} >= 1000:
+		give player 1 purple stained glass named "&fAmethyst Crystal"
+	if {_a} >= 10000:
+		give player 1 purple stained glass named "&fAmethyst Crystal"
+	if {_a} >= 100000:
+		give player 1 purple stained glass named "&fAmethyst Crystal"
+	if {_a} >= 1000000:
+		give player 1 purple stained glass named "&fAmethyst Crystal"
+	
+	add 1 to {_a}
+	set {_a} to "%{_a}%"
+	set string tag "AMETHYST-MS" of nbt compound of player's offhand tool to {_a}
+	
+#--------------RUBY--------------
+on break of red stained glass or red stained glass pane:
+	name of player's offhand item is "&eEnergized Mole"
+	if string tag "RUBY-MS" of nbt compound of player's offhand tool is not set:
+		set string tag "RUBY-MS" of nbt compound of player's offhand tool to "0"
+
+	set {_a} to "%string tag "RUBY-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_a} >= 100:
+		give player 1 red stained glass named "&fRuby Crystal"
+	if {_a} >= 1000:
+		give player 1 red stained glass named "&fRuby Crystal"
+	if {_a} >= 10000:
+		give player 1 red stained glass named "&fRuby Crystal"
+	if {_a} >= 100000:
+		give player 1 red stained glass named "&fRuby Crystal"
+	if {_a} >= 1000000:
+		give player 1 red stained glass named "&fRuby Crystal"
+	
+	add 1 to {_a}
+	set {_a} to "%{_a}%"
+	set string tag "RUBY-MS" of nbt compound of player's offhand tool to {_a}
+	
+# MILESTONE MESSAGES
+	
+#--------------HEMATITE--------------
+on break of black stained glass or black stained glass pane:
+	set {_a} to "%string tag "HEMA-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_a} = 100:
+		send message "&aYour &8Hematite Milestone &awas upgraded to &e1&a!" to player
+		play sound "entity.player.levelup" at pitch 0.75 to player
+	if {_a} = 1000:
+		send message "&aYour &8Hematite Milestone &awas upgraded to &e2&a!" to player
+		play sound "entity.player.levelup" at pitch 0.7 to player
+	if {_a} = 10000:
+		send message "&aYour &8Hematite Milestone &awas upgraded to &e3&a!" to player
+		play sound "entity.player.levelup" at pitch 0.65 to player
+	if {_a} = 100000:
+		send message "&aYour &8Hematite Milestone &awas upgraded to &e4&a!" to player
+		play sound "entity.player.levelup" at pitch 0.6 to player
+	if {_a} = 1000000:
+		broadcast "&a%player%'s &8Hematite Milestone &ais now &e&lMAXED OUT! &aNice!" 
+		play sound "ui.toast.challenge_complete" at pitch 0.75 at player
+
+#--------------QUARTZ--------------
+on break of white stained glass or white stained glass pane:
+	set {_a} to "%string tag "QUARTZ-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_a} = 100:
+		send message "&aYour &fQuartz Milestone &awas upgraded to &e1&a!" to player
+		play sound "entity.player.levelup" at pitch 0.75 to player
+	if {_a} = 1000:
+		send message "&aYour &fQuartz Milestone &awas upgraded to &e2&a!" to player
+		play sound "entity.player.levelup" at pitch 0.7 to player
+	if {_a} = 10000:
+		send message "&aYour &fQuartz Milestone &awas upgraded to &e3&a!" to player
+		play sound "entity.player.levelup" at pitch 0.65 to player
+	if {_a} = 100000:
+		send message "&aYour &fQuartz Milestone &awas upgraded to &e4&a!" to player
+		play sound "entity.player.levelup" at pitch 0.6 to player
+	if {_a} = 1000000:
+		broadcast "&a%player%'s &fQuartz Milestone &ais now &e&lMAXED OUT! &aNice!" 
+		play sound "ui.toast.challenge_complete" at pitch 0.75 at player
+	
+#--------------JADE--------------
+on break of lime stained glass or lime stained glass pane:
+	set {_a} to "%string tag "JADE-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_a} = 100:
+		send message "&aYour Jade Milestone &awas upgraded to &e1&a!" to player
+		play sound "entity.player.levelup" at pitch 0.75 to player
+	if {_a} = 1000:
+		send message "&aYour Jade Milestone &awas upgraded to &e2&a!" to player
+		play sound "entity.player.levelup" at pitch 0.7 to player
+	if {_a} = 10000:
+		send message "&aYour Jade Milestone &awas upgraded to &e3&a!" to player
+		play sound "entity.player.levelup" at pitch 0.65 to player
+	if {_a} = 100000:
+		send message "&aYour Jade Milestone &awas upgraded to &e4&a!" to player
+		play sound "entity.player.levelup" at pitch 0.6 to player
+	if {_a} = 1000000:
+		broadcast "&a%player%'s Jade Milestone &ais now &e&lMAXED OUT! &aNice!" 
+		play sound "ui.toast.challenge_complete" at pitch 0.75 at player
+		
+#--------------AMBER--------------
+on break of orange stained glass or orange stained glass pane:
+	set {_a} to "%string tag "AMBER-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_a} = 100:
+		send message "&aYour &6Amber Milestone &awas upgraded to &e1&a!" to player
+		play sound "entity.player.levelup" at pitch 0.75 to player
+	if {_a} = 1000:
+		send message "&aYour &6Amber Milestone &awas upgraded to &e2&a!" to player
+		play sound "entity.player.levelup" at pitch 0.7 to player
+	if {_a} = 10000:
+		send message "&aYour &6Amber Milestone &awas upgraded to &e3&a!" to player
+		play sound "entity.player.levelup" at pitch 0.65 to player
+	if {_a} = 100000:
+		send message "&aYour &6Amber Milestone &awas upgraded to &e4&a!" to player
+		play sound "entity.player.levelup" at pitch 0.6 to player
+	if {_a} = 1000000:
+		broadcast "&a%player%'s &6Amber Milestone &ais now &e&lMAXED OUT! &aNice!"
+		play sound "ui.toast.challenge_complete" at pitch 0.75 at player
+		
+#--------------SAPPHIRE--------------
+on break of light blue stained glass or light blue stained glass pane:
+	set {_a} to "%string tag "SAPPHIRE-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_a} = 100:
+		send message "&aYour &bSapphire Milestone &awas upgraded to &e1&a!" to player
+		play sound "entity.player.levelup" at pitch 0.75 to player
+	if {_a} = 1000:
+		send message "&aYour &bSapphire Milestone &awas upgraded to &e2&a!" to player
+		play sound "entity.player.levelup" at pitch 0.7 to player
+	if {_a} = 10000:
+		send message "&aYour &bSapphire Milestone &awas upgraded to &e3&a!" to player
+		play sound "entity.player.levelup" at pitch 0.65 to player
+	if {_a} = 100000:
+		send message "&aYour &bSapphire Milestone &awas upgraded to &e4&a!" to player
+		play sound "entity.player.levelup" at pitch 0.6 to player
+	if {_a} = 1000000:
+		broadcast "&a%player%'s &bSapphire Milestone &ais now &e&lMAXED OUT! &aNice!"
+		play sound "ui.toast.challenge_complete" at pitch 0.75 at player
+		
+#--------------AMETHYST--------------
+on break of light blue stained glass or light blue stained glass pane:
+	set {_a} to "%string tag "AMETHYST-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_a} = 100:
+		send message "&aYour &5Amethyst Milestone &awas upgraded to &e1&a!" to player
+		play sound "entity.player.levelup" at pitch 0.75 to player
+	if {_a} = 1000:
+		send message "&aYour &5Amethyst Milestone &awas upgraded to &e2&a!" to player
+		play sound "entity.player.levelup" at pitch 0.7 to player
+	if {_a} = 10000:
+		send message "&aYour &5Amethyst Milestone &awas upgraded to &e3&a!" to player
+		play sound "entity.player.levelup" at pitch 0.65 to player
+	if {_a} = 100000:
+		send message "&aYour &5Amethyst Milestone &awas upgraded to &e4&a!" to player
+		play sound "entity.player.levelup" at pitch 0.6 to player
+	if {_a} = 1000000:
+		broadcast "&a%player%'s &5Amethyst Milestone &ais now &e&lMAXED OUT! &aNice!"
+		play sound "ui.toast.challenge_complete" at pitch 0.75 at player
+	
+#--------------RUBY--------------
+on break of red stained glass or red stained glass pane:
+	set {_a} to "%string tag "RUBY-MS" of nbt compound of player's offhand tool%" parsed as an integer
+	if {_a} = 100:
+		send message "&aYour &cRuby Milestone &awas upgraded to &e1&a!" to player
+		play sound "entity.player.levelup" at pitch 0.75 to player
+	if {_a} = 1000:
+		send message "&aYour &cRuby Milestone &awas upgraded to &e2&a!" to player
+		play sound "entity.player.levelup" at pitch 0.7 to player
+	if {_a} = 10000:
+		send message "&aYour &cRuby Milestone &awas upgraded to &e3&a!" to player
+		play sound "entity.player.levelup" at pitch 0.65 to player
+	if {_a} = 100000:
+		send message "&aYour &cRuby Milestone &awas upgraded to &e4&a!" to player
+		play sound "entity.player.levelup" at pitch 0.6 to player
+	if {_a} = 1000000:
+		broadcast "&a%player%'s &cRuby Milestone &ais now &e&lMAXED OUT! &aNice!"
+		play sound "ui.toast.challenge_complete" at pitch 0.75 at player
+
+on inventory click:
+	name of event-inventory is "&6Gem Milestones":
+		cancel event
+		
+on login:
+	if string tag "HEMA-MS" of nbt compound of player's offhand tool isn't set:
+		set string tag "HEMA-MS" of nbt compound of player's offhand tool to "0"
+	if string tag "QUARTZ-MS" of nbt compound of player's offhand tool isn't set:
+		set string tag "QUARTZ-MS" of nbt compound of player's offhand tool to "0"
+	if string tag "JADE-MS" of nbt compound of player's offhand tool isn't set:
+		set string tag "JADE-MS" of nbt compound of player's offhand tool to "0"
+	if string tag "AMBER-MS" of nbt compound of player's offhand tool isn't set:
+		set string tag "AMBER-MS" of nbt compound of player's offhand tool to "0"
+	if string tag "SAPPHIRE-MS" of nbt compound of player's offhand tool isn't set:
+		set string tag "SAPPHIRE-MS" of nbt compound of player's offhand tool to "0"
+	if string tag "AMETHYST-MS" of nbt compound of player's offhand tool isn't set:
+		set string tag "AMETHYST-MS" of nbt compound of player's offhand tool to "0"
+	if string tag "RUBY-MS" of nbt compound of player's offhand tool isn't set:
+		set string tag "RUBY-MS" of nbt compound of player's offhand tool to "0"
+		
+#==========ADMIN COMMAND(s)================
+
+command /resetcounters [<offline player>]:
+	permission: op
+	trigger:
+		set string tag "HEMA-MS" of nbt compound of arg-1's offhand tool to "0"
+		set string tag "QUARTZ-MS" of nbt compound of arg-1's offhand tool to "0"
+		set string tag "JADE-MS" of nbt compound of arg-1's offhand tool to "0"
+		set string tag "AMBER-MS" of nbt compound of arg-1's offhand tool to "0"
+		set string tag "SAPPHIRE-MS" of nbt compound of arg-1's offhand tool to "0"
+		set string tag "AMETHYST-MS" of nbt compound of arg-1's offhand tool to "0"
+		set string tag "RUBY-MS" of nbt compound of arg-1's offhand tool to "0"
+		send "&cReset all of %arg-1%'s counters!" to player

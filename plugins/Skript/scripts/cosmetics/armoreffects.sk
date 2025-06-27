@@ -1,0 +1,88 @@
+on sneak toggle:
+	if name of player's offhand item contains "&fSmoke Trail Effect":
+		if player's held item is netherite boots or diamond boots or gold boots or chainmail boots or iron boots or leather boots:
+			if lore of player's held item contains "&f&8✔ Effect Added":
+				message "&cYou can only apply one effect per item!"
+			else:
+				set player's offhand item to air
+				add " " to lore of player's held item
+				add "&f🔥 Smoke Trail" to lore of player's held item
+				add "&7Smoke will trail under you!" to lore of player's held item
+				add "&f&8✔ Effect Added" to lore of player's held item
+				message "&aApplied Smoke Trail Effect!"
+		else:
+			message "&cYou can only apply this effect to boots!"
+every 2 ticks:
+	loop all players:
+		if lore of loop-player's boots contains "&f🔥 Smoke Trail":
+			play cloud at loop-player
+			play large smoke at loop-player
+every 2 ticks:
+	loop all players:
+		if lore of loop-player's boots contains "&f&bMagical Trail":
+			draw 20 of enchant at location of loop-player
+every 2 ticks:
+	loop all players:
+		if lore of loop-player's boots contains "&5Alchemist Trail":
+			draw 5 of witch at location of loop-player
+			draw 2 of instant effect at location of loop-player
+			draw 2 of effect at location of loop-player
+on sneak toggle:
+	if name of player's offhand item contains "&5Alchemist Trail Effect":
+		if player's held item is any boots:
+			if lore of player's held item contains "&f&8✔ Effect Added":
+				message "&cYou can only apply one effect per item!"
+			else:
+				set player's offhand item to air
+				add " " to lore of player's held item
+				add "&5Alchemist Trail" to lore of player's held item
+				add "&7Cosplaying as a witch??" to lore of player's held item
+				add "&f&8✔ Effect Added" to lore of player's held item
+				message "&aApplied Alchemist Trail Effect!"
+		else:
+			message "&cYou can only apply this effect to boots!"
+			
+#test
+on sneak toggle:
+	if name of player's offhand item contains "&dVibing Trail Effect":
+		if player's held item is any helmets or player head or big dripleaf:
+			if lore of player's held item contains "&f&8✔ Effect Added":
+				message "&cYou can only apply one effect per item!"
+			else:
+				set player's offhand item to air
+				add " " to lore of player's held item
+				add "&dVibing Trail" to lore of player's held item
+				add "&7Vibing to some &6bars ♫" to lore of player's held item
+				add "&f&8✔ Effect Added" to lore of player's held item
+				message "&aApplied Vibing Trail Effect!"
+		else:
+			message "&cYou can only apply this effect to helmets!"
+every 2 ticks:
+	loop all players:
+		if lore of loop-player's helmet contains "&f&dVibing Trail":
+			draw 1 of note at location 2.5 blocks above loop-player
+
+on sneak toggle:
+	if name of player's offhand item contains "&fSnow Trail Effect":
+		if player's held item is any boots:
+			if lore of player's held item contains "&f&8✔ Effect Added":
+				message "&cYou can only apply one effect per item!"
+			else:
+				set player's offhand item to air
+				add " " to lore of player's held item
+				add "&fSnow Trail" to lore of player's held item
+				add "&7A subtle, but cold" to lore of player's held item
+				add "&f&8✔ Effect Added" to lore of player's held item
+				message "&aApplied Snow Trail Effect!"
+		else:
+			message "&cYou can only apply this effect to boots!"
+			
+every 2 ticks:
+	loop all players:
+		if lore of loop-player's boots contains "&fSnow Trail":
+			play snowflake at loop-player
+			play snowflake at loop-player
+every 2 ticks:
+	loop all players:
+		if lore of loop-player's boots contains "&aAzalea Trail":
+			play 10 spore blossom air at location 2 blocks above loop-player

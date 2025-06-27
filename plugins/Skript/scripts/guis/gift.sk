@@ -1,0 +1,107 @@
+on sneak toggle:
+	if name of player's offhand item is "&dMystical Generous Bits Book":
+		if player's held item is leather chestplate or iron chestplate or chainmail chestplate or diamond chestplate or gold chestplate or netherite chestplate:
+			if lore of player's held item contains "&6Generous Bits":
+				message "&cYou already have this enchant on this item!"
+			else:
+				set player's offhand item to air
+				add " " and "&6Generous Bits" and "&7Gain 50%% more &bbits &7from /gift" to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith Generous Bits!"
+				play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou can only put this enchantment on chestplates!" to player
+
+command /gift:
+	trigger:
+		set {gm} to a new chest inventory with 6 row with name "&dGift Shop"
+		set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 and 36 and 37 and 38 and 39 and 40  and 41 and 42 and 43 and 44 and 45 and 46 and 47 and 48 and 50 and 51 and 52 and 53 of {gm} to gray stained glass pane named " "
+		#Sidebar
+		set slot 0 of {gm} to player's skull named "&aYour Profile &8/profile, /profile <name>" with lore "&7Click out to check out your" and "&7stats, gear, and more!"
+		set slot 9 of {gm} to ender pearl named "&bWarp &8/warp, /wp" with lore "&7Click to view your next area" and "&7to explore and take on!"
+		set slot 18 of {gm} to minecart with chest named "&eStorage &8/storage, /st" with lore "&7Click to view your avalible storage!"
+		set slot 27 of {gm} to experience bottle named "&aGifting &8/gift" with lore "&7Click to view a shop to gift" and "&7&aXP &7and &bBits &7to everyone online :D"
+		set slot 36 of {gm} to paper named "&fOther Commands &8/other, /ot" with lore "&7Click to check out some other useful commands."
+		set slot 45 of {gm} to barrier named "&fClose Menu"
+		set slot 11 of {gm} to lime dye with name "&aGift 10 Experience Levels" with lore "&8Gifted to everyone currently online" and " " and "&7Cost: 5 Clock Parts"
+		set slot 13 of {gm} to 5 lime dye with name "&aGift 50 Experience Levels" with lore "&8Gifted to everyone currently online" and " " and "&7Cost: 20 Clock Parts"
+		set slot 15 of {gm} to 10 lime dye with name "&aGift 100 Experience Levels" with lore "&8Gifted to everyone currently online" and " " and "&7Cost: 35 Clock Parts"
+		set slot 29 of {gm} to 5 light blue dye with name "&bGift 50 Bits" with lore "&8Gifted to everyone currently online" and " " and "&7Cost: 20 Clock Parts"
+		set slot 31 of {gm} to 10 light blue dye with name "&bGift 100 Bits" with lore "&8Gifted to everyone currently online" and " " and "&7Cost: 35 Clock Parts"
+		set slot 33 of {gm} to orange dye with name "&6Dungeonfy Supporter" with lore "&7Helps support the server and" and "&7grants several perks:" and " " and "&7-Colored chat &demojis" and "&7-Supporter &bDiscord Role" and "&7-A cool &6badge &7beside your name" and "&7-&6Supporter Cap &7(hella drippy)" and "&7-Bonus one &eClock Part &7per 10 minutes!" and "&7-Extra &62%% &7chance to get a &cCellphone" and "&7from /dailyreward" and " " and "&fCost: $3.99" and "&fClick if interested!"
+		set slot 34 of {gm} to red dye with name "&6Dye Pass &c(Unavailable Right Now)" with lore "&8&mGrants access to a Dye Pass&7", "&8&malso helps support the server!", "", "&8&m- Access to 1 Dye Pass (2 months)", "&8&m- Lets you to earn up to 24 Dye Points &", "&8&m3 Skin Points to buy cosmetics with!", "", "&8&mCost: $4.99", "&8&mClick if interested!"
+		set slot 49 of {gm} to barrier with name "&fClose Menu"
+		set slot 52 of {gm} to cyan dye named "&bTip:" with lore "&fWelcoming new players (within 5s) grants you &b+5 Bits&f!"
+		set slot 53 of {gm} to redstone torch with name "&c&lNOTICE:" with lore "&7You recieve clock parts every 10 minutes"
+		open {gm} to player
+ 
+on inventory click:
+	if name of event-inventory is "&dGift Shop":
+		cancel event
+		if index of event-slot = 11:
+			cancel event
+			if player has 5 comparators:
+				close player's inventory
+				remove 5 comparators from player
+				broadcast "&a&ke &a%player% gifted 10 experience levels! &a&ke"
+				make console execute command "/experience add @a 10 levels"
+				play sound "entity.player.levelup"
+			else:
+				close player's inventory
+				send message "&cYou do not have enough clock parts to afford that, sorry!"
+		if index of event-slot = 13:
+			cancel event
+			if player has 20 comparators:
+				close player's inventory
+				remove 20 comparators from player
+				broadcast "&a&ke &a%player% gifted 50 experience levels! &a&ke"
+				make console execute command "/experience add @a 50 levels"
+				play sound "entity.player.levelup"
+			else:
+				close player's inventory
+				send message "&cYou do not have enough clock parts to afford that, sorry!"
+		if index of event-slot = 15:
+			cancel event
+			if player has 35 comparators:
+				close player's inventory
+				remove 35 comparators from player
+				broadcast "&a&ke &a%player% gifted 100 experience levels! &a&ke"
+				make console execute command "/experience add @a 100 levels"
+				play sound "entity.player.levelup"
+			else:
+				close player's inventory
+				send message "&cYou do not have enough clock parts to afford that, sorry!"
+		if index of event-slot = 29:
+			cancel event
+			if player has 20 comparators:
+				close player's inventory
+				remove 20 comparators from player
+				broadcast "&b&ke &b%player% gifted 50 bits! &b&ke"
+				loop all players:
+					set {bits::%uuid of loop-player%} to {bits::%uuid of loop-player%} + 50
+					if lore of loop-player's chestplate is "&dGenerous Bits":
+						set {bits::%uuid of loop-player%} to {bits::%uuid of loop-player%} + 25
+				play sound "block.enchantment_table.use"
+			else:
+				close player's inventory
+				send message "&cYou do not have enough clock parts to afford that, sorry!"
+		if index of event-slot = 31:
+			cancel event
+			if player has 35 comparators:
+				close player's inventory
+				remove 35 comparators from player
+				broadcast "&b&ke &b%player% gifted 100 bits! &b&ke"
+				loop all players:
+					set {bits::%uuid of loop-player%} to {bits::%uuid of loop-player%} + 100
+					if lore of loop-player's chestplate is "&dGenerous Bits":
+						set {bits::%uuid of loop-player%} to {bits::%uuid of loop-player%} + 50
+				play sound "block.enchantment_table.use"
+			else:
+				close player's inventory
+				send message "&cYou do not have enough clock parts to afford that, sorry!"
+		if index of event-slot = 33:
+			close player's inventory
+			message "&eClick the link below!" and "<link:https://dungeonfy.tebex.io/package/5253299>&ehttps://dungeonfy.tebex.io/package/5253299"
+		if index of event-slot = 49:
+			cancel event
+			close player's inventory

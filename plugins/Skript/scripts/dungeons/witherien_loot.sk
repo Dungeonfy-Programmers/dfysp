@@ -1,0 +1,237 @@
+on mine of soul soil:
+	if block below event-block is bedrock:
+		clear drops
+		if {soulsoil_shield} = true:
+			cancel event
+			message "&cYou must destroy the &6SOUL SOIL SHIELD first!" to player
+		else:
+			loop all withers:
+				damage loop-wither by 10000
+	else:
+		cancel event
+on mine of soul sand:
+	if block below event-block is bedrock:
+		block below event-block is bedrock
+		clear drops
+		if {soulsand_shield} = true:
+			cancel event
+			message "&cYou must destroy the &6SOUL SAND SHIELD first!" to player
+		else:
+			loop all withers:
+				damage loop-wither by 10000
+	else:
+		cancel event
+on walk on magma block:
+	if {in_witherien::%uuid of player%} = true:
+		push player up at speed 2.4
+		damage player by player's max health * 0.2
+on damage of wither:
+	name of victim contains "&c&lWITHERIEN"
+	attacker is player
+	if health of victim >= victim's max health * 0.9:
+		cancel event
+		send message "&cYou must use &6Soul Sand/Soul Soil &cto damage Witherien while he is above &a90%% health!" to attacker
+
+on damage of wither skeleton:
+	attacker is a wither:
+		cancel event
+on explosion:
+	cancel event
+on damage of end crystal:
+	cancel event
+	name of victim is "&6&lSOUL SOIL SHIELD":
+		set {soulsoil_shield} to false
+		kill victim
+		create a safe explosion with force 2 at victim
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&6&lSHIELD! &f%attacker% destroyed the protection for &aSOUL SOIL" to loop-player
+				send message "&a&lOBJECTIVE: &fMine the &6Soul Soil &fto deal damage to &cWitherien!" to loop-player
+				play sound "entity.player.levelup" at pitch 5 to loop-player
+				send title "&6SHIELD DOWN" with subtitle "&f[SOUL SOIL]" to loop-player
+on damage of end crystal:
+	name of victim is "&6&lSOUL SAND SHIELD":
+		set {soulsand_shield} to false
+		kill victim
+		create a safe explosion with force 2 at victim
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} = true:
+				send message "&6&lSHIELD! &f%attacker% destroyed the protection for &aSOUL SAND" to loop-player
+				send message "&a&lOBJECTIVE: &fMine the &6Soul Sand &fto deal damage to &cWitherien!" to loop-player
+				play sound "entity.player.levelup" at pitch 5 to loop-player
+				send title "&6SHIELD DOWN" with subtitle "&f[SOUL SAND]" to loop-player
+
+every 10 ticks:
+	loop all withers:
+		loop all players in radius 5 of loop-wither:
+			shoot wither skull from loop-wither at speed 1.5
+			#entity.wither.break_block
+			damage loop-player by 250
+			apply slowness 10 to loop-player for 1 second replacing existing effect
+every 10 ticks:
+	loop all withers:
+		loop all players in radius 80 of loop-wither:
+			set target of loop-wither to loop-player
+			push loop-wither down at speed 1
+on projectile hit:
+	victim is a wither:
+		projectile exists:
+			cancel event
+			send message "&cWithers are immune to projectiles!" to shooter
+#-297.5 151 -432.5				
+on projectile hit:
+	projectile is wither skull:
+		push victim upwards at speed 10
+		#damage victim by 4000
+every 40 seconds:
+	set {_abilitychooser} to random integer between 1 and 6
+	if {_abilitychooser} is 1:
+		loop all withers:
+			loop all players in radius 20 around loop-wither:
+				apply blindness to loop-player for 3 seconds
+				send title "&cTOUCH THE SKY" to loop-player
+				send "&c&kWitherien&c: &8Have you ever wanted to touch the sky?" to loop-player
+				push loop-player upwards at speed 10
+				damage loop-player by 700
+				make console execute command "/soulsoil_add"
+					
+	if {_abilitychooser} is 2:
+		loop all withers:
+			loop all players in radius 10 around loop-wither:
+				send "&c&kWitherien&c: &8BEHOLD THE ULTIMATE DISPLAY OF POWER, &dWITHER SURGE&8!" to loop-player
+				send title "&cWARNING: ESCAPE THE SURGE" to loop-player
+				create a safe explosion of force 2 at loop-player
+				damage loop-player by 800
+				make console execute command "/soulsand_add"
+	if {_abilitychooser} is 3:
+		loop all withers:
+			loop all players in radius 40 around loop-wither:
+				send "&c&kWitherien&c: &8ARISE MY ARMY OF &dWITHERED KNIGHTS&8!" to loop-player
+				loop 4 times:
+					spawn wither skeleton at loop-player
+					set name of last spawned entity to "&8&lWithered Knight"
+					set max health of last spawned entity to 30000
+					set health of last spawned entity to 30000
+					make console execute command "/soulsoil_add"
+on damage: 
+    attacker is wither skeleton:
+        name of attacker is "&8&lWithered Knight":
+            add 600 to the damage
+on death:
+	name of victim contains "Withered Knight":
+		clear drops
+on death:
+	if {in_witherien::%uuid of victim%} = true:
+		send message "&c&kWitherien&c: &8You mere mortal really thought you could defeat me? Think again *evil laugh*" to victim
+#REWARD PHASE
+on death of wither:
+	name of victim contains "WITHERIEN"
+	set {w_players} to 0
+	set {witherien_run} to false
+	set {players_waiting} to 0
+	clear drops
+	set {witherkills::%uuid of attacker%} to {witherkills::%uuid of attacker%} + 1
+	broadcast "&4Witherien has been slain!"
+	set {phase3} to false
+	attacker is player:
+		loop all players:
+			if {in_witherien::%uuid of loop-player%} is true:
+				send title "&a[PHASE 3]" with subtitle "&6Dungeon Clear" to loop-player
+				send message "&c&kWitherien&c: &8Alas, my grasp of this world is over, well fought valiant warrior." to loop-player
+				play sound "ui.toast.challenge_complete" at pitch -2 to loop-player
+				give loop-player wither skeleton spawn egg named "&dWithered Soul" with lore "&7The key to opening &cThe Wither Box&7!"
+				if name of loop-player's offhand item is "&dWither":
+					give loop-player wither skeleton spawn egg named "&dWithered Soul" with lore "&7The key to opening &cThe Wither Box&7!"
+				set {_witherrewar} to location at (-309.5, 123, -454.5)
+				set {_witherrewar}'s yaw to -90
+				set {_witherrewar}'s pitch to 0.01
+				teleport loop-player to {_witherrewar}
+				set {in_witherien::%uuid of loop-player%} to false
+				set {witherruns::%uuid of loop-player%} to {witherruns::%uuid of loop-player%} + 1
+			
+#				THE WITHER BOX :O
+
+
+
+on left click on black shulker box:
+	message "&cWither Box Loot Table" and "&eNether Star &f(1-3)" and "&cWitherien's Skull &f- 20%%" and "&cWitherien's Funny Bone &f- 10%%" and "&cFinal Slay &f- 0.5%%" and "&dBloody Skull &f- 0.5%%" and "&cHealthy Heart &f- 0.5%%" and "&3Careless Relic &f- 0.5%%" and "&cWarbringer &f- 0.2%%" to player
+on rightclick on black shulker box:
+	if block below clicked block is polished deepslate wall:
+		cancel event
+		if player has wither skeleton spawn egg named "&dWithered Soul":
+			remove wither skeleton spawn egg named "&dWithered Soul" from player
+			play sound "block.ender_chest.open" at pitch -2 to player
+			set {_slot2} to false
+			set {_slot3} to false
+			set {_wb} to a new chest inventory with 3 row with name "&cThe Wither Box"
+			
+			#1-3 Nether Star
+			set {_a} to random integer between 1 to 3
+			if {_a} = 1:
+				set slot 11 of {_wb} to nether star named "&eNether Star" with lore "&8The power of the Nether in itself, in your hand..." and " " and "&7This is a gauranteed drop from &cThe Withered Box"
+			if {_a} = 2:
+				set slot 11 of {_wb} to 2 nether star named "&eNether Star" with lore "&8The power of the Nether in itself, in your hand..." and " " and "&7This is a gauranteed drop from &cThe Withered Box"
+			if {_a} = 3:
+				set slot 11 of {_wb} to 3 nether star named "&eNether Star" with lore "&8The power of the Nether in itself, in your hand..." and " " and "&7This is a gauranteed drop from &cThe Withered Box"
+			
+			#Slot 2 Drops
+			if {_slot2} = false:
+				chance of 0.5+(({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40))/100%:
+					set slot 13 of {_wb} to {bloodyskull}
+					set {_slot2} to true
+					broadcast "&c&lWITHER BOX! &f%player% just dropped a &cBloody Skull&f! &7(0.5&a+%(({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40))/100%&7%%)"
+			if {_slot2} = false:
+				chance of 0.5+(({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40))/100%:
+					set slot 13 of {_wb} to {finalslay}
+					set {_slot2} to true
+					broadcast "&c&lWITHER BOX! &f%player% just dropped a &cFinal Slay&f! &7(0.5&a+%(({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40))/100%&7%%)"
+			if {_slot2} = false:
+				chance of 20+(({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40))/100%:
+					set slot 13 of {_wb} to wither skeleton skull named "&cWitherien's Skull" with lore "&8The head of the menace that once ruled dungeonfy." and " " and "&7This is a &b20%% &7drop from &cThe Wither Box"
+					set {_slot2} to true
+			if {_slot2} = false:
+				set slot 13 of {_wb} to 5 diamond blocks
+				
+			#Slot 3
+			if {_slot3} = false:
+				chance of 0.2+(({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40))/100%:
+					set slot 15 of {_wb} to {alchemisttrail}
+					broadcast "&c&lWITHER BOX! &f%player% just dropped a &5Alchemist Trail Effect&f! &7(0.2&a+%(({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40))/100%&7%%)"
+					set {_slot3} to true
+			if {_slot3} = false:
+				chance of 0.2+(({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40))/100%:
+					set slot 15 of {_wb} to {warbringer}
+					broadcast "&c&lWITHER BOX! &f%player% just dropped a &cWarbringer&f! &7(0.2&a+%(({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40))/100%&7%%)"
+					set {_slot3} to true
+			if {_slot3} = false:
+				chance of 0.5+(({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40))/100%:
+					set slot 15 of {_wb} to red dye of protection 1 with item flag hide enchants with name "&cHealthy Heart" with lore "&8The core of all Healthy Pants." and " " and "&7This is a &d0.5&7%% &7drop from dungeon bosses!"
+					broadcast "&d&lCORE! &f%player% just dropped a &cHealthy Heart&f! &7(0.5&a+%(({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40))/100%&7%%)"
+					set {_slot3} to true
+			if {_slot3} = false:
+				chance of 0.5+(({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40))/100%:
+					set slot 15 of {_wb} to cyan dye of protection 1 with item flag hide enchants with name "&3Careless Relic" with lore "&8The core of all Careless Pants." and " " and "&7This is a &d0.5&7%% &7drop from dungeon bosses!"
+					broadcast "&d&lCORE! &f%player% just dropped a &3Careless Relic&f! &7(0.5&a+%(({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40))/100%&7%%)"
+					set {_slot3} to true
+			if {_slot3} = false:
+				chance of 10+(({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40))/100%:
+					set slot 15 of {_wb} to bone named "&cWitherien's Funny Bone" with lore "&7Used to create a wither pet." and " " and "&7This is a &b10%% &7drop from &cThe Wither Box"
+					set {_slot3} to true
+			if {_slot3} = false:
+				set slot 15 of {_wb} to light blue dye named "&b+500 Bits"
+			open {_wb} to player
+		else:
+			message "&cRequires at least 1 Withered Soul!" to player
+			play sound "block.chest.locked" to player
+			
+on inventory click:
+	if name of event-inventory is "&cThe Wither Box":
+		if name of event-item is "&b+500 Bits":
+			cancel event
+			set event-slot to air
+			play sound "entity.player.levelup" at pitch 2 to player
+			add 500 to {bits::%uuid of player%}
+			message "&b+500 Bits"
+on drink of potion:
+	if name of player's held item is "&5Alchemist Trail Effect":
+		message "&cBro you actually did it ☠"

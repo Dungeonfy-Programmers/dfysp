@@ -1,0 +1,203 @@
+command /resetfurguson:
+	permission: op
+	trigger:
+		set {furguson} to false
+
+on death:
+	if name of victim is "&6&lFurguson, Lord of The Lands Between" or "&aBacteria" or "&d&lFurguson, All-Father of The Lands Between":
+		delete drops
+on death:
+	if name of attacker is "&6&lFurguson, Lord of The Lands Between":
+		set {furguson} to false
+		set {furgusondialogue::%uuid of victim%} to false
+		send message "&6&lFurguson, Lord of The Lands Between&f Am I really that powerful? Or are you just bad" to victim
+on death:
+	if name of attacker is "&d&lFurguson, All-Father of The Lands Between":
+		set {furguson} to false
+		set {furgusondialogue::%uuid of victim%} to false
+		send message "&d&lFurguson, All-Father of The Lands Between&f: &cCome back later when you're more powerful, for you are no match for I, &d&lFurguson, All-Father of The Lands Between&c!" to victim
+
+#bacteria			
+on right click on entity:
+	name of player's held item is "&aHand Sanitizer":
+		if name of event-entity is "&aBacteria":
+			chance of 99.9%:
+				remove 1 ghast tear named "&aHand Sanitizer" from player
+				kill event-entity
+				play sound "entity.silverfish.death" at pitch 1 to player
+				send message "&aYou used your Hand Sanitizer to kill a Bacteria!" to player
+				
+on damage:
+	attacker is player
+	name of attacker's held item is "&aHand Sanitizer":
+		if name of victim isn't "&aBacteria" or "&6&lFurguson, Lord of The Lands Between" or "&d&lFurguson, All-Father of The Lands Between":
+			cancel event
+			send message "&cNo free weapon? &8&o*insert megamind meme here*&c." to attacker
+				
+on damage:
+	attacker is player
+	loop all creatures:
+		if name of loop-creature is "&aBacteria":
+			if name of victim is "&6&lFurguson, Lord of The Lands Between" or "&d&lFurguson, All-Father of The Lands Between":
+				cancel event
+				send message "&cYou need to kill all &aBacteria &cbefore damaging Furguson!" to attacker
+				
+#furguson's attacks (all of them)		
+every 2 ticks:
+	loop all creatures:
+		if name of loop-creature is "&6&lFurguson, Lord of The Lands Between" or "&d&lFurguson, All-Father of The Lands Between":
+			loop all players in radius 5 of loop-creature:
+				make loop-creature damage loop-player by 125
+				
+every 30 seconds:
+	loop all creatures:
+		if name of loop-creature is "&6&lFurguson, Lord of The Lands Between":
+			loop all players:
+				if {bacteriasummon} is false:
+					if {furguson} is true:
+						if {furgusondialogue::%uuid of loop-player%} is true:
+							make console execute command "/setblock -511 56 129 redstone_block destroy"
+							send message "&6&lFurguson, Lord of The Lands Between&f: Go my &aBacteria&f! Do your worst to this monster!" to loop-player
+							set {bacteriasummon} to true
+		
+every 6 seconds:
+	chance of 15%:
+		loop all creatures:
+			if name of loop-creature is "&6&lFurguson, Lord of The Lands Between":
+				loop all players in radius 25 around loop-creature:
+					if {furguson} is true:
+						if {furgusondialogue::%uuid of loop-player%} is true:
+							strike lightning effect at loop-player
+							remove slowness from loop-player
+							apply slowness 10 to loop-player for 10 seconds
+							send message "&6&lFurguson, Lord of The Lands Between&f: I, &6Furguson&f, have the ability to &8stun&f!" to loop-player
+						
+every 15 seconds:
+	loop all creatures:
+		if name of loop-creature is "&d&lFurguson, All-Father of The Lands Between":
+			loop all players:
+				if {bacteriasummon} is false:
+					if {furguson} is true:
+						if {furgusondialogue::%uuid of loop-player%} is true:
+							make console execute command "/setblock -511 56 129 redstone_block destroy"
+							wait 1 tick
+							make console execute command "/setblock -511 56 129 redstone_block destroy"
+							send message "&d&lFurguson, Lord of The Lands Between&f: &cGo my &aBacteria&c! This time, show this person hell!" to loop-player
+							set {bacteriasummon} to true
+					
+on damage:
+	victim is player
+	if name of attacker is "&d&lFurguson, All-Father of The Lands Between":
+		if {furguson} is true:
+			chance of 3%:
+				send message "&d&lFurguson, All-Father of The Lands Between&f: &2Venom &cdoes a lot to you humans." to victim
+				make attacker damage victim by 800
+				apply poison 1 without particles to victim for 5 seconds
+
+every 6 seconds:
+	chance of 15%:
+		loop all creatures:
+			if name of loop-creature is "&d&lFurguson, All-Father of The Lands Between":
+				loop all players in radius 25 around loop-creature:
+					if {furguson} is true:
+						if {furgusondialogue::%uuid of loop-player%} is true:
+							strike lightning effect at loop-player
+							remove slowness from loop-player
+							apply slowness 10 to loop-player for 10 seconds
+							make loop-creature damage loop-player by 350
+							send message "&d&lFurguson, Lord of The Lands Between&f: &cI, &dFurguson&f, &chave the ability to &8stun&c, and deal lots of damage!" to loop-player
+					
+
+#tt helm prevention				
+on damage:
+	attacker is player
+	if name of victim is "&6&lFurguson, Lord of The Lands Between" or "&d&lFurguson, All-Father of The Lands Between":
+		if name of attacker's helmet is "&aTime Traveler's Helmet":
+			wait 1 tick
+			set victim's invulnerability ticks to 20
+			
+on item damage:
+	cancel event
+
+#furguson/phase 2 spawn/death	
+on right click:
+	if name of player's held item is "&6The Monitor":
+		if {furguson} is false:
+			set {furguson} to true
+			set {furgusondialogue::%uuid of player%} to true
+			wait 1 tick
+			remove 1 painting named "&6The Monitor" from player
+			set {bacteriasummon} to false
+			set {_furgusonboss} to location at (-516.5, 61, 114.5)
+			set {_furgusonboss}'s yaw to 0
+			set {_furgusonboss}'s pitch to 0
+			teleport player to {_furgusonboss}
+			apply blindness 255 without particles to player for 3 days
+			apply slowness 255 without particles to player for 3 days
+			send message "&6&lFurguson, Lord of The Lands Between&f: Who's there? Is that an actual organism?" to player
+			play sound "entity.skeleton.ambient" at pitch 2 to player
+			wait 3 seconds
+			send message "&6&lFurguson, Lord of The Lands Between&f: Welcome to &6The Lands Between&f. It's &8&oempty&f, but fun." to player
+			play sound "entity.skeleton.ambient" at pitch 2 to player
+			wait 3 seconds
+			send message "&6&lFurguson, Lord of The Lands Between&f: Well, I see you want to &cfight&f, so I'll give you what you want." to player
+			play sound "entity.skeleton.ambient" at pitch 2 to player
+			wait 2 seconds
+			make console execute command "/setblock -511 56 131 redstone_block destroy"
+			remove blindness from player
+			remove slowness from player
+			send title "&6&lFurguson" with subtitle "&7Difficulty: &c[8.981/10]" to player
+			play sound "entity.wither.spawn" at pitch 1.5 to player
+		else:
+			cancel event
+			send message "&cSomeone else is already fighting Furguson!" to player
+
+on death:
+	attacker is player
+	if name of victim is "&6&lFurguson, Lord of The Lands Between":
+		set {furgusonsummon::%uuid of attacker%} to false
+		wait 1 second
+		send message "&6&lFurguson, Lord of The Lands Between&f: Fair play, we fought well, but you were better..." to attacker
+		play sound "entity.skeleton.ambient" at pitch 2 to attacker
+		wait 4 seconds
+		send message "&8&oThe Church of Mighty Beings has ressurected Furguson, and granted him a new title.." to attacker
+		wait 5 seconds
+		send message "&d&lFurguson, All-Father of The Lands Between&f: &cThat was fun, let's go for round &4&l2&c!" to attacker
+		apply blindness 1 without particles to attacker for 1 second
+		send title "&d&lFurguson, PHASE 2" with subtitle "&7Difficulty: &c[IT'S OVER 9000/10]" to attacker for 2 seconds
+		play sound "entity.wither.spawn" at pitch 0.75 to attacker
+		make console execute command "/setblock -511 56 133 redstone_block destroy"
+		set {bacteriasummon} to false
+
+on death:
+	attacker is player
+	if name of victim is "&d&lFurguson, All-Father of The Lands Between":
+		set {furguson} to false
+		set {furgusondialogue::%uuid of attacker%} to false
+		wait 1 second
+		send message "&d&lFurguson, All-Father of The Lands Between&f: &cI suppose it was never meant to be.. Good fight, nobel warrior!" to attacker
+		wait 1 seconds
+		set {_furgusondeath} to location at (1060.5, 58, 80.5)
+		set {_furgusondeath}'s yaw to 65
+		set {_furgusondeath}'s pitch to 0
+		teleport attacker to {_furgusondeath}
+		send title "&d&lFURGUSON KILLED!" with subtitle "&aRewards: +Boss Drops" to attacker
+		play sound "ui.toast.challenge_complete" at pitch 1.25 to attacker
+		chance of 10%:
+			give attacker netherite ingot named "&6Furguson's Armor Plate" with lore "&8&oPoor Furguson.. :sob:" and "" and "&7This is a &b10%% &7drop from &6Furguson&7!"
+			send message "&d&lFurguson Drop! &fYou got a &6Furguson's Armor Plate&f! &7(10%%)" to attacker
+		chance of 6%:
+			give attacker raw iron named "&6Mechanical Head Fragment" with lore "&8&oThe helmet has been blown into pieces..." and "" and "&7This is a &b6%% &7drop from &6Furguson&7!"
+			send message "&d&lFurguson Drop! &fYou got a &6Mechanical Head Fragment&f! &7(6%%)" to attacker
+		chance of 2%:
+			give attacker black dye named "&6Mechanical Ant's Machienery Piece" with lore "&8&oIt's really small but really complex." and "" and "&7This is a &b2%% &7drop from &6Furguson&7!"
+			send message "&d&lFurguson Drop! &fYou got a &6Mechanical Ant's Machienery Piece&f! &7(2%%)" to attacker
+		chance of 0.5%:
+			give attacker {mechantcore}
+			broadcast "&b&lMECHANICAL CORE! &f%attacker% got a &bMechanical Ant Core&f! &8(&b0.5%%&8)"
+		chance of 0.4%:
+			give attacker {anteater}
+			broadcast "&c&lANT EATER! &f%attacker% got &cThe Ant Eater&f! &8(&b0.4%%&8)"
+		chance of 0.3%:
+			give attacker {antconsumer}
+			broadcast "&6&lANT CONSUMER! &f%attacker% got an &6Ant Consumer&f! &8(&b0.3%%&8)"

@@ -1,0 +1,13 @@
+on sneak toggle:
+	if player's offhand item is enchanted book of protection 4:
+		if player's held item is not helmet or player head or air:
+			send "&4You can't do this."
+			stop
+		if player's held item is not enchanted with protection:
+			set player's offhand item to air
+			enchant player's held item with protection 4
+			set {_enchanteditem} to name of player's held item
+			play sound "entity.player.levelup" at pitch 2
+			message "&aYou enchanted your %{_enchanteditem}% &awith Protection IV!"
+		else:
+			send message "&cYou already have Protection on this item, or you're trying to apply this to air." to player

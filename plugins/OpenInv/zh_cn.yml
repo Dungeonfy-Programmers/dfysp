@@ -1,0 +1,31 @@
+# Translated into Chinese Simplified by Flandre_tw
+messages:
+  error:
+    consoleUnsupported: ���������������������������������
+    lootNotGenerated: '&c��������������������� ��� ��������� &b/silentcontainer&c���'
+    invalidMaterial: '&c��������������� ��� "%target%"'
+    invalidNumber: '&c��������������� ��� "%target%"'
+    invalidPlayer: '&c��������������� ���'
+    permissionOpenSelf: '&c������������������������������������'
+    permissionEnderAll: '&c������������������������������������������'
+    permissionExempt: '&c%target% ���������������������������'
+    permissionCrossWorld: '&c%target% ���������������������������'
+    permissionPlayerOnline: '&c������������������������������������������'
+    permissionPlayerOffline: '&c������������������������������������������'
+    commandException: '&c���������������������������������'
+  info:
+    containerBlocked: ���������������������������������������
+    containerBlockedSilent: ���������������������������������������������
+    containerSilent: ���������������������������������
+    settingState: '%setting% ��� %state%'
+    player:
+      noMatches: ��������������� %target% ������������
+      matches: ������������ %target% ��������� ��� %detail%
+    container:
+      noMatches: ��������������� %target% ���������������
+      matches: ������������ %target% ������������ ��� %detail%
+    'true': ������
+    'false': ������
+container:
+  player: '%player% ������������'
+  enderchest: '%player% ������������'

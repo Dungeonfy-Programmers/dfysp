@@ -1,0 +1,108 @@
+command /storage:
+	aliases: /st
+	trigger:
+		set {_storage} to a new chest inventory with 6 row with name "&eStorage"
+		set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 and 36 and 37 and 38 and 39 and 40  and 41 and 42 and 43 and 44 and 45 and 46 and 47 and 48 and 49 and 50 and 51 and 52 and 53 of {_storage} to gray stained glass pane named " "
+		
+		#Sidebar
+		set slot 0 of {_storage} to player's skull named "&aYour Profile &8/profile, /profile <name>" with lore "&7Click out to check out your" and "&7stats, gear, and more!"
+		set slot 9 of {_storage} to ender pearl named "&bWarp &8/warp, /wp" with lore "&7Click to view your next area" and "&7to explore and take on!"
+		set slot 18 of {_storage} to minecart with chest of protection 1 with item flag hide enchants named "&eStorage &8/storage, /st" with lore "&7Click to view your avalible storage!"
+		set slot 27 of {_storage} to experience bottle named "&aGifting &8/gift" with lore "&7Click to view a shop to gift" and "&7&aXP &7and &bBits &7to everyone online :D"
+		set slot 36 of {_storage} to paper named "&fOther Commands &8/other, /ot" with lore "&7Click to check out some other useful commands."
+		set slot 45 of {_storage} to barrier named "&fClose Menu"
+		
+		#Enderchest
+		set slot 25 of {_storage} to ender chest named "&5Ender Chest &8/ec" with lore "&7Click to open and view your" and "&7own personal ender chest!"
+		#Vaults
+		set slot 20 of {_storage} to chest named "&6Vault 1"
+		set slot 21 of {_storage} to chest named "&6Vault 2"
+		set slot 22 of {_storage} to chest named "&6Vault 3"
+		set slot 23 of {_storage} to chest named "&6Vault 4"
+		set slot 24 of {_storage} to chest named "&6Vault 5"
+		set slot 29 of {_storage} to barrel named "&6Vault 6"
+		set slot 30 of {_storage} to barrel named "&6Vault 7"
+		set slot 31 of {_storage} to barrel named "&6Vault 8"
+		set slot 32 of {_storage} to barrel named "&6Vault 9"
+		set slot 33 of {_storage} to barrel named "&6Vault 10"
+		open {_storage} to player
+ 
+on inventory click:
+	if name of event-inventory is "&eStorage":
+		cancel event
+		if name of event-item is "&5Ender Chest":
+			make player execute command "/ec"
+		if name of event-item is "&6Vault 1":
+			make player execute command "/pv 1"
+		if name of event-item is "&6Vault 2":
+			make player execute command "/pv 2"
+		if name of event-item is "&6Vault 3":
+			make player execute command "/pv 3"
+		if name of event-item is "&6Vault 4":
+			make player execute command "/pv 4"
+		if name of event-item is "&6Vault 5":
+			make player execute command "/pv 5"
+		if name of event-item is "&6Vault 6":
+			make player execute command "/pv 6"
+		if name of event-item is "&6Vault 7":
+			make player execute command "/pv 7"
+		if name of event-item is "&6Vault 8":
+			make player execute command "/pv 8"
+		if name of event-item is "&6Vault 9":
+			make player execute command "/pv 9"
+		if name of event-item is "&6Vault 10":
+			make player execute command "/pv 10"
+
+command /other:
+	aliases: /ot
+	trigger:
+		set {_ot} to a new chest inventory with 6 row with name "&fOther Commands"
+		set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 and 36 and 37 and 38 and 39 and 40  and 41 and 42 and 43 and 44 and 45 and 46 and 47 and 48 and 49 and 50 and 51 and 52 and 53 of {_ot} to gray stained glass pane named " "
+		
+		#Sidebar
+		set slot 0 of {_ot} to player's skull named "&aYour Profile &8/profile, /profile <name>" with lore "&7Click out to check out your" and "&7stats, gear, and more!"
+		set slot 9 of {_ot} to ender pearl named "&bWarp &8/warp, /wp" with lore "&7Click to view your next area" and "&7to explore and take on!"
+		set slot 18 of {_ot} to minecart with chest named "&eStorage &8/storage, /st" with lore "&7Click to view your avalible storage!"
+		set slot 27 of {_ot} to experience bottle named "&aGifting &8/gift" with lore "&7Click to view a shop to gift" and "&7&aXP &7and &bBits &7to everyone online :D"
+		set slot 36 of {_ot} to paper of protection 1 with item flag hide enchants named "&fOther Commands &8/other, /ot" with lore "&7Click to check out some other useful commands."
+		set slot 45 of {_ot} to barrier named "&fClose Menu"
+		
+		#Commands
+		set slot 11 of {_ot} to dried kelp block named "&f/trash" with lore "&7Throw away your items!"
+		set slot 12 of {_ot} to iron leggings named "&f/sets" with lore "&7See what other people online are using!"
+		set slot 13 of {_ot} to diamond named "&f/dungeon_drops" with lore "&7Disable picking any drops &cEXCEPT &7for &bDiamonds&7!"
+		set slot 14 of {_ot} to iron sword named "&f/damagetest" with lore "&7Shows how much damage your last" and "&7hit dealt. &8(sometimes innacurate)"
+		set slot 15 of {_ot} to gold ingot named "&f/daily" with lore "&7Claim some free rewards every 24 hours"
+		set slot 16 of {_ot} to painting named "&f/achievements" with lore "&7View achievements and how to complete them."
+		set slot 20 of {_ot} to cake named "&f/dailycake" with lore "&7Bake a consumable (and delicious) cake every 24 hours!" and " " and "&7Cost: &e256 Wheat"
+		set slot 21 of {_ot} to light gray shulker box named "&f/minerbox" with lore "&7Make a box containing mining goodies :D" and " " and "&7Cost: &3320 Azure Powder"
+		set slot 22 of {_ot} to lily pad named "&f/dungeon_luck" with lore "&7Check out how your &aDungeon Luck &7(DL) is calculated!"
+		set slot 23 of {_ot} to netherite helmet named "&f/challenges" with lore "&7Check out &cHardcore &7mode :D"
+
+		open {_ot} to player
+		
+on inventory click:
+	if name of event-inventory is "&fOther Commands":
+		cancel event
+		if name of event-item is "&f/trash":
+			make player execute command "/trash"
+		if name of event-item is "&f/sets":
+			make player execute command "/sets"
+		if name of event-item is "&f/dungeon_drops":
+			make player execute command "/dungeon_drops"
+		if name of event-item is "&f/damagetest":
+			close player's inventory
+			make player execute command "/damagetest"
+		if name of event-item is "&f/daily":
+			make player execute command "/daily"
+		if name of event-item is "&f/achievements":
+			make player execute command "/achievements"
+		if name of event-item is "&f/dailycake":
+			close player's inventory
+			make player execute command "/dailycake"
+		if name of event-item is "&f/minerbox":
+			make player execute command "/minerbox"
+		if name of event-item is "&f/dungeon_luck":
+			make player execute command "/dungeon_luck"
+		if name of event-item is "&f/challenges":
+			make player execute command "/challenges"

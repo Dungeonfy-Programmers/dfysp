@@ -1,0 +1,18 @@
+on right click:
+    name of player's held item is "&5Unlucky Dice"
+    if player does not have 12 diamond named "&dExceedingly Shiny Diamond":
+        cancel event
+        send message "&cYou do not have enough money to roll the dice!" to player
+    else:
+        remove 12 diamond named "&dExceedingly Shiny Diamond" from player's inventory
+        set metadata value "luckydicething" of player to a random integer between 1 and 6
+        if metadata value "luckydicething" of player is 1 or 2 or 3 or 4 or 5:
+            send message "&c&lUnlucky! &cYou lost &d12 Exceedingly Shiny Diamonds" to player
+            play sound "entity.villager.no" at player
+            wait 1 tick
+            stop
+        if metadata value "luckydicething" of player is 6:
+            remove 1 of item named "&5Unlucky Dice" from player's inventory
+            send message "&d&lKEEP GAMBLING!! &dYou won 64 Exceedingly Shiny Diamonds!!" to player
+            play sound "ui.toast.challenge_complete" at pitch 2 to player
+            give player 64 of {exshinydia}

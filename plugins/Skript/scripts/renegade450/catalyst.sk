@@ -1,0 +1,28 @@
+on right click with netherite axe:
+	name of player's held item is "&dThe Catalyst"
+	set {_thecata} to a new chest inventory with 3 row with name "&dThe Catalyst"
+	set slot 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26 of {_thecata} to black stained glass pane
+	if metadata value "ability1" of player isn't set:
+		set slot 11 of {_thecata} to red wool named "&cAbility ##1 (Locked)" with lore "&6Ability: Cataclysm", "&7Every &a3 &7hits, deal &c2.2x &7your damage to", "&7all mobs in a &e6 &7block radius but you take", "&c10%% &7of your max health as damage.", "", "&cCost:", "&d:)"
+		set slot 13 of {_thecata} to red wool named "&cAbility ##2 (Locked)" with lore "&6Ability: Heart of the Mob", "&7When players in a &a10 &7block radius of you", "&7take damage, heal them for &c20%% &7of your", "&7max health, &7but you deal &c60%% &7less damage.", "", "&cCost:", "&d;)"
+		set slot 15 of {_thecata} to red wool named "&cAbility ##3 (Locked)" with lore "&6Ability: Mobile T-62", "&7Grants &fResistance IV&7, but you take &c65%%&7 of", "&7all damage players take within &a15 &7blocks", "&7of you, but you deal &c90%% &7less damage.", "", "&cCost:", "&d:D"
+	else:
+		set slot 11 of {_thecata} to lime wool named "&aUnlocked Ability ##1" with lore "&6Ability: Cataclysm", "&7Every &a3 &7hits, deal &c2.2x &7your damage to", "&7all mobs in a &e4 &7block radius but you take", "&c10%% &7of your max health as damage.", "", "&eClick to equip this ability!"
+	open {_thecata} to player
+
+on inventory click:
+	name of event-inventory contains "&dThe Catalyst"
+	cancel event
+	name of player's tool is not "&dThe Catalyst"
+	close player's inventory
+	send "&cYou're not holding &dThe Catalyst&c." to player
+	if index of event-slot is 11:
+		if metadata value "ability1" of player isn't set:
+			player has 3 of {bloodyskull}
+			send "test" to player
+			set metadata value "ability1" of player to true
+			stop
+		if metadata value "ability1" of player is true:
+			clear metadata value "ability1" of player
+			send "rah" to player
+			stop

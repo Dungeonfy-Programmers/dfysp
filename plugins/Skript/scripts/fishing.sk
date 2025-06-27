@@ -1,0 +1,320 @@
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		if name of player's held item is "&eSlimefish Rod":
+			wait 30 ticks
+			give player slime ball of protection 1 with item flag hide enchants named "&fSlimefish" with lore "&8A weirdly slimy fish?" and " " and "&7Requires &eSlimefish Rod &7to be caught!"
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		if name of player's held item is "&eLotus Rod":
+			wait 30 ticks
+			give player spore blossom named "&fLotus Flower" with lore "&8A beautiful flower hidden beneath" and "&8the depths of the water?" and " " and "&7Requires &eLotus Rod &7to be caught!"
+
+#Main Roll
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		send title "&fRolling..."
+		play sound "block.note_block.hat" to player
+		set {fishingdrop} to random integer between 1 and 6
+		wait 10 ticks
+		play sound "block.note_block.hat" to player
+		wait 10 ticks
+		play sound "block.note_block.hat" to player
+		wait 10 ticks
+		play sound "block.note_block.pling" to player
+		if name of player's held item is "&6Cow Rod" or "&6Tripnet Rod" or "&6Sashimi Rod":
+			if {fishingdrop} is equal to 1:
+				send title "&bŁ" with subtitle "&b1"
+				give player 4 gold nuggets
+				send message "&b&lNET 1 &f+&64 Gold Nuggets" to player
+			if {fishingdrop} = 2:
+				send title "&b♧" with subtitle "&b2"
+				give player 1 gold ingot
+				send message "&b&lNET 2 &f+&6Gold Ingot" to player
+			if {fishingdrop} = 3:
+				send title "&b✦" with subtitle "&b3"
+				give player 2 gold ingots
+				send message "&b&lNET 3 &f+&62 Gold Ingots" to player
+			if {fishingdrop} = 4:
+				send title "&b✥" with subtitle "&b4"
+				give player 4 gold ingots
+				send message "&b&lNET 4 &f+&64 Gold Ingots" to player
+			if {fishingdrop} = 5:
+				send title "&b☯" with subtitle "&b5"
+				give player 8 gold ingots
+				send message "&b&lNET 5 &f+&68 Gold Ingots" to player
+			if {fishingdrop} = 6:
+				send title "&bΩ" with subtitle "&b6"
+				give player gold block
+				send message "&b&lNET 6 &f+&6Gold Block" to player
+		else:
+			if {fishingdrop} is equal to 1:
+				send title "&6Ł" with subtitle "&61"
+				give player 4 emeralds
+				send message "&6&lNET 1 &f+&a4 Emeralds" to player
+			if {fishingdrop} = 2:
+				send title "&6♧" with subtitle "&62"
+				give player 1 diamonds
+				send message "&6&lNET 2 &f+&b1 Diamond" to player
+			if {fishingdrop} = 3:
+				send title "&6✦" with subtitle "&63"
+				give player 2 diamonds
+				send message "&6&lNET 3 &f+&b2 Diamonds" to player
+			if {fishingdrop} = 4:
+				send title "&6✥" with subtitle "&64"
+				give player 4 diamonds
+				send message "&6&lNET 4 &f+&b4 Diamonds" to player
+			if {fishingdrop} = 5:
+				send title "&6☯" with subtitle "&65"
+				give player 8 diamonds
+				send message "&6&lNET 5 &f+&b8 Diamonds" to player
+			if {fishingdrop} = 6:
+				send title "&6Ω" with subtitle "&66"
+				give player diamond block
+				send message "&6&lNET 6 &f+&b1 Diamond Block" to player
+
+#================PREHISTORIC FISHING ABILITIES=================
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		if name of player's held item is "&6Cow Rod" or "&6Tripnet Rod" or "&6Sashimi Rod":
+			chance of 10%:
+				wait 30 ticks
+				give player tropical fish with name "&bKoi" with lore "&7A type of dinofish, a rather uncommon drop"
+				send message "&6&lDINOFISH! &fYou fished up a &bKoi! &8(10%%)" to player
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		if name of player's held item is "&6Cow Rod" or "&6Tripnet Rod" or "&6Sashimi Rod":
+			chance of 10%:
+				wait 30 ticks
+				give player salmon with name "&bTuna" with lore "&7A type of dinofish, a rather uncommon drop"
+				send message "&6&lDINOFISH! &fYou fished up a &bTuna! &8(10%%)" to player
+				
+#rod abilities
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		if name of player's held item is "&6Cow Rod":
+			wait 30 ticks
+			send message "&6&lCOW! &fYou fished up 2 Raw Beef!" to player
+			give player 2 raw beef
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		if name of player's held item is "&6Tripnet Rod":
+			wait 30 ticks
+			send message "&b&lTRIPNET! &f+&62 Gold Ingots&f!" to player
+			give player 2 gold ingots
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		if name of player's held item is "&6Cow Rod" or "&6Tripnet Rod" or "&6Sashimi Rod":
+			chance of 0.08%:
+				wait 30 ticks
+				give player {donkasaurus}
+				broadcast "&6&lDONKASAURUS &f%player% just dropped a &dDonkasaurus&f! &8(0.08%%)"
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		if name of player's held item is "&6Sashimi Rod" or "&6Tripnet Rod":
+			chance of 5%:
+				wait 30 ticks
+				give player cod with name "&bCoelacanth" with lore "&7A type of dinofish, a rather uncommon drop"
+				send message "&6&lDINOFISH! &fYou fished up a &bCoelacanth! &8(5%%)" to player
+				
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		if name of player's helmet is "&dTuna Helmet":
+			if name of player's chestplate is "&dTuna Chestplate":
+				if name of player's leggings is "&dTuna Leggings":
+					if name of player's boots is "&dTuna Boots":
+						wait 30 ticks
+						send message "&b&lBONUS! &f+&64 Gold Ingots &fbecause of your &dTuna Armor&f!"
+						give 4 gold ingots to player
+			
+#====================RARE FISHING DROPS=========================
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		chance of 0.2%:
+			wait 30 ticks
+			broadcast "&3&ke &3%player% just fished up &fSilk of the Sea &3&ke &8(0.2%%)"
+			give player string with name "&fSilk of the Sea" with lore "&7A rare drop from fishing used to make powerful rods."			
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		chance of 2%:
+			wait 30 ticks
+			send message "&c&lIMPOSTER! &fYou fished up &cSusbuck™ &8(2%%)"
+			give player red dye with name "&cSusbuck™" with lore "&7A highly premium side currency used amongst players."
+	if fishing state is CAUGHT_FISH:
+		chance of 2%:
+			wait 30 ticks
+			send message "&a&lSCUTE! &fYou fished up a Scute! &8(2%%)"
+			give player scute
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		chance of 5%:
+			wait 30 ticks
+			send message "&6&lNICE CATCH! &fYou fished up &fSubmerged Scraps &8(5%%)"
+			give player gold ingot with name "&fSubmerged Scraps"
+
+#=================SEA MONSTERS=================
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		chance of 5%:
+			wait 30 ticks
+			send message "&c&lMONSTER! &fYou fished up a &3Drowned&f!" to player
+			summon drowned at player's location	
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		chance of 5%:
+			wait 30 ticks
+			send message "&c&lMONSTER! &fYou fished up a &fSkeleton&f!" to player
+			summon skeleton at player's location	
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		chance of 2%:
+			wait 30 ticks
+			send message "&c&lMONSTER! &fYou fished up a &3Guardian&f!" to player
+			summon guardian at player's location
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		chance of 1%:
+			wait 30 ticks
+			send "&c&lMONSTER! &fYou fished up a &3Elder Guardian&f!" to player
+			summon elder guardian at player's location
+on death of guardian:
+	clear drops
+	drop prismarine brick slab with name "&fTablets of the Ocean" with lore "&8Dropped from killing guardians."
+on death of elder guardian:
+	clear drops
+	drop 32 cod
+	drop 32 salmon
+	drop prismarine brick slab with name "&fTablets of the Ocean" with lore "&8Dropped from killing guardians."			
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		if name of player's helmet is "&bWinfred's Cap":
+			wait 30 ticks
+			send message "&b&lBONUS! &f+1 &bDiamond &fbecause of your helmet!"
+			give diamond to player
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		if name of player's helmet is "&dDiver's Helmet":
+			if name of player's chestplate is "&dDiver's Chestplate":
+				if name of player's leggings is "&dDiver's Leggings":
+					if name of player's boots is "&dDiver's Yeezys":
+						wait 30 ticks
+						send message "&b&lBONUS! &f+&b4 Diamonds &fbecause of your &dDiver's Armor&f!"
+						give 4 diamonds to player
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		chance of 0.08%:
+			wait 30 ticks
+			broadcast "&b&lDUNKLEOSTEUS! &f%player% just fished up &dDunkleosteus&f! &8(0.08%%)"
+			give player {dunkleosteus}
+			
+#===================SUBMERGED BARREL==================
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		chance of 10%:
+			name of player's held item is "&dBarrel-magnet™":
+				give player barrel of protection 1 with item flag hide enchants named "&6Submerged Barrel" with lore "&7Right click to open for treasure!"
+				message "&6&lTREASURE! &fYou caught up a &6Submerged Barrel&f! &7(10%%)"
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		chance of 10%:
+			lore of player's held item contains "&6Barrelerator":
+				give player barrel of protection 1 with item flag hide enchants named "&6Submerged Barrel" with lore "&7Right click to open for treasure!"
+				message "&6&lTREASURE! &fYou caught up a &6Submerged Barrel&f! &7(10%%)"
+
+on rightclick with barrel:
+	if name of player's held item is "&6Submerged Barrel":
+		remove barrel from player
+		set {_barrel} to a new chest inventory with 3 row with name "&6Submerged Barrel"
+		set slot random integer between 0 to 8 of {_barrel} to 8 raw cod
+		set slot random integer between 9 to 17 of {_barrel} to 8 raw salmon
+		set slot random integer between 18 to 26 of {_barrel} to 8 pufferfish
+		set slot random integer between 0 to 8 of {_barrel} to 2 diamond block
+		set slot random integer between 9 to 17 of {_barrel} to 2 diamond block
+		set slot random integer between 18 to 26 of {_barrel} to 2 diamond block
+		chance of 20%:
+			set slot random integer between 18 to 26 of {_barrel} to tropical fish
+		chance of 2%:
+			set slot random integer between 9 to 17 of {_barrel} to {doubleroll}
+			broadcast "&6&lRARE TREASURE! &f%player% got a &dMystical Double Roll Book &ffrom a &6Submerged Barrel&f! &8(2%%)"
+		chance of 2%:
+			set slot random integer between 0 to 8 of {_barrel} to {thickskull}
+			broadcast "&6&lRARE TREASURE! &f%player% got a &dMystical Thick Skull Book &ffrom a &6Submerged Barrel&f! &8(2%%)"
+		open {_barrel} to player
+		
+on sneak toggle:
+	if name of player's offhand item is "&dMystical Double Roll Book":
+		if player's held item is enchanted with lure 5:
+			if lore of player's held item contains "&6Double Roll":
+				message "&cYou already have this enchant on this item!"
+			else:
+				set player's offhand item to air
+				add " " and "&6Double Roll" and "&720%% for an &6extra &7fishing roll!" to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith Double Roll!"
+				play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou need Lure V on this item to apply it!" to player
+			
+on fishing:
+	if fishing state is CAUGHT_FISH:
+		chance of 20%:
+			if lore of player's held item contains "&6Double Roll":
+				if name of player's held item is "&6Cow Rod" or "&6Tripnet Rod" or "&6Sashimi Rod":
+					message "&6&lDOUBLE ROLL!"
+					if {fishingdrop} is equal to 1:
+						send title "&bŁ" with subtitle "&b1"
+						give player 4 gold nuggets
+						send message "&b&lNET 1 &f+&64 Gold Nuggets" to player
+					if {fishingdrop} = 2:
+						send title "&b♧" with subtitle "&b2"
+						give player 1 gold ingot
+						send message "&b&lNET 2 &f+&6Gold Ingot" to player
+					if {fishingdrop} = 3:
+						send title "&b✦" with subtitle "&b3"
+						give player 2 gold ingots
+						send message "&b&lNET 3 &f+&62 Gold Ingots" to player
+					if {fishingdrop} = 4:
+						send title "&b✥" with subtitle "&b4"
+						give player 4 gold ingots
+						send message "&b&lNET 4 &f+&64 Gold Ingots" to player
+					if {fishingdrop} = 5:
+						send title "&b☯" with subtitle "&b5"
+						give player 8 gold ingots
+						send message "&b&lNET 5 &f+&68 Gold Ingots" to player
+					if {fishingdrop} = 6:
+						send title "&bΩ" with subtitle "&b6"
+						give player gold block
+						send message "&b&lNET 6 &f+&6Gold Block" to player
+				else:
+					message "&b&lDOUBLE ROLL!"
+					if {fishingdrop} is equal to 1:
+						give player 4 emeralds
+						send message "&6&lNET 1 &f+&a4 Emeralds" to player
+					if {fishingdrop} = 2:
+						give player 1 diamonds
+						send message "&6&lNET 2 &f+&b1 Diamond" to player
+					if {fishingdrop} = 3:
+						give player 2 diamonds
+						send message "&6&lNET 3 &f+&b2 Diamonds" to player
+					if {fishingdrop} = 4:
+						give player 4 diamonds
+						send message "&6&lNET 4 &f+&b4 Diamonds" to player
+					if {fishingdrop} = 5:
+						give player 8 diamonds
+						send message "&6&lNET 5 &f+&b8 Diamonds" to player
+					if {fishingdrop} = 6:
+						give player diamond block
+						send message "&6&lNET 6 &f+&b1 Diamond Block" to player
+
+on sneak toggle:
+	if name of player's offhand item is "&dMystical Barrelerator Book":
+		if player's held item is fishing rod:
+			if lore of player's held item contains "&6Barrelerator":
+				message "&cYou already have this enchant on this item!"
+			else:
+				set player's offhand item to air
+				add " " and "&6Barrelerator" and "&710%% chance to fish up a &6Submerged Barrel&7!" to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith Barrelerator!"
+				play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou can only apply this mystical enchant to fishing rods!" to player

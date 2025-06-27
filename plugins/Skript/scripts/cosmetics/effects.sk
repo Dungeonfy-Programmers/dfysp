@@ -1,0 +1,93 @@
+#kill effects
+on sneak toggle:
+	if name of player's offhand item is "&d♫ Music Effect ♫":
+		if player's held item isn't air:
+			if lore of player's held item contains "&8✔ Effect Added":
+				message "&cYou can only apply one effect per item!"
+			else:
+				set player's offhand item to air
+				add " " to lore of player's held item
+				add "&d♫ Music Effect ♫" to lore of player's held item
+				add "&7Plays a &6trio of notes &7on kill :)" to lore of player's held item
+				add "&8✔ Effect Added" to lore of player's held item
+				message "&aYou have applied the &d♫ Music Effect ♫&a!"
+		else:
+			message "&cYou can't apply this to air D:"
+on sneak toggle:
+	if name of player's offhand item is "&bMagical Trail":
+		if player's held item is any boots:
+			if lore of player's held item contains "&8✔ Effect Added":
+				message "&cYou can only apply one effect per item!"
+			else:
+				remove 1 enchanting table from player
+				add " " to lore of player's held item
+				add "&bMagical Trail" to lore of player's held item
+				add "&6Magic &7starts following you around!" to lore of player's held item
+				add "&8✔ Effect Added" to lore of player's held item
+				message "&aYou have applied the &bMagical Trail&a!"
+		else:
+			message "&cYou can't apply this to air D:"
+on sneak toggle:
+	if name of player's offhand item is "&5Amethyst Effect ✦":
+		if player's held item isn't air:
+			if lore of player's held item contains "&8✔ Effect Added":
+				message "&cYou can only apply one effect per item!"
+			else:
+				set player's offhand item to air
+				add " " to lore of player's held item
+				add "&5Amethyst Effect ✦" to lore of player's held item
+				add "&7Breaking blocks dissolves into purple dust..." to lore of player's held item
+				add "&8✔ Effect Added" to lore of player's held item
+		else:
+			message "&cYou can't apply this to air D:"
+on death:
+	if lore of attacker's held item contains "&cAngry Chef Effect":
+		draw 5 of angry villager at location 1 block above victim
+		play sound "entity.pillager.death" to attacker
+on sneak toggle:
+	if name of player's offhand item is "&cAngry Chef Effect":
+		if player's held item isn't air:
+			if lore of player's held item contains "&8✔ Effect Added":
+				message "&cYou can only apply one effect per item!"
+			else:
+				set player's offhand item to air
+				add " " to lore of player's held item
+				add "&cAngry Chef Effect" to lore of player's held item
+				add "&7Angry particles appear on kill. &8GRRR!" to lore of player's held item
+				add "&8✔ Effect Added" to lore of player's held item
+		else:
+			message "&cYou can't apply this to air D:"
+
+#Mining Effects
+on sneak toggle:
+	if name of player's offhand item is "&5Amethyst Effect ✦":
+		if lore of player's held item contains "&8✔ Effect Added":
+			message "&cYou can only apply one effect per item!"
+		else:
+			if player's held item is prismarine shard or netherite pickaxe or diamond pickaxe or golden pickaxe or iron pickaxe or stone pickaxe or wooden pickaxe:
+				set player's offhand item to air
+				add " " to lore of player's held item
+				add "&5Amethyst Effect ✦" to lore of player's held item
+				add "&7Drops visual amethyst shards when mining!" to lore of player's held item
+				add "&8✔ Effect Added" to lore of player's held item
+			else:
+				message "&cYou can only apply this to mining tools!"
+#on break:
+#	if lore of player's held item contains "&5Amethyst Effect":		
+
+on death:
+	if name of attacker's held item is "&dStormbreaker":
+		play electric spark at location 3 blocks above victim's location
+		wait 4 ticks
+		play electric spark at location 2.5 blocks above victim's location
+		wait 4 ticks
+		play electric spark at location 2 blocks above victim's location
+		wait 4 ticks
+		play electric spark at location 1.5 blocks above victim's location
+		wait 4 ticks
+		play electric spark at location 1 blocks above victim's location
+		wait 4 ticks
+		play electric spark at location 0.5 blocks above victim's location
+		wait 4 ticks
+		strike lightning effect at the victim
+		

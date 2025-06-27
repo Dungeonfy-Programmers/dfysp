@@ -1,0 +1,19 @@
+on inventory click:
+	if name of event-item is "&aYour Profile &8/profile, /profile <name>":
+		cancel event
+		make player execute command "/profile"
+	if name of event-item is "&bWarp &8/warp, /wp":
+		cancel event
+		make player execute command "/warp"
+	if name of event-item is "&eStorage &8/storage, /st":
+		cancel event
+		make player execute command "/st"
+	if name of event-item is "&aGifting &8/gift":
+		cancel event
+		make player execute command "/gift"
+	if name of event-item is "&fOther Commands &8/other, /ot":
+		cancel event
+		make player execute command "/other"
+	if name of event-item is "&fClose Menu":
+		cancel event
+		close player's inventory

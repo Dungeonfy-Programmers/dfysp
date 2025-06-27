@@ -1,0 +1,186 @@
+every 1200 seconds:
+	if number of all players >= 4:
+		make console execute command "/auctionstart"
+
+command /auctionstart:
+	permission: op
+	trigger:
+		broadcast "&6&lAUCTION! &fAn auction event is starting!"
+		set {auc_alreadybidamt::%uuid of player%} to 0
+		set {auc_extension_time} to 0
+		set {auc_timer} to -10
+		set {auc_item} to random integer between 1 to 13
+		chance of 0.1%:
+			set {auc_item} to {witheriensglock19}
+			set {auc_item_name} to "&dWitherien's Glock-19 &8(0.1%%)"
+			set {auc_current_highest_bid} to 200
+			set {auc_bid_amount} to 200
+			set {_auc_item} to 0
+		chance of 0.1%:
+			set {auc_item} to {40in1shampoo}
+			set {auc_item_name} to "&b40 in 1 Shampoo &8(0.1%%)"
+			set {auc_current_highest_bid} to 180
+			set {auc_bid_amount} to 180
+			set {_auc_item} to 0
+		if {auc_item} = 1:
+			set {auc_item} to iron axe named "&5Dwarven Axe" with lore "&7It may just look like a regular axe but it" and "&7deals &c25x &7damage to unwounded mobs" and " " and "&cWARNING: Killing a mob with this will result" and "&cin your not getting custom drops." and " " and "&8Obtained from the auction event"
+			set {auc_item_name} to "&5Dwarven Axe"
+			set {auc_current_highest_bid} to 32
+			set {auc_bid_amount} to 32
+		if {auc_item} = 2:
+			set {auc_item} to {dwarven_helmet}
+			set {auc_item_name} to "&5Dwarven Helmet"
+			set {auc_current_highest_bid} to 8
+			set {auc_bid_amount} to 8
+		if {auc_item} = 3:
+			set {auc_item} to {dwarven_chest}
+			set {auc_item_name} to "&5Dwarven Chestplate"
+			set {auc_current_highest_bid} to 8
+			set {auc_bid_amount} to 8
+		if {auc_item} = 4:
+			set {auc_item} to {dwarven_legs}
+			set {auc_item_name} to "&5Dwarven Leggings"
+			set {auc_current_highest_bid} to 8
+			set {auc_bid_amount} to 8
+		if {auc_item} = 5:
+			set {auc_item} to {dwarven_boots}
+			set {auc_item_name} to "&5Dwarven Boots"
+			set {auc_current_highest_bid} to 8
+			set {auc_bid_amount} to 8
+		if {auc_item} = 6:
+			set {auc_item} to book of sharpness 8 named "&5Ancient Sharpness Book" with lore "&7Shift while holding this in your offhand" and "&7and the weapon you want to apply this" and "&7to in your mainhand" and " " and "&cOnly use one at a time!" and " " and "&cRequires Sharpness VII" and "&8Obtained from the auction event"
+			set {auc_item_name} to "&5Ancient Sharpness Book"
+			set {auc_current_highest_bid} to 8
+			set {auc_bid_amount} to 8
+		if {auc_item} = 7:
+			set {auc_item} to baked potato named "&cHot Potato" with lore "&7Right click to gain &4Strength 50" and "&7(+150 damage) for 2 minutes." and " " and "&7Cost: &c50%% of your max health" and "&81 minute cooldown" and "&8Infinite Use, does not stack"
+			set {auc_item_name} to "&cHot Potato"
+			set {auc_current_highest_bid} to 8
+			set {auc_bid_amount} to 8
+		if {auc_item} = 8:
+			set {auc_item} to cake of looting 7 named "&bHazing Looting Cake" with lore "&7Shift while holding this in your offhand" and "&7and the weapon you want to apply this" and "&7to in your mainhand" and " " and "&cCan only be put on a &bHazen Axe" and "&8Obtained from the auction event"
+			set {auc_item_name} to "&bHazing Looting Cake"
+			set {auc_current_highest_bid} to 8
+			set {auc_bid_amount} to 8
+		if {auc_item} = 9:
+			set {auc_item} to {iceyheart}
+			set {auc_item_name} to "&bIcey Heart"
+			set {auc_current_highest_bid} to 60
+			set {auc_bid_amount} to 60
+		if {auc_item} = 10:
+			set {auc_item} to {unluckydice}
+			set {auc_item_name} to "&5Unlucky Dice"
+			set {auc_current_highest_bid} to 12
+			set {auc_bid_amount} to 12
+		if {auc_item} = 11:
+			set {auc_item} to {lapisscythe}
+			set {auc_item_name} to "&9Lapis Scythe"
+			set {auc_current_highest_bid} to 30
+			set {auc_bid_amount} to 30
+		if {auc_item} = 12:
+			set {auc_item} to {stoneattachment}
+			set {auc_item_name} to "&8Stone Attachment"
+			set {auc_current_highest_bid} to 24
+			set {auc_bid_amount} to 24
+		if {auc_item} = 13:
+			set {auc_item} to {toucanpet}
+			set {auc_item_name} to "&aToucan"
+			set {auc_current_highest_bid} to 64
+			set {auc_bid_amount} to 64
+		loop all players:
+			set {auc_highest_bid::%uuid of loop-player%} to false
+			set {auc_alreadybid_amount::%uuid of loop-player%} to 0
+		clear {auc_highest_bidder}
+		wait 3 seconds
+		set {auc_live} to true
+		broadcast "&6&lAUCTION! &fWe're auctioning %{auc_item_name}% <command:/auction><tooltip:&eClick here to view the auction!>&e[CLICK]"
+		while {auc_live} is true:
+			increase {auc_timer} by 0.1
+			wait 2 ticks
+			if {auc_timer} = 5:
+				broadcast "&6&lAUCTION! &fAuction will end in 10 seconds if no one else bids!"
+			if {auc_timer} = 10:
+				broadcast "&6&lAUCTION! &fAuction will end in 5 seconds if no one else bids!"
+			if {auc_timer} >= 15:
+				clear {auc_live}
+				loop all players:
+					if {auc_highest_bid::%uuid of loop-player%} = true:
+						give loop-player {auc_item}
+						broadcast "&6&lAUCTION! &f%loop-player% has won %{auc_item_name}% &ffor &d%{auc_current_highest_bid}% ex shiny diamonds&f!"
+					else:
+						give loop-player {auc_alreadybid_amount::%uuid of loop-player%} of {exshinydia}
+					chance of 0%:
+						wait 3 seconds		
+						broadcast "&6&lAUCTION! &fan extra auction event is happening in 5 seconds! &8(10%%)"
+						wait 5 seconds
+						make console execute command "/auctionstart"
+
+command /auction:
+	#permission: op
+	trigger:
+		if {auc_live} = true:
+			set {auc_gui} to a new chest inventory with 5 row with name "&6&lAUCTION!"
+			loop 54 times:
+				set {_auc_slot} to loop-value
+				set {_auc_slot} to {_auc_slot}-1
+				if {_auc_slot} is not 13:
+					if {_auc_slot} is not 22:
+						set slot {_auc_slot} of {auc_gui} to black stained glass pane
+			set slot 13 of {auc_gui} to {auc_item}
+			if {auc_highest_bidder} isn't set:
+				set slot 22 of {auc_gui} to gold nugget named "&6Current Highest Bidder:" with lore "&7Bid &d%{auc_current_highest_bid}% ex. shiny diamonds &7as the starting bid?" and " " and "&eClick to bid %{auc_bid_amount}% ex. shiny diamonds!"
+			else:
+				set slot 22 of {auc_gui} to gold nugget named "&6Current Highest Bidder:" with lore "&d%{auc_current_highest_bid}% ex. shiny diamonds &7by %{auc_highest_bidder}%" and " " and "&eClick to bid %{auc_bid_amount}% ex. shiny diamonds!" and "&7This will cost you %{auc_bid_amount} - {auc_alreadybid_amount::%uuid of player%}% ex. shiny diamonds"
+			set slot 40 of {auc_gui} to barrier named "&cClose Menu"
+			open {auc_gui} to player
+		else:
+			message "&cThere's currently no auction going on D:"
+
+command /auctiontimerget:
+	permission: op
+	trigger:
+		send {auc_timer}
+
+on inventory click:
+	if name of event-inventory is "&6&lAUCTION!":
+		cancel event
+		if index of event-slot = 40:
+			close player's inventory
+		if index of event-slot = 22:
+			if {auc_live} = true:
+				if {auc_highest_bid::%uuid of player%} = true: #If player is highest bidder
+					close player's inventory
+					message "&cYou're already the highest bidder on this item!"				
+				else:
+					close player's inventory
+					if player has {auc_bid_amount} - {auc_alreadybid_amount::%uuid of player%} of diamonds named "&dExceedingly Shiny Diamond":
+						remove {auc_bid_amount} - {auc_alreadybid_amount::%uuid of player%} of diamonds named "&dExceedingly Shiny Diamond" from player
+						set {auc_alreadybid_amount::%uuid of player%} to {auc_bid_amount}
+						loop all players:
+							set {auc_highest_bid::%uuid of loop-player%} to false
+						set {auc_highest_bid::%uuid of player%} to true
+						set {auc_current_highest_bid} to {auc_bid_amount}
+						set {auc_timer} to -10
+						broadcast "&6&lAUCTION! &f%player% just bid &d%{auc_bid_amount}% ex. shiny diamonds&f! <command:/auction><tooltip:&eClick here to view the auction!>&e[CLICK]"
+						if {auc_bid_amount} >= 8:
+							if {auc_bid_amount} >= 20:
+								if {auc_bid_amount} >= 80:
+									if {auc_bid_amount} >= 160:
+										if {auc_bid_amount} >= 320:
+											set {auc_bid_amount} to {auc_bid_amount} + 20
+										else:
+											set {auc_bid_amount} to {auc_bid_amount} + 16
+									else:
+										set {auc_bid_amount} to {auc_bid_amount} + 8
+								else:
+									set {auc_bid_amount} to {auc_bid_amount} + 4
+							else:
+								set {auc_bid_amount} to {auc_bid_amount} + 2
+						else:
+							set {auc_bid_amount} to {auc_bid_amount} + 1
+						set {auc_highest_bidder} to player's name				
+					else:
+						message "&cYou don't have enough exceedingly shiny diamonds to bid, sorry!"
+			else: #If there is no live auction
+				close player's inventory
+				message "&cThere's no auction happening currently! D:"

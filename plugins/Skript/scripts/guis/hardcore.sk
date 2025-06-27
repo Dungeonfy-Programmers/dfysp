@@ -1,0 +1,39 @@
+on death of player:
+	if name of victim's chestplate is "&cWither Slayer Tunic &d☠":
+		chance of 10%:
+			cancel event
+			send message "&aYour Wither Slayer Tunic just saved your life!" to victim
+on death of player:
+	if {hardcore::%uuid of victim%} = true:
+		set {hardcore::%uuid of victim%} to false
+		clear victim's inventory
+		wait 2 ticks
+		clear {inventory%victim%::*}
+		broadcast "&4%victim% died in Hardcore Mode D:"
+		set {hardcoredeaths::%uuid of victim%} to {hardcoredeaths::%uuid of victim%} + 1
+		make console execute command "/team leave %victim%"
+		give victim {normalinventory%victim%::*}
+		clear {normalinventory%victim%::*}
+ 
+on inventory click:
+	if name of event-inventory contains "Ender" or "Vault" or "Chest" or "Barrel" or "Furnace" or "Hopper" or "Trade":
+		if {hardcore::%uuid of player%} = true:
+			cancel event
+			close player's inventory
+			message "&cYou can't use this while in hardcore!"
+on inventory click:
+	if name of player's inventory contains "Trade":
+		if {hardcore::%uuid of player%} = true:
+			cancel event
+			close player's inventory
+			message "&cYou can't trade while in hardcore!"
+on pick up:
+	if {hardcore::%uuid of player%} = true:
+		if event-item is all swords or all axes or all hoes or all helmet or all chestplate or all leggings or all boots:
+			cancel event
+on inventory click:
+	if {hardcore::%uuid of player%} = true:
+		if event-item is red terracotta:
+			cancel event
+			close player's inventory
+			message "&cYou can't trade while in hardcore!"

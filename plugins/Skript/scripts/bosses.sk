@@ -1,0 +1,822 @@
+#The Grandfather
+on load:
+	set {isGrand} to false
+on right click:
+	if name of player's held item is "&6The Grandfather Battle Pass":
+		if {isGrand} = true:
+			message "&cThis boss fight is already happening! You can join using &e/grandfather" to player
+		else:
+			set player's held item to air
+			set {isGrand} to true
+			set {_santtp} to location at (358.5, 34, -233.5)
+			set {_santtp}'s yaw to -180
+			set {_santtp}'s pitch to 0.01
+			teleport player to {_santtp}
+			make console execute command "/setblock 358 36 -241 minecraft:redstone_block destroy"
+			broadcast "&b&lCOMMUNITY BOSS! &f%player% summoned &6The Grandfather&f! Use &e/grandfather &fto join :D"
+command /grandfather:
+	trigger:
+		if {isGrand} = false:
+			message "&cThere's no boss happening right now!" to player
+		else:
+			set {_santtp} to location at (358.5, 34, -233.5)
+			set {_santtp}'s yaw to -180
+			set {_santtp}'s pitch to 0.01
+			teleport player to {_santtp}
+			message "&eTry to deal at least &c50 hits &eto &6The Grandfather &eto get rewards!" to player
+on damage of zombie:
+	victim is player
+	if name of victim is "&6The Grandfather":
+		damage victim by victim's max health * 0.2
+on damage of zombie:
+	attacker is player
+	projectile doesn't exist
+	if name of victim is "&6The Grandfather":
+		cancel event
+		set victim's invulnerability ticks to 0
+		if attacker's held item isn't feather:
+			cancel event
+			send message "&cYou can only hit him with your feather!" to attacker 
+		else:
+			damage victim by 1
+			if {gScore.%attacker%} isn't set:
+				set {gScore.%attacker%} to 1
+			else:
+				add 1 to {gScore.%attacker%}
+			send action bar "&e%{gScore.%attacker%}% total points!" to attacker
+			play sound "block.stone.break" to attacker
+
+on death of zombie:
+	if name of victim is "&6The Grandfather":
+		set {eg} to 0
+		broadcast "&b&lBOSS DOWN! &6The Grandfather &fhas been defeated!"
+		loop all players:
+			if {gScore.%loop-player%} >= 50:
+				add 1 to {eg}
+				give loop-player shulker shell named "&eTimeless Steel" with lore "&7Used to create very particular items..." and " " and "&8Guaranteed drop from The Grandfather when" and "&8getting more than 50 hits."
+				chance of 20%:
+					give loop-player glow item frame named "&eCoveted Painting" with lore "&7A work of art made many eons" and "&7ago by The Grandfather, certainly abstract." and " " and "&820%% drop from The Grandfather when" and "&8getting more than 50 hits"
+				chance of 1%:
+					broadcast "&e&lDROP! &f%loop-player% got a &eWheelchair&f! &8(&b1%%&8)"
+					give loop-player oak stair named "&eWheelchair" with lore "&7On it's own it's not too fast..." and " " and "&81%% drop from The Grandfather when" and "&8getting more than 50 hits"
+			delete {gScore.%loop-player%}
+		set {isGrand} to false
+		broadcast "&e%{eg}% people got 50+ hits on the boss!"
+		
+every 8 seconds:
+	loop all zombies:
+		if name of loop-zombie is "&6The Grandfather":
+			set {grandf} to location of loop-zombie
+			wait 4 seconds
+			loop all players in radius 20 of loop-zombie:
+				damage loop-player by loop-player's max health * 0.35
+				set {grandf.%loop-player%} to location of loop-zombie
+			teleport loop-zombie to {grandf}
+			delete {grandf}
+			draw 20 of enchant at location of loop-zombie
+			wait 4 seconds
+			loop all players in radius 20 of loop-zombie:
+				teleport loop-player to {grandf.%loop-player%}
+				push the loop-player backwards at speed 3
+				send subtitle "&b&ke&bREWIND!? &ke" to loop-player
+				if {gScore.%loop-player%} isn't set:
+					set {gScore.%loop-player%} to 1
+				else:
+					add 1 to {gScore.%loop-player%}
+				send action bar "&e%{gScore.%loop-player%}% total points!" to loop-player
+
+on leave:
+	delete {grandf.%player%}
+#Santiago
+on death:
+	attacker is player
+	if name of victim is "&6Santiago":
+		clear drops
+		send message "&6&lSANTIAGO DOWN! &f+&b16 Diamonds" to attacker
+		send message "&6&lSANTIAGO DOWN! &f+&6Alchemist's Gold" to attacker
+		give attacker 16 diamonds
+		give attacker gold ingot named "&6Alchemist's Gold" with lore "&7Beautiful gold, made from lead," and "&7can be turned into anything" and "&8Santiago Drop"
+		chance of 25%:
+			give attacker glowstone dust named "&6Timed Sand" with lore "&7The most powerful sand found within the desert..." and "&8Santiago Drop"
+			send message "&6&lSANTIAGO DOWN! &f+&6Timed Sand &8(25%%)" to attacker
+		send title "&aBOSS COMPLETE" with subtitle "&7Teleporting in 5 seconds..." to attacker
+		play sound "entity.player.levelup" to attacker
+		wait 5 seconds
+		set {_santtp} to location at (89.5, 25, 173.5)
+		set {_santtp}'s yaw to 90
+		set {_santtp}'s pitch to 0.01
+		teleport attacker to {_santtp}
+on death:
+	victim is player
+	name of attacker is "&6Santiago":
+		wait 2 ticks
+		kill attacker
+on death:
+	attacker is not player
+	if name of victim is "&6Santiago":
+		clear drops
+on right click: #100.5 25 150.5
+	if name of player's held item is "&6Legend's Essence":
+		remove honey bottle named "&6Legend's Essence" from player
+		loop all husks:
+			name of loop-husk is "&6Santiago":
+				kill loop-husk
+		set {_santtp} to location at (100.5, 25, 150.5)
+		set {_santtp}'s yaw to 180
+		set {_santtp}'s pitch to 0.01
+		teleport player to {_santtp}
+		apply blindness to player for 6 seconds
+		message "&6Santiago: &8Buddy, you don't know what I've been through lately." to player
+		wait 3 seconds
+		message "&6Santiago: &8You're gonna have a bad time *megalovania starts playing*" to player
+		wait 3 seconds
+		make console execute command "/setblock 100 10 140 minecraft:redstone_block destroy"
+		message "&cSANTIAGO HAS SPAWNED!" to player
+
+#mr mite
+on death:
+	if name of victim is "&5Vorpal Drifter":
+		send message "&5&lVORPAL KILL! &f+&b20 Diamonds" to attacker
+		give attacker 20 diamonds
+		send title "&aBOSS COMPLETE" with subtitle "&7Teleporting in 5 seconds..." to attacker
+		play sound "entity.player.levelup" to attacker
+		wait 5 seconds
+		set {fightingvorpal.%attacker%} to false
+		set {_vorpaltp} to location at (-99.5, 52, 193.5)
+		set {_vorpaltp}'s yaw to 0.01
+		set {_vorpaltp}'s pitch to 0.01
+		teleport attacker to {_vorpaltp}
+on death:
+	if name of attacker is "&5Vorpal Drifter":
+		set {fightingvorpal.%victim%} to false
+		wait 2 ticks
+		kill attacker
+on login:
+	if {fightingvorpal.%player%} = true:
+		set {fightingvorpal.%player%} to false
+on death:
+	attacker is not player
+	if name of victim is "&5Vorpal Drifter":
+		clear drops
+on right click:
+	if name of player's held item is "&5Void Key":
+		if {fightingvorpal.%player%} = true:
+			message "&cYou can't summon the vorpal drifter this often!" to player
+		else:
+			set {fightingvorpal.%player%} to true
+			remove end crystal named "&5Void Key" from player
+			set {_vorpaltp} to location at (-246.5, 90, 350.5)
+			set {_vorpaltp}'s yaw to 0.01
+			set {_vorpaltp}'s pitch to 0.01
+			teleport player to {_vorpaltp}
+			send title "&5Vorpal Drifter" with subtitle "&7Difficulty: &c5&7/10" to player
+			apply blindness to player for 4 seconds
+			wait 2 seconds
+			message "&5Vorpal Drifter: &8⍙⊑⍜ ⎅⏃⍀⟒⌇ ☌⍜ ⟟⋏⏁⍜ ⋔⊬ ⌇⏃☊⍀⟒⎅ ☊⏃⎐⟒!" to player
+			make console execute command "/setblock -247 79 362 minecraft:redstone_block destroy"
+			wait 30 seconds
+			set {fightingvorpal.%player%} to false
+
+#ERIk===========================
+every 7 seconds:
+    loop all creatures:
+        uncolored name of loop-creature contains "Erik":
+            apply slowness 10 to loop-creature for 3 seconds
+            loop all blocks in radius 5 around loop-creature:
+                loop-block is stone:
+                    set loop-block to tnt
+            wait 3 seconds
+            loop all blocks in radius 7 around loop-creature:
+                loop-block is tnt:
+                    set loop-block to stone
+every 5 tick:
+	loop all players:
+		block below loop-player is tnt:
+			set {_Edmg} to max health of loop-player * 0.08
+			damage loop-player by {_Edmg}
+			play sound "entity.generic.explode" to loop-player
+			remove jump boost from loop-player
+			apply jump boost 200 to loop-player for 4 second
+on death:
+	if name of victim is "&eErik":
+		chance of 20%:
+			send message "&cBOSS KILL! &fYou got a &bViking's Tears&f! &7(20%%)" to attacker
+			give ghast tear with name "&bViking's Tears" with lore "&7An uncommon drop from &eErik &7:(" to attacker
+on death:
+	if name of victim is "&eErik":
+		chance of 1%:
+			send message "&dRARE DROP! &fYou got a &dBlue Flower&f! &7(1%%)" to attacker
+			give cornflower of infinity 1 with name "&dBlue Flower" with lore "&7The heart of the viking society..." with item flag hide enchants to attacker
+on damage:
+	if name of attacker is "&eErik":
+		make attacker shoot tnt at speed 1
+on right click:
+	if name of player's held item is "&eErik Battle Pass":
+		set player's held item to air
+		set {erikarena} to location at (-24.5, 5, -639.5)
+		set {erikarena}'s yaw to 0.01
+		set {erikarena}'s pitch to 0.01
+		teleport player to {erikarena}
+		message "&eErik: &8What lies did Jake tell you?" to player
+		wait 3 seconds
+		message "&eErik: &8He isn't the last viking..." to player
+		wait 2 seconds
+		message "&eErik: &8Just all the others are dead >:)" to player
+		make console execute command "/setblock -24 2 -631 minecraft:redstone_block destroy"
+
+#DUNGEON WITCH BOSS========================
+every 10 ticks:
+	loop all witches:
+		if name of loop-witch is "&eSwamp Witch":
+			loop all players in radius 4 of loop-witch:
+				make loop-witch damage loop-player by 140
+				remove poison from loop-player
+				apply poison 10 to loop-player for 5 second
+#===========ALLUMER==========
+on right click:
+	if name of player's held item is "&cExpired Soup":
+		set player's held item to air
+		broadcast "&6🔥 %player% has summoned Allumer!"
+		wait 3 seconds
+		broadcast "&d[BOSS] Allumer&f: What the hoglin doin?"
+		wait 3 seconds
+		broadcast "&d[BOSS] Allumer&f: What's that, you wanna fight?"
+		wait 3 seconds
+		broadcast "&6🔥 Allumer has spawned!"
+		make console execute command "/setblock 203 30 437 minecraft:redstone_block destroy"
+		give player {bottleofcream}
+		give player {bottleofcream}
+		give player {bottleofcream}
+on death of magma cube:
+	clear drops
+	give attacker {bottleofcream}
+
+#/setblock 203 30 437 minecraft:redstone_block destroy
+#================CORRUPTED MAGE================
+on right click:
+	if name of player's held item is "&5Corrupted Mage Battle Pass":
+		make console execute command "/kill @e[type=illusioner]"
+		set player's held item to air
+		set {magearena} to location at (148.5, 38, 409.5)
+		set {magearena}'s yaw to 0.01
+		set {magearena}'s pitch to 0.01
+		teleport player to {magearena}
+		apply blindness to player for 7 seconds
+		apply slowness 50 to player for 7 seconds
+		wait 10 ticks
+		message "&5Corrupted Mage: &8Finally, a worthy opponent." to player
+		wait 3 seconds
+		message "&5Corrupted Mage: &8I've been training for this." to player
+		wait 3 seconds
+		message "&5Corrupted Mage: &8Let our legendary battle commence." to player
+		make console execute command "/setblock 147 34 417 minecraft:redstone_block destroy"
+on death:
+	if name of victim is "&5&lCorrupted Mage":
+		give attacker paper with name "&5Corrupted Mage's Tattered Notes" with lore "&7It takes quite a true warrior to" and "&7take on the &5Corrupted Mage"
+		send message "&5Corrupted Mage: &8Alas, I have been defeated, well fought!" to attacker
+on death:
+	chance of 20%:
+		if name of victim is "&5&lCorrupted Mage":
+			give attacker amethyst shard with name "&5Purple Magic Shard" with lore "&8A sharp purple slice of glass."
+on death:
+	if name of attacker is "&5&lCorrupted Mage":
+		send message "&5Corrupted Mage: &8You can't possibly beat me. HAHA" to victim
+#=============BLAZE DRUID===========
+on right click:
+	if name of player's held item is "&6Blaze Druid Battle Pass":
+		set player's held item to air
+		set {druidarena} to location at (185.5, 59, 432.5)
+		set {druidarena}'s yaw to 180
+		set {druidarena}'s pitch to 0.01
+		teleport player to {druidarena}
+		message "&6Blaze Druid: &8This is it... just me and you." to player
+		wait 2 seconds
+		message "&6Blaze Druid: &8Let's fight." to player
+		make console execute command "/setblock 179 45 426 minecraft:redstone_block destroy"
+on death of blaze:
+	if name of victim is "&c&lBlaze Druid":
+		teleport attacker to {nether}
+		give attacker 20 diamonds
+		send message "&6&lBLAZE DRUID DOWN! &f+&b20 Diamonds" to attacker
+on death:
+	victim is player
+	attacker is blaze:
+		name of attacker is "&c&lBlaze Druid":
+			wait 2 seconds
+			kill attacker
+every 1 seconds:
+    loop all creatures:
+        if name of loop-creature contains "Blaze Druid":
+            loop all blocks in radius 1.5 around head of loop-creature:
+                add location of loop-block to {_particles::*}
+                set {_pl} to random element of {_particles::*}
+                show 3 yellow dust at {_pl}
+                set {_pl} to random element of {_particles::*}
+                show 3 red dust at {_pl}
+                set {_pl} to random element of {_particles::*}
+                show 3 orange dust at {_pl}
+            loop all players in radius 4 of loop-creature:
+                set {_dmg} to max health of loop-player * 0.04
+                make loop-creature damage loop-player by {_dmg}
+every 0.2 ticks:
+    loop all projectiles:
+        loop-projectile is small fireball:
+            show 5 orange dust at loop-projectile
+            show 5 red dust at loop-projectile
+            show 5 yellow dust at loop-projectile
+
+            show 5 orange dust at block 0.2 above loop-projectile
+            show 5 red dust at block 0.2 above loop-projectile
+            show 5 yellow dust at block 0.2 above loop-projectile
+
+            show 5 orange dust at block 1 below loop-projectile
+            show 5 red dust at block 0.2 below loop-projectile
+            show 5 yellow dust at block 0.2 below loop-projectile
+
+every 10 seconds:
+    loop all creatures:
+        uncolored name of loop-creature contains "Blaze Druid":
+            loop 4 times:
+                make loop-creature shoot small fireball at speed 2
+                push last shot projectile left at force 0.1
+                wait 5 ticks
+                make loop-creature shoot small fireball at speed 2
+                push last shot projectile up at force 0.1
+                wait 5 ticks
+                make loop-creature shoot small fireball at speed 2
+                push last shot projectile down at speed 0.1
+                wait 5 ticks
+                make loop-creature shoot small fireball at speed 2
+                push last shot projectile right at force 0.1
+                wait 5 ticks
+#==================SOUL SEEKER===============
+on right click:
+	if name of player's held item is "&9Soul Seeker Battle Pass":
+		make console execute command "/kill @e[type=skeleton]"
+		make console execute command "/kill @e[type=wither_skeleton]"
+		set player's held item to air
+		set {soularena} to location at (-165.5, 9, -269.5)
+		set {soularena}'s yaw to 90
+		set {soularena}'s pitch to 0.01
+		teleport player to {soularena}
+		apply blindness to player for 11 seconds
+		apply slowness 50 to player for 11 seconds
+		wait 10 ticks
+		message "&1Soul Seeker: &8You... the one in the shiny armor." to player
+		wait 3 seconds
+		message "&1Soul Seeker: &8I've been waiting for this." to player
+		wait 3 seconds
+		message "&1Soul Seeker: &8You know you're scared of the dark..." to player
+		wait 4 seconds
+		message "&1Soul Seeker: &8You can run, but you can't hide!" to player
+		make console execute command "/setblock -175 5 -270 minecraft:redstone_block destroy"
+		broadcast "&3The Soul Seeker has spawned!"
+
+on death of skeleton:
+	if name of victim is "&1Soul Seeker":
+		give soul lantern of infinity 1 with name "&9Contained Soul" with lore "&7The remains of the Soul Seeker..." to attacker
+on death of skeleton:
+	if name of victim is "&1Soul Seeker":
+		chance of 15%:
+			give charcoal with name "&9Soul Essence" with lore "&7A uncommon drop from the Soul Seeker." to attacker
+			send message "&b&lESSENCE! &fYou got &9Soul Essence&f! &8(15%%)" to attacker	
+on damage:
+	projectile exists
+	if projectile is a arrow:
+		if name of attacker's held item is "&dMastella":
+			if victim is iron golem:
+				cancel event
+				send message "&cJoe cannot be damaged by bow!" to attacker
+			else:
+				make attacker damage victim by 200
+				set {mastellawarploc} to victim's location
+				teleport attacker to victim
+				play sound "entity.experience_orb.pickup" to attacker
+on damage:
+	if name of victim is "&1Soul Seeker":
+		set {soularcherloc} to victim's location
+		teleport attacker to {soularcherloc}
+every 10 ticks:
+	loop all skeletons:
+		if name of loop-skeleton is "&1Soul Seeker":
+			loop all players in radius 4 of loop-skeleton:
+				shoot wither skull from loop-skeleton at speed 1
+				damage loop-player by 50
+				remove blindness from loop-player
+				remove weakness from loop-player
+				remove slowness from loop-player
+				apply blindness to loop-player for 1 second
+				apply weakness 10 to loop-player for 1 second
+				apply slowness 20 to loop-player for 1 second
+				summon evoker fangs at loop-player's location
+on damage:
+	if name of victim is "&1Soul Seeker":
+		chance of 4%:
+			if {soularchinvin} = false:
+				set {soularchinvin} to true
+				send message "&3The Soul Seeker is now invincible for 8 seconds!" to attacker
+				set {soulfollower} to wither skeleton
+				set held item of {soulfollower} to stone axe
+				summon {soulfollower}
+				summon {soulfollower}
+				summon {soulfollower}
+				summon {soulfollower}
+				summon {soulfollower}
+				summon {soulfollower}
+				summon {soulfollower}
+				summon {soulfollower}
+				summon {soulfollower}
+				summon {soulfollower}
+				wait 8 seconds
+				set {soularchinvin} to false
+				send message "&3The Soul Seeker's invincibility has worn off!" to attacker
+on damage:
+	if name of victim is "&1Soul Seeker":
+		if {soularchinvin} = true:
+			cancel event
+			send message "&cYou can't damage the boss during this phase!" to attacker			
+on load:
+	set {soularchinvin} to false
+	
+#===========BULLFROG=========
+on right click:
+	if name of player's held item is "&6Bullfrog Battle Pass":
+		set player's held item to air
+		set {bullfrogarena} to location at (-84.5, 8, -297.5)
+		set {bullfrogarena}'s yaw to 180
+		set {bullfrogarena}'s pitch to 0.01
+		teleport player to {bullfrogarena}
+		make console execute command "/setblock -85 5 -304 minecraft:redstone_block destroy"
+on death:
+	if name of victim is "&2Bullfrog":
+		clear drops
+		give attacker ghast tear with name "&fBullfrog Tusk" with lore "&7The big front teeth of the Bullfrog!"
+		
+every 5 seconds:
+    loop all creatures:
+        uncolored name of loop-creature contains "Bullfrog":
+            set {_ability} to random integer between 1 and 2
+            set {_expand} to 0
+            if {_ability} = 1:
+                push loop-creature up at speed 0.7
+                wait 10 ticks
+                loop 6 times:
+                    wait 5 ticks
+                    add 1 to {_expand}
+                    loop all blocks in radius {_expand} around loop-creature:
+                        if loop-block is not air:
+                            show 14 brown dust at block above loop-block
+                            show 4 light gray dust at block above loop-block
+                            loop all players in radius {_expand} around loop-creature:
+                                make loop-creature damage loop-player by 200
+                                push loop-player up with speed 0.004
+#(push|thrust) %entities% %direction% [(at|with) (speed|velocity|force) %number%]
+#JOE THE GOLEM=======================
+on right click:
+	if name of player's held item is "&bJoe's Invatation Letter":
+		set held item of player to air
+		send message "&bJoe: &fHullo" to player
+		set {_joearena} to location at (-199.5, 1, -13.5)
+		set {_joearena}'s yaw to 90
+		set {_joearena}'s pitch to 0.01
+		teleport player to {_joearena}
+		make console execute command "/setblock -252 0 -15 minecraft:redstone_block destroy"
+		wait 4 seconds
+		loop all creatures:
+			if name of loop-creature is "&bJoe the Golem":
+				kill loop-creature
+		send message "&bJoe: &fDon't be cringe and hit me >:)" to player
+on damage of iron golem:
+	play sound "block.anvil.place" to attacker
+	add damage * 0.05 to victim's health
+on death of iron golem:
+	if name of victim is "&b&lJoe the Golem":
+		clear drops
+		drop white dye with name "&fSnowdred" with lore "&8Joe's Tears"
+		send message "&b&lJOE LOOT! &f1x Snowdred" to attacker
+on death of iron golem:
+	attacker is player
+	if name of victim is "&b&lJoe the Golem":
+		chance of 2%:
+			give attacker {joesword}
+			broadcast "&b&lJOE LOOT! &f%attacker% has obtained &b1x Sword in the Ice &7(2%%)"
+on death of iron golem:
+	attacker is player
+	if name of victim is "&b&lJoe the Golem":
+		chance of 2%:
+			give attacker {golemgrace}
+			broadcast "&b&lJOE LOOT! &f%attacker% has obtained &d1x Golem's Grace &7(2%%)"
+on death of iron golem:
+	if name of victim is "&b&lJoe the Golem":
+		chance of 10%:
+			drop light gray dye named "&fGolem's Hide" with lore "&7A drop from joe"
+			send message "&b&lJOE LOOT! &fGolem's Hide" to attacker
+on death of iron golem:
+	if name of victim is "&b&lJoe the Golem":
+		chance of 10%:
+			drop snowball named "&fBall of Snow" with lore "&7A drop from joe"
+			send message "&b&lJOE LOOT! &fBall of Snow" to attacker
+on death:
+	victim is player
+	if attacker is iron golem:
+		if name of attacker is "&b&lJoe the Golem":
+			wait 1 second
+			kill attacker
+every 13 seconds:
+    loop all creatures:
+        uncolored name of loop-creature contains "Joe the Golem":
+            set {_ability} to random integer between 1 and 2
+            set {_expand} to 0
+            if {_ability} = 1:
+                loop 7 times:
+                    wait 5 ticks
+                    add 1 to {_expand}
+                    loop all blocks in radius {_expand} around loop-creature:
+                        if loop-block is not air:
+                            show 14 light blue dust at block above loop-block
+                            show 4 blue dust at block above loop-block
+                            show 7 aqua dust at block above loop-block
+                        show ice break at block above loop-block
+                        loop all players in radius {_expand} around loop-creature:
+                            remove slowness from loop-player 
+                            apply slowness 10 to loop-player for 4 seconds
+                            remove jump boost from loop-player
+                            apply jump boost 127 to loop-player for 4 seconds
+                            make loop-creature damage loop-player by 200
+                wait 5 ticks
+                loop all players in radius 7 around loop-creature:
+                    remove slowness from loop-player 
+                    apply slowness 10 to loop-player for 4 seconds
+                    remove jump boost from loop-player
+                    apply jump boost 127 to loop-player for 4 seconds
+            if {_ability} = 2:
+                loop all players in radius 4 of loop-creature:
+                    set {_b} to block above block below loop-player
+                    loop 80 times:
+                        show 14 light blue dust at block 0.01 above {_b}
+                        show 4 blue dust at block 0.01 above {_b}
+                        show 7 aqua dust at block 0.01 above {_b}
+                        set {_b} to block 0.6 above {_b}
+                    push loop-player up with speed 3
+                    wait 5 ticks
+                    push loop-player up with speed 4
+                    make loop-creature damage loop-player by 400
+
+on damage:
+    projectile exists:
+        name of attacker's held item is "&bEldrinsk":
+            make attacker damage victim by 500
+            apply slowness 2 to victim for 3 seconds
+            loop all creatures in radius 4 around victim:
+                loop all blocks in radius 4 around victim:
+                    if loop-block is not air:
+                        show 14 light blue dust at block above loop-block
+                        show 4 blue dust at block above loop-block
+                        show 7 aqua dust at block above loop-block
+                    show ice break at block above loop-block
+                make attacker damage loop-creature by 500
+		
+#=================ZOMBIE LORD===============
+on right click:
+	if name of player's held item is "&6Zombie Lord Battle Pass":
+		set player's held item to air
+		set {zombielordarena} to location at (-59.5, 20, 24.5)
+		set {zombielordarena}'s yaw to 90
+		set {zombielordarena}'s pitch to 0.01
+		teleport player to {zombielordarena}
+		loop all zombies:
+			if name of loop-zombie is "&2Zombie Lord":
+				kill loop-zombie
+		wait 1 second
+		message "&2Zombie Lord: &8Dead, dead, dead, everytime..." to player
+		wait 2 seconds
+		message "&2Zombie Lord: &8It's time to see if you're different." to player
+		wait 2 seconds
+		make console execute command "/setblock -65 17 24 minecraft:redstone_block destroy"
+on death:
+	if name of attacker is "&2Zombie Lord":
+		wait 2 ticks
+		loop all zombies in radius 8 of attacker:
+			kill loop-zombie
+		kill attacker
+on death of zombie:
+	if name of victim is "&2Zombie Lord":
+		set {zombelordobserver} to location at (-46.5, 24, 20.5)
+		set {zombelordobserver}'s yaw to 90
+		set {zombelordobserver}'s pitch to 0.01
+		wait 1 second
+		teleport attacker to {zombelordobserver}
+		send message "&b&lKILL! &fYou killed the &2Zombie Lord &fand got &a4 Emeralds &f+ &bZombie Lord Flesh&f!" to attacker
+		give attacker rotten flesh with name "&bZombie Lord Flesh" with lore "&7Obtained from killilng the &2Zombie Lord&7!"
+		give attacker 4 emeralds
+		#-46.5 24 20.5 90 0
+#weakness ability
+on damage:
+	if name of attacker is "&4Emperor Genichiro":
+		if victim is player:
+			chance of 15%:
+				remove weakness from victim
+				apply weakness 20 to victim for 10 seconds
+				set {_genimsg} to random integer between 1 to 4
+				if {_genimsg} is 1:
+					send message "&4[Emperor Genichiro] &fAha! I have successfully weakened you!" to victim
+				if {_genimsg} is 2:
+					send message "&4[Emperor Genichiro] &fI've weakned you. Good luck defeating me now!" to victim
+				if {_genimsg} is 3:
+					send message "&4[Emperor Genichiro] &fA real Samurai doesn't get affected by weakness." to victim
+				if {_genimsg} is 4:
+					send message "&4[Emperor Genichiro] &fYou must be a Shinobu. They are weak. Just like you." to victim
+
+#bleeding ability					
+on damage:
+	if name of attacker is "&4Emperor Genichiro":
+		if victim is player:
+			chance of 5%:
+				set {_genichiromaxhp} to max health of victim * 0.02
+				send message "&4[Emperor Genichiro] &fMy blade as struck you in such a way that you bleed now. Have fun!" to victim
+				damage victim by {_genichiromaxhp}
+				wait 1 second
+				damage victim by {_genichiromaxhp}
+				wait 1 second
+				damage victim by {_genichiromaxhp}
+				wait 1 second
+				damage victim by {_genichiromaxhp}
+				wait 1 second
+				damage victim by {_genichiromaxhp}
+				wait 5 seconds
+
+#self explanitory
+on damage:
+	if name of attacker is "&4Emperor Genichiro":
+		if victim is player:
+			remove wither effect from victim
+
+command /resetgenichirodialoguelol:
+	permission: op
+	trigger:
+		set {genichirofirstkill::%uuid of player%} to false
+		send "&aSet it to false lol" to player
+#first kill dialogue	
+on death:
+	if attacker is player:
+		if name of victim is "&4Emperor Genichiro":
+			if {genichirofirstkill::%uuid of attacker%} is false:
+				set {genichirofirstkill::%uuid of attacker%} to true
+				delete drops
+				apply slowness 255 to attacker for 40 seconds
+				apply jump boost 200 to attacker for 40 seconds
+				send message "&4[Emperor Genichiro] &fI.. How? How are you so much more powerful than I, &4Emperor Genichiro." to attacker
+				wait 2 seconds
+				send message "&4[Emperor Genichiro] &fI must say, I'm impressed..." to attacker
+				wait 5 second
+				send message "&4[Emperor Genichiro] &fWait.. MY SON! NO! You monster.. You are going to leave my son fatherless. I train him to be as powerful as his father one day. Our people will have no protector. You've ruined &4&lEVERYTHING." to attacker
+				wait 10 seconds
+				send message "&4[Emperor Genichiro] &fOur people will be invaded by &2The Tribe &fas soon as they find out I am dead. And it is all your fault." to attacker
+				wait 6 seconds
+				send message "&4[Emperor Genichiro] &fMy wife.. She will be devastated as soon as she finds out I'm dead aswell.. You're a monster. What about &b&lJoe&f? He had a wife and kids. What about &1Soul Seeker&f? He had a girlfriend. What about &6Bullfrog&f? He had a loving family. You've ruined the lives of everyone. Yet there is nothing we can do about it. You are simply too powerful. Except.. THAT'S RIGHT! Our &4Secret Weapon..." to attacker
+				wait 13 seconds
+				send message "&4[Emperor Genichiro] &4&lWitherein. Witherein is our last hope. Our lord. Our savior. Witherein is the only being capable of stopping you." to attacker
+				wait 5 seconds
+				send message "&4[Emperor Genichiro] &4&lHe will find out about everything soon enough. He will be awoken & take revenge. For me, and the lives of everyone else you've ruined... Good Luck..." to attacker
+				set {genichiroboss} to false
+#ninja summon	
+every 30 seconds:
+	loop all players:
+		if {genichiroboss} is true:
+			chance of 10%:
+				make console execute command "/setblock 1010 80 158 redstone_block destroy"
+
+on death:
+	if attacker is player:
+		if name of victim is "&4Emperor Genichiro":
+			if {genichirofirstkill} is true:
+				set {genichiroboss} to false
+				delete drops
+#spawn dialogue		
+on right click:
+	if name of player's held item is "&4Emperor Genichiro Battle Pass":
+		if {genichiroboss} is true:
+			send message "&cSomeone else is already fighting this boss." to player
+		else:
+			set {genichiroboss} to true
+			set player's held item to air
+			set {_geni} to location at (1006.5, 86, 161.5)
+			set {_geni}'s yaw to 0.01
+			set {_geni}'s pitch to 0.01
+			teleport player to {_geni}
+			set {geni::%player%} to true
+			wait 1 tick
+			make console execute command "/setblock 1012 80 155 minecraft:redstone_block destroy"
+			set {_geni} to random integer between 1 and 4
+			if {_geni} is 1:
+				send message "&4[Emperor Genichiro] &fYou finally made it here huh? You've come to ruin me too? I can take it. Let's dance." to player
+			if {_geni} is 2:
+				send message "&4[Emperor Genichiro] &fWelcome to my Humble Abode. This will be the last place you step foot in. Make sure to take a good look before you die." to player
+			if {_geni} is 3:
+				send message "&4[Emperor Genichiro] &fExcuse you? How dare you waltz on in here uninvited. I was about to train, but I guess I'm doing this now." to player
+			if {_geni} is 4:
+				send message "&4[Emperor Genichiro] &fHow the hell did you pass the guards?? They were supposed to protect this place.. Welp, time to sheesh you out of existence." to player
+
+#death dialogue		
+on death:
+	if attacker is player:
+		if name of victim is "&4Emperor Genichiro":
+			if {genichirofirstkill::%uuid of attacker%} is true:
+				set {genichirokill} to random integer between 1 and 4
+				if {genichirokill} is 1:
+					send message "&4[Emperor Genichiro] &fWell fought.. You really are a true Samurai." to attacker
+				if {genichirokill} is 2:
+					send message "&4[Emperor Genichiro] &fYou are a coward.. You cannot take on &c&kWitherein&f.. He will kill you effortlessly." to attacker
+				if {genichirokill} is 3:
+					send message "&4[Emperor Genichiro] &fYou are a very strong Samurai. No wonder you managed to beat me." to attacker
+				if {genichirokill} is 4:
+					send message "&4[Emperor Genichiro] &fI wonder what my father is doing in heaven... Now I can finally find out." to attacker
+				set {_geni} to location at (1006.5, 85, 151.5)
+				teleport attacker to {_geni}
+
+#death message		
+on death:
+	victim is player
+	if name of attacker is "&4Emperor Genichiro":
+		if {genichiroboss} is true:
+			set {geni.%attacker%} to false
+			set {genichiroboss} to false
+			send message "&4[Emperor Genichiro] &fYou cannot kill me. I am your kryptonite." to victim
+			wait 1 second
+			kill attacker
+on leave:
+	if {geni.%player%} = true:
+		set {geni.%player%} to false
+#1006.5 85 151.5
+#ninja drops
+on death:
+	if name of victim is "&9Genichiro's Ninja":
+		if attacker is player:
+			chance of 1%:
+				give attacker {ninjahelm}
+				broadcast "&9&lNINJA ARMOR PIECE! &f%attacker% dropped a &9Ninja's Helmet&f! &8(&d1%%&8)"
+			chance of 1%:
+				give attacker {ninjachestplate}
+				broadcast "&9&lNINJA ARMOR PIECE! &f%attacker% dropped a &9Ninja's Chestplate&f! &8(&d1%%&8)"
+			chance of 1%:
+				give attacker {ninjalegs}
+				broadcast "&9&lNINJA ARMOR PIECE! &f%attacker% dropped &9Ninja's Leggings&f! &8(&d1%%&8)"
+			chance of 1%:
+				give attacker {ninjaboots}
+				broadcast "&9&lNINJA ARMOR PIECE! &f%attacker% dropped &9Ninja's Boots&f! &8(&d1%%&8)"
+			chance of 0.8%:
+				give attacker {kunai}
+				broadcast "&9&lKUNAI! &f%attacker% dropped a Kunai! &8(&d0.8%%&8)"
+#genichiro drops
+on death:
+	if name of victim is "&4Emperor Genichiro":
+		if attacker is player:
+			chance of 1%:
+				give attacker {yoroihelmframe}
+				broadcast "&4&lARMOR FRAME! &f%attacker% dropped the &4Yoroi Helmet Frame&f! <tooltip:&fThis is a 1/100 drop!>&8(&d1%%&8)<reset>"
+			chance of 1%:
+				give attacker {yoroichestframe}
+				broadcast "&4&lARMOR FRAME! &f%attacker% dropped the &4Yoroi Chestplate Frame&f! <tooltip:&fThis is a 1/100 drop!>&8(&d1%%&8)<reset>"
+			chance of 1%:
+				give attacker {yoroilegsframe}
+				broadcast "&4&lARMOR FRAME! &f%attacker% dropped the &4Yoroi Leggings Frame&f! <tooltip:&fThis is a 1/100 drop!>&8(&d1%%&8)<reset>"
+			chance of 1%:
+				give attacker {yoroibootsframe}
+				broadcast "&4&lARMOR FRAME! &f%attacker% dropped the &4Yoroi Boots Frame&f! <tooltip:&fThis is a 1/100 drop!>&8(&d1%%&8)<reset>"
+			chance of 7.5%:
+				give attacker red dye named "&4Yoroi Armour Catalyst" with lore "&7The catalyst of the &4Yoroi Armor&7." and "&7Holds the power to bring the" and "&7armor to life."
+				send message "&4&lBOSS DROP! &fYou got a &4Yoroi Armor Catalyst&f! &7(7.5%%)" to attacker
+			chance of 0.5%:
+				give attacker stick named "&4Genichiro's Katana Handle" with lore "&4Genichiro's &7katana fell apart one evening" and "&7after he had finished his dinner & decided" and "&7to train. The handle fell apart when he picked" and "&7up his very beloved katana."
+				broadcast "&4&lKATANA HANDLE! &f%attacker% dropped &cGenichiro's Katana Handle&f! <tooltip:&fThis is a 1/200 drop!>&8(&d0.5%%&8)<reset>"
+			chance of 0.8%:
+				give attacker netherite scrap named "&cGenichiro's Katana Blade" with lore "&7Not long after &4Genichiro's &7handle broke," and "&2The Tribe &7decided to sabotage &4Genichiro" and "&7by stealing his katana's blade and hiding it" and "&7deep within their camp not too far away" and "&7from &4Genichiro's &7home. It's finally been found."
+				broadcast "&4&lKATANA BLADE! &f%attacker% dropped &cGenichiro's Katana Blade&f! <tooltip:&fThis is a 1/125 drop!>&8(&d0.8%%&8)<reset>"
+			chance of 0.6%:
+				give attacker red candle named "&4Oni Soul Candle" with lore "&7The soul of the &4Oni&7. It has been contained in" and "&7this candle for a VERY long time.. Maybe you", "&7can finally set it free."
+				broadcast "&4&lONI SOUL! &f%attacker% dropped an &4Oni Soul Candle&f! <tooltip:&fThis is a 1/165 drop!>&8(&d0.6%%&8)<reset>"
+			chance of 3%:
+				give attacker string named "&fShundo's String" with lore "&7Said to be lost within the midst of an intense" and "&7battle between &2The Tribe &7& &4Genichiro's Scholars&7."
+				send message "&4&lSHUNDO STRING! &fYou dropped a piece of Shundo's String! &7(3%%)" to attacker
+			chance of 4%:
+				give iron sword named "&2Bamboo Carver" with lore "&7A beautifully crafted knife used to", "&7professionally carve bamboo." and "&8(Genichiro boss drop.)" with all item flags to attacker
+				send message "&4&lCARVER! &f%attacker% dropped a Bamboo Carver! &7(4%%)" to attacker
+on load:
+	set {genichiroboss} to false
+on death:
+	if name of victim is "&4Emperor Genichiro":
+		delete drops
+		set {genichiroboss} to false
+#katana strength ability		
+on death:
+	if attacker is player:
+		if name of attacker's held item is "&cGenichiro's Katana":
+			remove strength from attacker
+			apply strength 5 to attacker for 3 seconds
+#katana heal			
+on damage:
+	if attacker is player:
+		if name of attacker's held item is "&cGenichiro's Katana":
+			wait 6 ticks
+			set {bloodkatanamaxhp} to max health of attacker * 0.02
+			heal attacker by {bloodkatanamaxhp}

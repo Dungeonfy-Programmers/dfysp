@@ -1,0 +1,58 @@
+#Hardcore Mode
+command /challenges:
+	trigger:
+		set {challangegui} to a new chest inventory with 4 row with name "&6Challenge Modes"
+		if {hardcoredeaths::%uuid of player%} isn't set:
+			set {hardcoredeaths::%uuid of player%} to 0
+		if {hardcore::%uuid of player%} = true:
+			set slot 12 of {challangegui} to netherite helmet of protection 1 with item flag hide enchants named "&cHardcore Mode ☠ &bBETA &8v0.3" with lore "&8A real challenge for the sweatiest gamers." and " " and "&7- You only have &61 &7life." and "&7- No extra storage space&7." and "&7- Permenant &4Hunger 10&7." and "&7- Trading with other players is disabled." and "&7- No &eTime Played &7rewards &8(ie. Clock Parts, Diamonds)" and " " and "&eENABLED (Click to stop!)" and "&8Hardcore Deaths: %{hardcoredeaths::%uuid of player%}%" and " " and "&cWARNING: DO NOT LEAVE WITH A FULL INVENTORY!" and "&8Requires 2000 kills to enter!"
+		else:
+			set slot 12 of {challangegui} to netherite helmet of protection 1 with item flag hide enchants named "&cHardcore Mode ☠ &8v0.3" with lore "&8A real challenge for the sweatiest gamers." and " " and "&7- You only have &61 &7life." and "&7- No extra storage space&7." and "&7- Permenant &4Hunger 10&7." and "&7- Trading with other players is disabled." and "&7- No &eTime Played &7rewards &8(ie. Clock Parts, Diamonds)" and " " and "&eDISABLED (Click to start!)" and "&8Hardcore Deaths: %{hardcoredeaths::%uuid of player%}%" and " " and "&cWARNING: DO NOT JOIN WITH A FULL INVENTORY!" and "&8Requires 2000 kills to enter!"
+		set slot 14 of {challangegui} to sugar of protection 1 with item flag hide enchants named "&bSpeedrun Mode ⌛ &8v0.2" with lore "&8Do you think you are the speediest" and "&8gamer in all of dungeonfy?" and " " and "&7- No extra storage space." and "&7- Trading with other players is disabled." and "&7- No season kills are gained" and "&7- &aFarming Luck &7bonus crops are disabled." and "&7- Event modifiers are disabled." and " " and "&eCLICK TO VIEW CATEGORIES" and " " and "&cPUT YOUR STUFF AWAY BEFORE ENTERING A RUN!"
+		set slot 31 of {challangegui} to barrier named "&fClose Menu"
+		open {challangegui} to player
+on inventory click:
+	if name of event-inventory is "&6Challenge Modes":
+		cancel event
+		if index of event-slot = 31:
+			close player's inventory
+		if index of event-slot = 14:
+			make player execute command "/speedrun"
+		if index of event-slot = 12:
+			close player's inventory
+			if {in_sr::%uuid of player%} = true:
+				message "&cYou must leave speedrun mode to join hardcore mode!"
+			else:
+				if {hardcore::%uuid of player%} = true:
+					clear {inventory%player%::*}
+					loop all items in player's inventory:
+						add loop-item to {inventory%player%::*}
+					clear player's inventory
+					give player {normalinventory%player%::*}
+					set {hardcore::%uuid of player%} to false
+					broadcast "&e%player% left &cHardcore Mode ☠&e..."
+					message "&aYour hardcore items have been saved!"
+					make console execute command "/team leave %player%"
+					set {newspawn} to location at (396.5, 38, -203.5)
+					set {newspawn}'s yaw to 180
+					set {newspawn}'s pitch to 0.01
+					teleport player to {newspawn}
+				else:
+					if {kills::%uuid of player%} >= 2000:
+						clear {normalinventory%player%::*}
+						loop all items in player's inventory:
+							add loop-item to {normalinventory%player%::*}
+						clear player's inventory
+						give player {inventory%player%::*}
+						make console execute command "/effect clear %player%"
+						make console execute command "/team join hardcore %player%"
+						set {hardcore::%uuid of player%} to true
+						send title "&eDUNGEONFY" with subtitle "&cHardcore Mode ☠" to player
+						broadcast "&e%player% is now in &cHardcore Mode ☠&e! GLHF :D"
+						set {newspawn} to location at (396.5, 38, -203.5)
+						set {newspawn}'s yaw to 180
+						set {newspawn}'s pitch to 0.01
+						teleport player to {newspawn}
+						play sound "entity.ender_dragon.ambient"
+					else:
+						message "&cYou need at least 2000 kills to play Hardcore Mode ☠"

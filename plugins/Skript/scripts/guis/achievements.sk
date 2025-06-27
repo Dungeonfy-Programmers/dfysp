@@ -1,0 +1,17 @@
+#Command + GUI
+command /achievements:
+	aliases: /ach
+	trigger:
+		if player isn't op:
+			message "&cWe are currently reworking achievements!"
+		else:
+			set {_agui} to a new chest inventory with 6 row with name "&6Achievements"
+			set slot 0 of {_agui} to porkchop named "&eOink Oink" with lore "&fKill your first pig."
+			open {_agui} to player
+			delete {_agui}
+ 
+on inventory click:
+	if name of event-inventory contains "Achievements":
+		cancel event
+		if index of event-slot = 0:
+			cancel event

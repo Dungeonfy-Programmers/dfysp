@@ -1,0 +1,100 @@
+on damage:
+  victim is player
+  attacker is a creature
+  max health of victim > 20
+  health of victim < victim's max health
+  if damage >= max health of victim * 0.9:
+    if health of victim >= max health of victim * 0.9:
+      cancel event
+      set health of victim to max health of victim * 0.1
+
+on sneak toggle:
+  name of player's offhand item is "&6Calico Cat Pet Skin"
+  name of player's held item is "&aBlack Cat"
+  set player's offhand item to air
+  set {_n} to nbt compound of player's held item
+  add nbt compound of "{SkullOwner:{Id:[I;502109177,-1388753139,-1694495139,1088133352],Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWE3NmQ1YTEzMjFkNDE1YjdmMTNkYzNiNGIwMDkwNjNiMzc0YjM3ZTA3NjA2NTY2N2ZiNjIyNmE0YzU2ZWFhOCJ9fX0=""}]}}}" to {_n}
+  set name of player's held item to "&aBlack Cat &d☘"
+
+on right click with stone sword:
+	if name of player's held item is "&5The Mite's Bane":
+		set {_nbt} to nbt of player's tool
+		set {_item} to diamond sword with nbt {_nbt}
+		set name of {_item} to "&bThe Mite's Bane"
+		send title "" with subtitle "&b✧ Warped Rune ✧" to player
+		set player's tool to {_item}
+		play sound "entity.ender_eye.death" at pitch 0.75 to player
+		play sound "block.end_portal_frame.fill" at pitch 0.75 to player
+		play sound "entity.ender_eye.death" at pitch 1.25 to player
+on right click with diamond sword:
+	if name of player's held item is "&bThe Mite's Bane":
+		set {_nbt} to nbt of player's tool
+		set {_item} to stone sword with nbt {_nbt}
+		send title "" with subtitle "&5✦ Void Rune ✦" to player
+		set name of {_item} to "&5The Mite's Bane"
+		play sound "entity.ender_eye.death" at pitch 1.25 to player
+		play sound "block.end_portal_frame.fill" at pitch 1.25 to player
+		play sound "entity.ender_eye.death" at pitch 1.75 to player
+		set player's tool to {_item}
+
+every 0.5 second:
+	loop all endermites:
+		name of loop-endermite is "&5the endermite"
+		loop all players in radius 3 of loop-endermite:
+			name of loop-player's offhand item isn't "&eMighty Endermite"
+			loop-player is not sneaking
+			push loop-player backwards at force 10
+			broadcast "&5The Endermite&f: bro isn't crouching ☠"
+			wait 1 second
+			broadcast "&c%loop-player%&f: shit yourself now"
+
+on damage:
+	victim is not a endermite
+	name of attacker's held item contains "The Mite's Bane"
+	cancel event
+
+command /smite [<offline player>]:
+	permission: op
+	trigger:
+		if arg is set:
+			kill arg
+			strike lightning effect at arg
+			broadcast "&e&l%arg% HAS BEEN SMITTEN!!!"
+			
+command /setbits [<offline player>] [<int>]:
+	permission: op
+	trigger:
+		set {bits::%uuid of arg-1%} to arg-2
+		send message "&bSet %arg-1%'s bits to %arg-2%!"
+command /setfl [<offline player>] [<int>]:
+	permission: op
+	trigger:
+		set {farmingluck::%uuid of arg-1%} to arg-2
+		send message "&aSet %arg-1%'s Farming Luck to %arg-2%!"
+command /setdl [<offline player>] [<int>]:
+	permission: op
+	trigger:
+		set {harddungeonbosskills::%uuid of arg-1%} to arg-2
+		send message "&cSet %arg-1%'s Dungeon Luck to %arg-2%!"
+
+on right click:
+	name of player's held item is "&cThe Beetroot of Good Health"
+	if metadata value "beetcd" of player is not set:
+		set metadata value "beetcd" of player to true
+		play sound "entity.warden.death" at pitch 1.5 to player
+		send "&aYou're now being healed for the next 7 seconds!" to player
+		loop 7 times:
+			heal player by max health of player * 0.07
+			remove regeneration from player
+			apply regeneration 1 without particles to player for 1 second
+			wait 1 second
+		wait 15 seconds
+		clear metadata value "beetcd" of player
+		send "&aYour Beetroot is ready!" to player
+	else:
+		send "&cYou cannot use this right now!" to player
+	
+on consume:
+	name of player's held item is "&cThe Beetroot of Good Health"
+	cancel event
+	send "&cYou can't eat this! If you think this is a mistake, contact renegade450 via the dungeonfy discord server: <link:https://discord.gg/yhw4ajkCu8>&bhttps://discord.gg/yhw4ajkCu8"

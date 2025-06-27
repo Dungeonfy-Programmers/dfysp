@@ -1,0 +1,79 @@
+command /minerbox:
+	trigger:
+		if player has 320 cyan dye:
+			remove 320 cyan dye from player
+			give player light gray shulker box with name "&dMiner's Box" with lore "&7Right click to open this box :)" and " " and "&8Box made by %player%" and "&cWARNING: Have inventory space when opening::"
+			broadcast "&6%player% just made a miner's box &f/minerbox"
+		else:
+			send message "&cYou need five stacks of azure powder to claim your box!"
+command /crystalluck:
+	trigger:
+		send message "&fYou have &5%{luckofcave::%uuid of player%}% Crystal Luck&f!" to player
+on right click with light gray shulker box:
+	cancel event
+	set player's held item to air
+	give player 4 gold blocks
+	give player 16 golden carrots
+	give player 1 nether star with name "&bStardrop" with lore "&7Right click to increase your &5Crystal Luck &7by 0::1%%" and "&8Crystal Luck caps at 20"
+on right click with light gray shulker box:
+	chance of 25%:
+		give player {minerpot}
+		message "&b&lNICE! &f+&6Miner's Potion&f! &7(25%%)" to player
+	chance of 2%:
+		give player {drillcata}
+		message "&b&lNICE! &f+&b1 Drill Catalyst&f! &7(2%%)" to player
+on right click with light gray shulker box:
+	chance of 25%:
+		give player torch with name "&6Torchlight" with lore "&7Right click to increase your &5Crystal Luck &7by 0::2%%" and "&8Crystal Luck caps at 20" and " " and "&cCan only be used when under 19 Crystal Luck!"
+		message "&6&lLIGHT! &f+&61 Torchlight&f! &7(25%%)" to player
+on right click with light gray shulker box:
+	chance of 25%:
+		give player deepslate with name "&fChunk of Deepslate" with lore "&7""It's like stone, but harder!"" -Average Deepslate Enjoyer" and " " and "&8Drop from miner's boxes"
+		message "&6&lCOOL! &f+1 Chunk of Deepslate! &7(25%%)" to player
+command /setpot:
+	permission: op
+	trigger:
+		set {minerpot} to player's held item
+#=========INCREASING CAVE LUCK ITEMS=============
+on right click with nether star:
+	if name of player's held item is "&bStardrop":
+		if {luckofcave::%uuid of player%} >= 20:
+			cancel event
+			send message "&cYou have reached the max amount of crystal luck!" to player
+		else:
+			remove nether star from player
+			set {luckofcave::%uuid of player%} to {luckofcave::%uuid of player%} + 0.1
+			send message "&fYou gained &5+0.1 Crystal Luck&f!" to player
+on right click with torch:
+	if name of player's held item is "&6Torchlight":
+		if {luckofcave::%uuid of player%} >= 19:
+			cancel event
+			send message "&cCan only be used when under 15 crystal luck!" to player
+		else:
+			remove torch from player
+			set {luckofcave::%uuid of player%} to {luckofcave::%uuid of player%} + 0.2
+			send message "&fYou gained &5+0.2 Crystal Luck&f!" to player			
+on join:
+	if {luckofcave::%uuid of player%} <= 5:
+		set {luckofcave::%uuid of player%} to 5
+	if {luckofcave::%uuid of player%} isn't set:
+		set {luckofcave::%uuid of player%} to 5
+on rightclick:
+    if name of player's held item contains "&cTomato Soup":
+        apply haste 3 to player for 10 seconds
+        remove event-item from player
+
+#tier 1 drills (1000)
+every 1 second:
+    loop all players:
+        if name of loop-player's held item contains "&2Ruby Drill RB-1000" or "&2Amethyst Drill AM-1000" or "&2Amber Drill AB-1000" or "&2Jade Drill JD-1000" or "&2Quartz Drill QR-1000" or "&2Sapphire Drill SP-1000" or "&2Hematite Drill HM-1000" or "&4First Miner's Pickaxe" or "&3Azure Drill AZ-1000":
+            apply mining fatigue 2 to loop-player for 2 seconds replacing the existing effect
+        if name of loop-player's held item contains "&2Ruby Drill RB-2000" or "&2Amethyst Drill AM-2000" or "&2Amber Drill AB-2000" or "&2Jade Drill JD-2000" or "&2Quartz Drill QR-2000" or "&2Sapphire Drill SP-2000" or "&2Hematite Drill HM-2000" or "&3Azure Drill AZ-2000":
+            apply mining fatigue 1 to loop-player for 2 seconds replacing the existing effect
+
+#quartz pickaxe
+on break of white stained glass or white stained glass pane:
+    name of player's held item contains "&fQuartz Pickaxe":
+        drop white stained glass named "&fQuartz Crystal" at event-location
+    name of player's held item contains "&fQuartz Pickaxe":
+        drop white stained glass named "&fQuartz Crystal" at event-location

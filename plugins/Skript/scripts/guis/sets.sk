@@ -1,0 +1,59 @@
+command /sets:
+	trigger:
+		set {_setgui} to a new chest inventory with 6 row with name "&6Set Explorerer"
+		
+		clear {_sets::*}
+		loop all players:
+			if loop-player has permission "op":
+			else:
+				#ARMOR
+				if loop-player's helmet is air:
+					add light gray stained glass pane named "&f%loop-player% isn't wearing any helmet!" to {_sets::*}
+				else:
+					set {_seti} to loop-player's helmet
+					if name of loop-player's helmet = "":
+						set name of {_seti} to "&f%loop-player%'s %{_seti}%"
+					else:
+						set {_setin} to name of loop-player's helmet
+						set name of {_seti} to "&f%loop-player%'s %{_setin}%"
+					add {_seti} to {_sets::*}
+				if loop-player's chestplate is air:
+					add light gray stained glass pane named "&f%loop-player% isn't wearing a chestplate!" to {_sets::*}
+				else:
+					set {_seti} to loop-player's chestplate
+					if name of loop-player's chestplate = "":
+						set name of {_seti} to "&f%loop-player%'s %{_seti}%"
+					else:
+						set {_setin} to name of loop-player's chestplate
+						set name of {_seti} to "&f%loop-player%'s %{_setin}%"
+					add {_seti} to {_sets::*}
+				if loop-player's leggings is air:
+					add light gray stained glass pane named "&f%loop-player% isn't wearing any pants!" to {_sets::*}
+				else:
+					set {_seti} to loop-player's leggings
+					if name of loop-player's leggings = "":
+						set name of {_seti} to "&f%loop-player%'s %{_seti}%"
+					else:
+						set {_setin} to name of loop-player's leggings
+						set name of {_seti} to "&f%loop-player%'s %{_setin}%"
+					add {_seti} to {_sets::*}
+				if loop-player's boots is air:
+					add light gray stained glass pane named "&f%loop-player% isn't wearing any yeezys!" to {_sets::*}
+				else:
+					set {_seti} to loop-player's boots
+					if name of loop-player's boots = "":
+						set name of {_seti} to "&f%loop-player%'s %{_seti}%"
+					else:
+						set {_setin} to name of loop-player's boots
+						set name of {_seti} to "&f%loop-player%'s %{_setin}%"
+					add {_seti} to {_sets::*}
+		set slot 4 and 13 and 22 and 31 and 40 of {_setgui} to gray stained glass pane named " "
+		set slot 49 of {_setgui} to barrier named "&fClose Menu"
+		add {_sets::*} to {_setgui}
+		open {_setgui} to player
+ 
+on inventory click:
+	if name of event-inventory is "&6Set Explorerer":
+		cancel event
+		if index of event-slot = 49:
+			close player's inventory

@@ -1,0 +1,80 @@
+command /garden:
+	permission: op
+	trigger:
+	
+		if {garden_slot1.%uuid of player%} isn't set:
+			set {garden_slot1.%uuid of player%} to flower pot named "&fEmpty Pot!" with lore " " and "&eClick to choose plant!"
+		if {soil_slot1.%uuid of player%} isn't set:
+			set {soil_slot1.%uuid of player%} to red stained glass pane named "&cNo Soil" with lore "&7No Extra Buffs" and " " and "&eClick to upgrade for 16 emeralds!"
+
+		#set {soil_slot1.%uuid of player%} to red stained glass pane named "&cNo Soil" with lore "&7No Extra Buffs" and " " and "&eClick to upgrade for 16 emeralds!"	
+
+		set {_garden} to a new chest inventory with 6 row with name "&a&l%player%'s Garden"
+		set slot 22 of {_garden} to {garden_slot1.%uuid of player%}
+		set slot 31 of {_garden} to {soil_slot1.%uuid of player%}
+	
+		#Fertalizers
+		set slot 10 of {_garden} to bonemeal named "&fBonemeal" with lore "&8Common Fertilizer" and " " and "&7Increases crop harvest rate by &a20%%" and " " and "&7Cost: &f32 Bones"
+		set slot 11 of {_garden} to brown dye named "&eAnimal Manure" with lore "&8Rare Fertilizer" and " " and "&7Increases crop harvest rate by &a60%%" and " " and "&7Cost: &f256 Raw Beef"
+		set slot 19 of {_garden} to bone named "&6Fossil" with lore "&8Rare Fertilizer" and " " and "&7Increases crop harvest rate by &a100%%" and " " and "&7Cost: &f10 Dinosaur Bones"
+		set slot 20 of {_garden} to blaze powder named "&6Blaze Dust" with lore "&8Legendary Fertilizer" and " " and "&7Increases crop harvest rate by &a100%%" and " " and "&7Cost: &f512 Blaze Rods" and "&cCan only be put on nether crops!"
+
+			
+		set slot 49 of {_garden} to barrier named "&fClose Menu"
+		open {_garden} to player
+ 
+on inventory click:
+	if name of event-inventory is "&a&l%player%'s Garden":
+		cancel event
+		if index of event-slot = 49:
+			close player's inventory
+		if index of event-slot = 22:
+			if {garden_slot1.%uuid of player%} is equal to flower pot named "&fEmpty Pot!" with lore " " and "&eClick to choose plant!": #Pot is empty
+				set {_seedoptions} to a new chest inventory with 4 row with name "&6Select a crop for Pot 1!"
+				
+				
+				set slot 31 of {_seedoptions} to barrier named "&fClose Menu"
+				set slot 30 of {_seedoptions} to arrow named "&fBack"
+				open {_seedoptions} to player
+				
+		if index of event-slot = 31:
+			close player's inventory
+			
+			#Tier I Upgrade
+			if {soil_slot1.%uuid of player%} = red stained glass pane named "&cNo Soil" with lore "&7No Extra Buffs" and " " and "&eClick to upgrade for 16 emeralds!":
+				if player has 16 emeralds:
+					remove 16 emeralds from player
+					set {soil_slot1.%uuid of player%} to dirt named "&6Tier I Soil" with lore "&7-&a1 hours &7when planting a new crop!" and " " and "&eClick to upgrade for 64 emeralds!"
+				else:
+					message "&cYou don't have enough emeralds to ugprade your soil!"
+			else:		
+			#Tier II Upgrade
+				if {soil_slot1.%uuid of player%} = dirt named "&6Tier I Soil" with lore "&7-&a1 hours &7when planting a new crop!" and " " and "&eClick to upgrade for 64 emeralds!":
+					if player has 64 emeralds:
+						remove 64 emeralds from player
+						set {soil_slot1.%uuid of player%} to coarse dirt named "&6Tier II Soil" with lore "&7-&a2 hours &7when planting a new crop!" and " " and "&eClick to upgrade for 40 diamonds!"
+					else:
+						message "&cYou don't have enough emeralds to ugprade your soil!"
+				else:
+
+			#Tier III Upgrade
+					if {soil_slot1.%uuid of player%} = coarse dirt named "&6Tier II Soil" with lore "&7-&a2 hours &7when planting a new crop!" and " " and "&eClick to upgrade for 40 diamonds!":
+						if player has 40 diamonds:
+							remove 40 diamonds from player
+							set {soil_slot1.%uuid of player%} to rooted dirt named "&6Tier III Soil" with lore "&7-&a3 hours &7when planting a new crop!" and " " and "&eClick to upgrade for 40 diamonds!"
+						else:
+							message "&cYou don't have enough diamonds to ugprade your soil!"
+				
+#Crop Shop
+on inventory click:
+	if name of event-inventory is "&6Select a crop for Pot 1!":
+		cancel event
+		if index of event-slot = 10:
+			set {garden_slot1.%uuid of player%} to poppy named "&fHealthy Rose Bush" with lore "&7+&c2 max health &8(capped at 10)" and " " and "&eCheck back in a few hours to harvest!"
+		if index of event-slot = 31:
+			close player's inventory
+		if index of event-slot = 30:
+			make player execute command "/garden"
+			
+#Murderous Plants - ocassionaly gives you some dungeon drops
+#

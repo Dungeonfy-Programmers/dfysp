@@ -1,0 +1,424 @@
+#============WISHING WELL================
+on right click on enchantment table:
+	cancel event
+	set {_wishingwell} to a new chest inventory with 6 row with name "&d&lMystic Enchantment Table"
+	set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 and 36 and 37 and 38 and 39 and 40 and 41 and 42 and 43 and 44 and 45 and 46 and 47 and 48 and 49 and 50 and 51 and 52 and 53 of {_wishingwell} to gray stained glass pane named " "
+	set slot 11 and 12 and 13 and 20 and 22 and 29 and 30 and 31 of {_wishingwell} to magenta stained glass pane with name " "
+	set slot 21 of {_wishingwell} to enchantment table with name "&dRoll a Mystic Enchantment" with lore "&7Rolling the &dMystic Table &7gives you a random" and "&7high tier or custom enchant book :)" and " " and "&7Cost: 50 Lapis Lazuli"
+	set slot 45 and 46 and 47 and 48 and 50 and 51 and 52 of {wishingwell} to light gray stained glass pane with name " "
+	set slot 53 of {_wishingwell} to bookshelf with name "&eView Custom Enchants" with lore "&7The &dMystic Table &7offers some new custom enchantments!"
+	set slot 16 of {_wishingwell} to enchanted book of sharpness 5 named "&eEnchanted Book" with lore " " and "&7Cost: 30 Lapis Lazuli"
+	set slot 25 of {_wishingwell} to enchanted book of protection 4 named "&eEnchanted Book" with lore " " and "&7Cost: 30 Lapis Lazuli"
+	set slot 34 of {_wishingwell} to enchanted book of sweeping edge 3 named "&eEnchanted Book" with lore " " and "&7Cost: 30 Lapis Lazuli"
+	set slot 49 of {_wishingwell} to barrier with name "&fClose Menu"
+	open {_wishingwell} to player
+
+on inventory click:
+	if name of event-inventory contains "&d&lMystic Enchantment Table":
+		cancel event
+		if index of event-slot = 21:
+			if player has 50 lapis lazuli:
+				remove 50 lapis lazuli from player
+				play sound "block.enchantment_table.use" at pitch 2
+				set {_mysticroll} to random integer between 1 to 12
+				if {_mysticroll} = 1:
+					give player knowledge book of sharpness 6 with name "&aMystical Sharpness Book" with lore "&7Shift while holding this in your offhand" and "&7and the weapon you want to apply this" and "&7to in your mainhand." and " " and "&cRequires Sharpness V"
+					broadcast "&a%player% rolled a Mystical Sharpness VI Book :D"
+				if {_mysticroll} = 2:
+					give player knowledge book of protection 5 with name "&aMystical Protection Book" with lore "&7Shift while holding this in your offhand" and "&7and the armor piece you want to apply this" and "&7to in your mainhand." and " " and "&cRequires Protection IV"
+					broadcast "&a%player% rolled a Mystical Protection V Book :O"
+				if {_mysticroll} = 3:
+					give player knowledge book of thorns 4 with name "&aMystical Thorns Book" with lore "&7Shift while holding this in your offhand" and "&7and the armor piece you want to apply this" and "&7to in your mainhand." and " " and "&cRequires Thorns III"
+					broadcast "&a%player% rolled a Mystical Thorns IV Book :)"
+				if {_mysticroll} = 4:
+					give player knowledge book of fire aspect 3 with name "&aMystical Fire Aspect Book" with lore "&7Shift while holding this in your offhand" and "&7and the weapon you want to apply this" and "&7to in your mainhand." and " " and "&cRequires Fire Aspect II"
+					broadcast "&a%player% rolled a Mystical Fire Aspect Book :v"
+				if {_mysticroll} = 5:
+					give player knowledge book of feather falling 5 with name "&aMystical Feather Falling Book" with lore "&7Shift while holding this in your offhand" and "&7and the armor piece you want to apply this" and "&7to in your mainhand." and " " and "&cRequires Feather Falling IV"
+					broadcast "&a%player% rolled a Mystical Feather Falling Book :P"
+				if {_mysticroll} = 6:
+					give player knowledge book of looting 4 with name "&aMystical Looting Book" with lore "&7Shift while holding this in your offhand" and "&7and the weapon you want to apply this" and "&7to in your mainhand." and " " and "&cRequires Looting III"
+					broadcast "&a%player% rolled a Mystical Looting Book :>"
+				if {_mysticroll} = 7:
+					give player knowledge book of efficiency 6 with name "&aMystical Efficiency Book" with lore "&7Shift while holding this in your offhand" and "&7and the tool you want to apply this" and "&7to in your mainhand." and " " and "&cRequires Effeciency V"
+					broadcast "&a%player% rolled a Mystical Effeciency Book :D"
+				if {_mysticroll} = 8:
+					give player enchanted book of protection 1 with item flag hide enchants with name "&dMystical Lightweight Book" with lore "&6Lightweight" and "&7Shift while holding this in your offhand" and "&7and the boots you want to apply this" and "&7to in your mainhand." and " " and "&7Disables the mist from launching you." and " " and "&cRequires Feather Falling IV"
+					broadcast "&d%player% rolled a Mystical Lightweight Book :)"
+				if {_mysticroll} = 9:
+					give player enchanted book of protection 1 with item flag hide enchants with name "&dMystical Greed Book" with lore "&6Greed" and "&7Shift while holding this in your offhand" and "&7and the weapon you want to apply this" and "&7to in your mainhand." and " " and "&7Grants a 20%% chance for diamond on kill" and " " and "&cRequires Sharpness V"
+					broadcast "&d%player% rolled a Mystical Greed Book :)"
+				if {_mysticroll} = 10:
+					give player enchanted book of protection 1 with item flag hide enchants with name "&dMystical Fancy Pants Book" with lore "&6Fancy Pants" and "&7Shift while holding this in your offhand" and "&7and the leggings you want to apply this" and "&7to in your mainhand." and " " and "&7Gain &6Absorption II &7when hit" and " " and "&cCan only be put on leggings!"
+					broadcast "&d%player% rolled a Mystical Fancy Pants Book :)"
+				if {_mysticroll} = 11:
+					give player enchanted book of protection 1 with item flag hide enchants with name "&dMystical Bit Hunter Book" with lore "&6Bit Hunter" and "&7Shift while holding this in your offhand" and "&7and the item you want to apply this" and "&7to in your mainhand." and " " and "&7when mining, fishing, or killing things, have a" and "&7chance for some &bbits&7!" and " " and "&cCan only be put on mining tools," and "&crods, weapons, and farming tools!"
+					broadcast "&d%player% rolled a Mystical Bit Hunter Book :O"
+				if {_mysticroll} = 12:
+					give player enchanted book of protection 1 with item flag hide enchants with name "&dMystical Shiny Fish Book" with lore "&6Shiny Fish" and "&7Shift while holding this in your offhand" and "&7and the rod you want to apply this" and "&7to in your mainhand." and " " and "&7Guarantees &b3 Diamonds &7per catch." and " " and "&cCan only be put on fishing rods!"
+					broadcast "&d%player% rolled a Mystical Shiny Fish Book :O"
+			else:
+				close player's inventory
+				message "&cYou need 50 lapis lazuli to roll the mystic table!"
+				play sound "entity.villager.no"
+		if index of event-slot = 16:
+			if player has 30 lapis lazuli:
+				remove 30 lapis lazuli from player
+				give player {sharpv}
+				play sound "block.enchantment_table.use"
+			else:
+				close player's inventory
+				message "&cYou need 30 lapis lazuli to purchase this book!"
+				play sound "entity.villager.no"
+		if index of event-slot = 25:
+			if player has 30 lapis lazuli:
+				remove 30 lapis lazuli from player
+				give player enchanted book of protection 4 with lore "", "&8If you're trying to put this on a helmet", "&8like Wither Slayer or Yoroi, apply this", "&8like a mystic enchant!"
+				play sound "block.enchantment_table.use"
+			else:
+				close player's inventory
+				message "&cYou need 30 lapis lazuli to purchase this book!"
+				play sound "entity.villager.no"
+		if index of event-slot = 34:
+			if player has 30 lapis lazuli:
+				remove 30 lapis lazuli from player
+				give player {sweepiii}
+				play sound "block.enchantment_table.use"
+			else:
+				close player's inventory
+				message "&cYou need 30 lapis lazuli to purchase this book!"
+				play sound "entity.villager.no"
+		if index of event-slot = 49:
+			close player's inventory
+		if index of event-slot = 53:
+			make player execute command "/enchants"
+
+#=====================ENCHANTS=================
+on sneak toggle:
+	if name of player's offhand item is "&aMystical Sharpness Book":
+		if player's held item is enchanted with sharpness 5:
+			set player's offhand item to air
+			enchant player's held item with sharpness 6
+			set {_enchanteditem} to name of player's held item
+			message "&aYou enchanted your %{_enchanteditem}% &awith Sharpness VI!"
+			play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou need Sharpness V on this item to apply it!" to player
+on sneak toggle:
+	if name of player's offhand item is "&aMystical Protection Book":
+		if player's held item is enchanted with protection 4:
+			set player's offhand item to air
+			enchant player's held item with protection 5
+			set {_enchanteditem} to name of player's held item
+			message "&aYou enchanted your %{_enchanteditem}% &awith Protection V!"
+			play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou need Protection IV on this item to apply it!" to player
+on sneak toggle:
+	if name of player's offhand item is "&aMystical Thorns Book":
+		if player's held item is enchanted with thorns 3:
+			set player's offhand item to air
+			enchant player's held item with thorns 4
+			set {_enchanteditem} to name of player's held item
+			message "&aYou enchanted your %{_enchanteditem}% &awith Thorns IV!"
+			play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou need Thorns III on this item to apply it!" to player
+on sneak toggle:
+	if name of player's offhand item is "&aMystical Fire Aspect Book":
+		if player's held item is enchanted with fire aspect 2:
+			set player's offhand item to air
+			enchant player's held item with fire aspect 3
+			set {_enchanteditem} to name of player's held item
+			message "&aYou enchanted your %{_enchanteditem}% &awith Fire Aspect III!"
+			play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou need Fire Aspect II on this item to apply it!" to player
+on sneak toggle:
+	if name of player's offhand item is "&aMystical Feather Falling Book":
+		if player's held item is enchanted with feather falling 4:
+			set player's offhand item to air
+			enchant player's held item with feather falling 5
+			set {_enchanteditem} to name of player's held item
+			message "&aYou enchanted your %{_enchanteditem}% &awith Feather Falling V"
+			play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou need Feather Falling IV on this item to apply it!" to player
+on sneak toggle:
+	if name of player's offhand item is "&aMystical Looting Book":
+		if player's held item is enchanted with looting 3:
+			set player's offhand item to air
+			enchant player's held item with looting 4
+			set {_enchanteditem} to name of player's held item
+			message "&aYou enchanted your %{_enchanteditem}% &awith Looting IV"
+			play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou need Looting III on this item to apply it!" to player
+on sneak toggle:
+	if name of player's offhand item is "&aMystical Efficiency Book":
+		if player's held item is enchanted with efficiency 5:
+			set player's offhand item to air
+			enchant player's held item with efficiency 6
+			set {_enchanteditem} to name of player's held item
+			message "&aYou enchanted your %{_enchanteditem}% &awith Efficiency VI"
+			play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou need Efficiency V on this item to apply it!" to player
+on sneak toggle:
+	if name of player's offhand item is "&dMystical Lightweight Book":
+		if player's held item is enchanted with feather falling 4:
+			if lore of player's held item contains "&f&6Lightweight":
+				message "&cYou already have this enchant on this item!"
+			else:
+				set player's offhand item to air
+				add " " and "&6Lightweight" and "&7Disables the mist from launching you." to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith Lightweight!"
+			play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou need Feather Falling IV on this item to apply it!" to player
+on sneak toggle:
+	if name of player's offhand item is "&dMystical Greed Book":
+		if player's held item is enchanted with sharpness 5:
+			if lore of player's held item contains "&f&6Greed":
+				message "&cYou already have this enchant on this item!"
+			else:
+				set player's offhand item to air
+				add " " and "&6Greed" and "&720%% for a &bdiamond &7on kill." to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith Greed!"
+				play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou need Sharpness V on this item to apply it!" to player
+on sneak toggle:
+	if name of player's offhand item is "&dMystical Fancy Pants Book":
+		if player's held item is leather leggings or iron leggings or chainmail leggings or gold leggings or diamond leggings or netherite leggings:
+			if lore of player's held item contains "&f&6Fancy Pants":
+				message "&cYou already have this enchant on this item!"
+			else:
+				set player's offhand item to air
+				add " " and "&6Fancy Pants" and "&7Gain &6Absorption II &7when hit." to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith Fancy Pants!"
+				play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou can only put this enchantment on pants!" to player
+on sneak toggle:
+	if name of player's offhand item is "&dMystical Frostbite Book":
+		message "&cThis book no longer works. It made fighting mobs too easy and killed almost all challange. Weapons already with this enchantment will not have the effects."
+on sneak toggle:
+	if name of player's offhand item is "&aMystical Sweeping Edge Book":
+		if player's held item is enchanted with sweeping edge 3:
+			set player's offhand item to air
+			enchant player's held item with sweeping edge 4
+			set {_enchanteditem} to name of player's held item
+			message "&aYou enchanted your %{_enchanteditem}% &awith Sweeping Edge IV!"
+			play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou need Sweeping Edge III on this item to apply it!" to player
+on sneak toggle:
+	if name of player's offhand item is "&aMystical Lure Book":
+		if player's held item is enchanted with lure 5:
+			set player's offhand item to air
+			enchant player's held item with lure 6
+			set {_enchanteditem} to name of player's held item
+			message "&aYou enchanted your %{_enchanteditem}% &awith Lure VI"
+			play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou need Lure V on this item to apply it!" to player
+on sneak toggle:
+	if name of player's offhand item is "&dMystical Bit Hunter Book":
+		if player's held item is fishing rod or prismarine shard or netherite sword or diamond sword or golden sword or iron sword or stone sword or wooden sword or netherite pickaxe or diamond pickaxe or golden pickaxe or iron pickaxe or stone pickaxe or wooden pickaxe or netherite hoe or diamond hoe or golden hoe or iron hoe or stone hoe or wooden hoe or bow or netherite axe or diamond axe or golden axe or iron axe or stone axe or wooden axe or orange tulip:
+			if lore of player's held item contains "&f&6Bit Hunter":
+				message "&cYou already have this enchant on this item!"
+			else:
+				set player's offhand item to air
+				add " " and "&6Bit Hunter" and "&7Gain a chance for &bbits &7when killing," and "&7mining, fishing, or farming." to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith Bit Hunter&a!"
+				play sound "entity.player.levelup" at pitch 2
+		else:
+			if name of player's held item contains "&5Soul Gauntlet":
+				set player's offhand item to air
+				add " " and "&6Bit Hunter" and "&7Gain a chance for &bbits &7when killing," and "&7mining, fishing, or farming." to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith Bit Hunter&a!"
+				play sound "entity.player.levelup" at pitch 2
+			else:
+				cancel event
+				send message "&cYou need to be holding a weapon, sword, rod, hoe, or drill to apply this!" to player
+on sneak toggle:
+	if name of player's offhand item is "&dMystical Shiny Fish Book":
+		if player's held item is fishing rod:
+			if lore of player's held item contains "&f&6Shiny Fish":
+				message "&cYou already have this enchant on this item!"
+			else:
+				set player's offhand item to air
+				add " " and "&6Shiny Fish" and "&7Guarantees &b3 Diamonds &7per catch." to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith Shiny Fish!"
+				play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou can only apply this book to fishing rods!" to player
+on sneak toggle:
+	if name of player's offhand item is "&dMystical First Aid Book":
+		if player's held item is netherite chestplate or diamond chestplate or iron chestplate or golden chestplate or chainmail chestplate or leather tunic:
+			if lore of player's held item contains "&f&6First Aid":
+				message "&cYou already have this enchant on this item!"
+			else:
+				set player's offhand item to air
+				add " " and "&6First Aid" and "&7when below half health, heal &c10 health&7/s" to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith First Aid!"
+				play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou can only apply this book to chestplate!" to player
+			#squirrel
+on sneak toggle:
+	if name of player's offhand item is "&dMystical Squirrel Book":
+		if player's held item is enchanted with feather falling 5:
+			if lore of player's held item contains "&f&6Squirrel":
+				message "&cYou already have this enchant on this item!"
+			else:
+				set player's offhand item to air
+				add " " and "&6Squirrel" and "&7Disables fall damage! &8You must become a squirrel." to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith Squirrel!"
+				play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cThis needs Feather Falling V on this item to apply it!" to player
+on sneak toggle:
+	if name of player's offhand item is "&dMystical Thick Skull Book":
+		if player's held item is any helmet or player head:
+			if lore of player's held item contains "&f&6Thick Skull":
+				message "&cYou already have this enchant on this item!"
+			else:
+				set player's offhand item to air
+				add " " and "&6Thick Skull" and "&7Taking a combined total of &c25 hits" and "&7from enemies, gain &fResistance II" and "&7for 3 seconds." to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&aYou enchanted your %{_enchanteditem}% &awith Thick Skull!"
+				play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cThis can only be put on a helmet/player head" to player
+on sneak toggle:
+	if name of player's offhand item is "&aSharpness Swamp Charm":
+		if player's held item is enchanted with sharpness 6:
+			set player's offhand item to air
+			enchant player's held item with sharpness 7
+			set {_enchanteditem} to name of player's held item
+			message "&aYou enchanted your %{_enchanteditem}% &awith Sharpness VII!"
+			play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou need Sharpness VI on this item to apply it!" to player
+on sneak toggle:
+	if name of player's offhand item is "&5Ancient Sharpness Book":
+		if player's held item is enchanted with sharpness 7:
+			set player's offhand item to air
+			enchant player's held item with sharpness 8
+			set {_enchanteditem} to name of player's held item
+			message "&aYou enchanted your %{_enchanteditem}% &awith Sharpness VIII!"
+			play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou need Sharpness VII on this item to apply it!" to player
+on sneak toggle:
+	if name of player's offhand item is "&bHazing Looting Cake":
+		if name of player's held item is "&bHazen Axe":
+			set player's offhand item to air
+			enchant player's held item with looting 7
+			set {_enchanteditem} to name of player's held item
+			message "&aYou enchanted your %{_enchanteditem}% &awith Looting VII!"
+			play sound "entity.player.levelup" at pitch 2
+		else:
+			send message "&cYou can only put this on a Hazen Axe!" to player
+#==========================enchant functions==========
+on death:
+	if lore of attacker's tool contains "&6Greed":
+		chance of 20%:
+			give attacker diamond
+on damage:
+	if lore of victim's leggings contains "&6Fancy Pants":
+		remove absorption from victim
+		apply absorption 2 to victim for 120 seconds
+
+#========bit enchant=======
+on death:
+	if lore of attacker's tool contains "&6Bit Hunter":
+		chance of 5%:
+			set {bits::%uuid of attacker%} to {bits::%uuid of attacker%} + 5
+			send message "&b&lBITS ENCHANT! &fYou gained &b+5 Bits &ffrom your &bBits &fenchant! &7(5%%)" to attacker
+on block break:
+	if tool of player is netherite hoe or diamond hoe or golden hoe or iron hoe or stone hoe or wooden hoe:
+		if lore of player's tool contains "&6Bit Hunter":
+			chance of 0.5%:
+				set {bits::%uuid of player%} to {bits::%uuid of player%} + 5
+				send message "&b&lBITS ENCHANT! &fYou gained &b+5 Bits &ffrom your &bBits &fenchant! &7(0.5%%)" to player
+on block break:
+	if tool of player is netherite axe or diamond axe or golden axe or iron axe or stone axe or wooden axe:
+		if lore of player's tool contains "&6Bit Hunter":
+			chance of 2%:
+				set {bits::%uuid of player%} to {bits::%uuid of player%} + 5
+				send message "&b&lBITS ENCHANT! &fYou gained &b+5 Bits &ffrom your &bBits &fenchant! &7(2%%)" to player
+on block break:
+	if tool of player is netherite pickaxe or diamond pickaxe or golden pickaxe or iron pickaxe or stone pickaxe or wooden pickaxe or prismarine shard:
+		if lore of player's tool contains "&6Bit Hunter":
+			chance of 2%:
+				set {bits::%uuid of player%} to {bits::%uuid of player%} + 5
+				send message "&b&lBITS ENCHANT! &fYou gained &b+5 Bits &ffrom your &bBits &fenchant! &7(2%%)" to player
+on fishing:
+	if fishing state is "CAUGHT_FISH":
+		if lore of player's tool contains "&6Bit Hunter":
+			chance of 10%:
+				set {bits::%uuid of player%} to {bits::%uuid of player%} + 10
+				send message "&b&lBITS ENCHANT! &fYou gained &b+10 Bits &ffrom your &bBits &fenchant! &7(10%%)" to player
+#shiny fish
+on fishing:
+	if fishing state is "CAUGHT_FISH":
+		if lore of player's tool contains "&6Shiny Fish":
+			wait 30 ticks
+			give player 3 diamonds
+#first aid
+every 1 second:
+	loop all players:
+		if lore of loop-player's chestplate contains "&6First Aid":
+			set {firstaid::%loop-player%} to loop-player's max health / 2
+			if loop-player's health <= {firstaid::%loop-player%}: 
+				add 5 to loop-player's health
+
+#squirrel
+on damage:
+	if damage cause is fall:
+		if lore of victim's boots contains "&f&6Squirrel":
+			cancel event
+			
+on sneak toggle:
+	if player's held item is a sword or axe:
+		if name of player's offhand item is "&dMystical Bloody Work Book":
+			if lore of player's held item contains "&6Bloody Work":
+				send message "&cYou've already have this enchant on this item!" to player
+			if player's held item is not enchanted with sharpness 7 or sharpness 8:
+				cancel event
+				send message "&cYou need Sharpness VII or VIII to enchant this item."
+			if lore of player's held item doesn't contain "&6Bloody Work":
+				if player's held item is enchanted with sharpness 7 or sharpness 8:
+					set player's offhand item to air
+					add "" and "&6Bloody Work" and "&7On hit, have a &a3%% &7chance to make enemies" and "&7bleed dealing &c1%% &7of their max health each" and "&7second for 5 seconds." to lore of player's held item
+					set {_enchanteditem} to name of player's held item
+					message "&aYou enchanted your %{_enchanteditem}% &awith &6Bloody Work&a!"
+					play sound "entity.player.levelup" at pitch 2
+#bloody work function				
+on damage:
+	if attacker is player:
+		if lore of attacker's held item contains "&6Bloody Work":
+			chance of 3%:
+				set {_bloodworkhp} to max health of victim * 0.01
+				send message "&c&oYour blade struck your enemy, making them bleed." to attacker
+				wait 1 second
+				make attacker damage victim by {_bloodworkhp}
+				wait 1 second
+				make attacker damage victim by {_bloodworkhp}
+				wait 1 second
+				make attacker damage victim by {_bloodworkhp}
+				wait 1 second
+				make attacker damage victim by {_bloodworkhp}
+				wait 1 second
+				make attacker damage victim by {_bloodworkhp}

@@ -1,0 +1,87 @@
+on death:
+  attacker is player
+  name of attacker's held item is "&9Lapis Scythe"
+  give attacker 1 lapis
+
+on damage:
+	if attacker is player:  
+		if name of slot 7 of attacker's inventory contains "&8Stone Attachment":
+			chance of 2%
+			play sound "entity.iron_golem.repair" at pitch 1.15 to attacker
+			play sound "entity.player.attack.weak" at pitch 0.8 to attacker
+			remove slowness from victim
+			apply slowness of tier 225 to victim for 5 seconds 
+on join:
+  set {golemgracecharge::%uuid of player%} to 4
+
+on right click:
+  name of player's held item is "&dGolem's Grace &b❤"
+  if {golemgracecharge::%uuid of player%} < 1:
+    send "&cYou don't have any charges left! Wait for them to recharge!" to player
+  else:
+    remove 1 from {golemgracecharge::%uuid of player%}
+    play sound "entity.zombie.infect" to player
+    remove regeneration from player
+    apply regeneration 1 without particles to player for 1 second
+    loop all players in radius 5 of player:
+      heal loop-player by max health of player * 0.06 + 80
+      send action bar "&8- [&c%health of player * 2%/%max health of player * 2%&8] ⇔ &8[&e%{golemgracecharge::%uuid of player%}%&8/&e4&8] -" to player
+    wait 15 seconds
+    add 1 to {golemgracecharge::%uuid of player%}
+    send action bar "&8- [&c%health of player * 2%/%max health of player * 2%&8] ⇔ &8[&e%{golemgracecharge::%uuid of player%}%&8/&e4&8] -" to player
+    if {golemgracecharge::%uuid of player%} >= 4:
+      set {golemgracecharge::%uuid of player%} to 4
+
+on sneak toggle:
+  if name of player's offhand item is "&bIcey Heart":
+    if name of player's held item is "&dGolem's Grace":
+      set player's offhand item to air
+      set player's held item to {golemsgraceupg}
+      send "&aYou upgraded your &dGolem's Grace &awith the &bIcey Heart&a!"
+      play sound "entity.player.levelup" at pitch 2
+
+on right click:
+	name of player's held item is "&b40 in 1 Shampoo"
+	remove gray candle from player
+	loop 3 times:
+		play sound "entity.generic.eat" at player
+		play sound "entity.warden.heartbeat" at player
+		wait 1 second
+	kill player
+	play sound "entity.player.burp" at player
+	remove 1 grey candle named "&d40 in 1 Shampoo" from player's inventory
+	broadcast "&f%player% ate the &b40 in 1 Shampoo&f."
+
+on death:
+  attacker is player
+  name of attacker's offhand item is "&aToucan"
+  give attacker 4 diamonds
+
+on sneak toggle:
+  name of player's offhand item is "&aToucan"
+  if metadata value "ToucanPetCD" of player isn't set:
+    set metadata value "ToucanPetCD" of player to true
+  if metadata value "ToucanPetCD" of player is true:
+    loop all players in radius 10 of player:
+      heal loop-player by health of player * 0.15
+      wait 20 seconds
+      clear metadata value "ToucanPetCD" of player
+
+every 1 second:
+  loop all players:
+    if name of loop-player's offhand item is "&aToucan":
+      if {oneinthesame} is 1:
+        heal loop-player by max health of loop-player * 0.015
+      if {oneinthesame} is 2:
+        heal loop-player by max health of loop-player * 0.03
+      if {oneinthesame} is 3:
+        heal loop-player by max health of loop-player * 0.045
+			
+every 2 second:
+	set {oneinthesame} to 0
+	loop all players:
+		if name of loop-player's offhand item is "&aToucan":
+			set {oneinthesame} to {oneinthesame} + 1
+	if {oneinthesame} > 4:
+		set {oneinthesame} to 4
+	set {oneinthesame} to {oneinthesame} * 2

@@ -1,0 +1,173 @@
+on pickup:
+	if {in_sr::%uuid of player%} = true:
+		if event-item is player head or a sword:
+			cancel event
+command /recordreset_zl:
+	trigger:
+		set {pb_zl::%uuid of player%} to 9999 seconds
+		message "&aReset your Zombie Lord time to 9999 seconds"
+command /speedrun:
+	aliases: /sr
+	trigger:
+		if {pb_vers::%uuid of player%} isn't set:
+			set {pb_vers::%uuid of player%} to 9999 seconds
+		if {pb_zl::%uuid of player%} isn't set:
+			set {pb_zl::%uuid of player%} to 9999 seconds
+		if {pb_vd::%uuid of player%} isn't set:
+			set {pb_vd::%uuid of player%} to 9999 seconds
+		if {hardcore::%uuid of player%} or {in_sr::%uuid of player%} = true:
+			close player's inventory
+			message "&cYou can't speedrun in hardcore mode/already in speedrun mode D: Use /speedrunleave to leave!"
+		else:
+			set {_srgui} to a new chest inventory with 4 row with name "&6Speedrun Mode"
+		
+		#Categories
+			set {_vy} to leather boots named "&eObtain Versatile Yeezys" with lore "&7You can't access storage or trade while speedrunning::" and "&cEQUIP THE VERSATILE YEEZYS TO END THE RUN" and " " and "&6Your Personal Best: %{pb_vers::%uuid of player%}%" and " " and "&fClick to start!" and "&8/speedrunleave if you want to quit mid run"
+			dye {_vy} (102, 0, 255)
+			set slot 10 of {_srgui} to {_vy}
+			set slot 11 of {_srgui} to rotten flesh named "&eKill Zombie Lord" with lore "&7You can't access storage or trade while speedrunning::" and " " and "&6Your Personal Best: %{pb_zl::%uuid of player%}%" and " " and "&fClick to start!"  and "&8/speedrunleave if you want to quit mid run"
+			set slot 12 of {_srgui} to ender pearl named "&eKill Vorpal Drifter" with lore "&7You can't access storage or trade while speedrunning::" and " " and "&6Your Personal Best: %{pb_vd::%uuid of player%}%" and " " and "&fClick to start!"  and "&8/speedrunleave if you want to quit mid run"
+			set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 17 and 18 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 of {_srgui} to gray stained glass pane named " "
+			#set slot 35 of {_srgui} to gold ingot named "&6Current World Records" with lore "&eObtain Versatile Yeezys:" and "&f%{wr_vers}% by %{wr_vers_holder}%" and " " and "&eKill Zombie Lord:" and "&f%{wr_zl}% by %{wr_zl_holder}%"
+			set slot 35 of {_srgui} to redstone torch named "&cSpeedrunning Courtesy" with lore "&7There are many bugs to get insanely low times, so" and "&7we have removed the world records tab::" and " " and "&7Some people abuse bugs to get a better time," and "&7people with the &a[⌚] &7in tab are verified runners::" and "&8To apply for this, go to https://forms::gle/136JKJXU454Lqazb9" and " " and "&c2 hours and 46::65 minutes is the unset time!"
+			set slot 30 of {_srgui} to arrow named "&fBack"
+			set slot 31 of {_srgui} to barrier named "&fClose Menu"
+			open {_srgui} to player
+ 
+on inventory click:
+	if name of event-inventory is "&6Speedrun Mode":
+		cancel event
+		if index of event-slot = 30:
+			make player execute command "/challenges"
+		if index of event-slot = 31:
+			close player's inventory
+			
+		if index of event-slot = 10: #Versatile Yeezys
+			close player's inventory
+			set {sr_obj::%player%} to "versatile"
+			make player execute command "/srst"
+			send title "&eSPEEDRUN" with subtitle "&fObtain Versatile Yeezys" to player
+		if index of event-slot = 11: #Zombie Lord
+			close player's inventory
+			set {sr_obj::%player%} to "zombielord"
+			make player execute command "/srst"
+			send title "&eSPEEDRUN" with subtitle "&fKill Zombie Lord"
+		if index of event-slot = 12: #Vorpal Drifter
+			close player's inventory
+			set {sr_obj::%player%} to "vorpaldrifter"
+			make player execute command "/srst"
+			send title "&eSPEEDRUN" with subtitle "&fKill Vorpal Drifter"
+
+#Starting the Speedrun !!
+command /srst:
+	trigger:
+		if {in_sr::%uuid of player%} or {hardcore::%uuid of player%} = true:
+			message "&cYou can't start a new run! Please use /speedrunleave to leave this run!"
+		else:
+			if {sr_obj::%player%} != "versatile" or "zombielord" or "vorpaldrifter":
+				message "&cYou must select a category first! /sr"
+			else:
+				make console execute command "/heal %player%"
+				close player's inventory
+				clear {normalinventory%player%::*}
+				loop all items in player's inventory:
+					add loop-item to {normalinventory%player%::*}
+				clear player's inventory
+				make console execute command "/effect clear %player%"
+				make console execute command "/team join speedrun %player%"
+				set {in_sr::%uuid of player%} to true
+				give player stone sword named "&6Speedrun Sword" with lore "&7/speedrun"
+				set {_racehelmet} to leather helmet named "&6%player%'s Race Helmet" with lore "&8VROOOOOM GOTTA GO FAST!!!!"
+				dye {_racehelmet} (255, 0, 0)
+				set player's helmet to {_racehelmet}
+				give player 16 baked potato named "&6Speedrun Snacks"
+				set {sr_start::%uuid of player%} to now
+				set {_spawn} to location at (396.5, 38, -203.5)
+				set {_spawn}'s yaw to -180
+				set {_spawn}'s pitch to 0.01
+				teleport player to {_spawn}
+				while {in_sr::%uuid of player%} is true:
+					set {sr_time::%uuid of player%} to difference between now and {sr_start::%uuid of player%}
+					wait 1 second
+			
+command /speedrunleave:
+	aliases: /srl
+	trigger:
+		if {in_sr::%uuid of player%} = true:
+			close player's inventory
+			clear player's inventory
+			set {in_sr::%uuid of player%} to false
+			message "&aYou left speedrun mode::::::"
+			make console execute command "/team leave %player%"
+			give player {normalinventory%player%::*}
+			clear {normalinventory%player%::*}
+		else:
+			message "&cYou must be in a speedrun to leave speedruns!"
+			
+on armor change:
+	if name of event-item is "&9Versatile Yeezys":
+		if {in_sr::%uuid of player%} = true:
+			if {sr_obj::%player%} = "versatile":
+				set {in_sr::%uuid of player%} to false
+				if {sr_time::%uuid of player%} < {pb_vers::%uuid of player%}:
+					set {pb_vers::%uuid of player%} to {sr_time::%uuid of player%}
+					message "&aYour final time is %{sr_time::%uuid of player%}% in &eObtain Versatile Yeezys &6[NEW PB]"
+				else:
+					message "&aYour final time is %{sr_time::%uuid of player%}% in &eObtain Versatile Yeezys"
+				clear player's inventory
+				give player {normalinventory%player%::*}
+				wait 2 ticks
+				clear {normalinventory%player%::*}
+				make console execute command "/team leave %player%"
+on death:
+	if name of victim is "&2Zombie Lord":
+		if {in_sr::%uuid of attacker%} = true:
+			if {sr_obj::%attacker%} = "zombielord":
+				set {in_sr::%uuid of attacker%} to false
+				if {sr_time::%uuid of attacker%} < {pb_zl::%uuid of attacker%}:
+					set {pb_zl::%uuid of attacker%} to {sr_time::%uuid of attacker%}
+					send message "&aYour final time is %{sr_time::%uuid of attacker%}% in &eKill Zombie Lord &6NEW PB!" to attacker
+				else:
+					send message "&aYour final time is %{sr_time::%uuid of attacker%}% in &eKill Zombie Lord" to attacker
+				clear attacker's inventory
+				give attacker {normalinventory%attacker%::*}
+				wait 2 ticks
+				clear {normalinventory%attacker%::*}
+				make console execute command "/team leave %attacker%"
+				
+on death:
+	if name of victim is "&5Vorpal Drifter":
+		if {in_sr::%uuid of attacker%} = true:
+			if {sr_obj::%attacker%} = "vorpaldrifter":
+				set {in_sr::%uuid of attacker%} to false
+				if {sr_time::%uuid of attacker%} < {pb_vd::%uuid of attacker%}:
+					set {pb_vd::%uuid of attacker%} to {sr_time::%uuid of attacker%}
+					send message "&aYour final time is %{sr_time::%uuid of attacker%}% in &eKill Vorpal Drifter &6NEW PB!" to attacker
+				else:
+					send message "&aYour final time is %{sr_time::%uuid of attacker%}% in &eKill Vorpal Drifter" to attacker
+				clear attacker's inventory
+				give attacker {normalinventory%attacker%::*}
+				wait 2 ticks
+				clear {normalinventory%attacker%::*}
+				make console execute command "/team leave %attacker%"
+
+on login:
+	if {in_sr::%uuid of player%} = true:
+		set {in_sr::%uuid of player%} to false
+		clear player's inventory
+		give player {normalinventory%player%::*}
+		clear {normalinventory%player%::*}
+		make console execute command "/team leave %player%"
+		#remove "tradeplus::accept" from permissions of player
+on inventory click:
+	if name of event-inventory contains "Ender" or "Vault" or "Chest" or "Barrel" or "Furnace" or "Hopper":
+		if {in_sr::%uuid of player%} = true:
+			cancel event
+			close player's inventory
+			message "&cYou can't use this while in Speedrun mode!"
+on inventory click:
+	if name of player's inventory contains "Trade":
+		if {in_sr::%uuid of player%} = true:
+			cancel event
+			close player's inventory
+			message "&cYou can't trade while in Speedrun mode!"

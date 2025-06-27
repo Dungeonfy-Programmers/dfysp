@@ -1,0 +1,105 @@
+on death:
+	attacker is player
+	name of attacker's chestplate is "&cSoul Breaker Chestplate"
+	chance of 100 + (metadata value "ExtraSoulChnc" of attacker)%:
+		if metadata value "SoulCrusher" of attacker >= 5:
+			stop
+		set metadata value "SoulCrusher" of attacker to metadata value "SoulCrusher" of attacker + 1
+		send "&eYou've obtained your target's &dSoul ☬&e. You now have &d%metadata value "SoulCrusher" of attacker% Soul(s) ☬&e." to attacker
+		play sound "block.beacon.power_select" and "block.glass.break" at pitch 1.25 to attacker
+		
+on right click:
+	player is sneaking
+	name of player's chestplate is "&cSoul Breaker Chestplate"
+	if metadata value "SoulCrusher" of player > 0:
+		if metadata value "SoulCrusherBuff" of player isn't set:
+			play sound "block.glass.break" at pitch 0.8 to player
+			play sound "entity.generic.eat" at pitch 0.65 to player
+			play sound "block.beacon.deactivate" at pitch 1.25 to player
+			set metadata value "SoulCrusherBuff" of player to true
+			set metadata value "SoulCrusherBuffRndm" of player to a random integer between 1 and 3
+#===================EXTRA DAMAGE===================
+			if metadata value "SoulCrusherBuffRndm" of player is 1:
+				if metadata value "SoulCrusher" of player is 1:
+					send "&dYou consumed %metadata value "SoulCrusher" of player% Soul(s) ☬ and gained &c+3%% Damage &dfor &a20 seconds&d!" to player
+					set metadata value "SCExtrDmg" of player to 1
+			if metadata value "SoulCrusherBuffRndm" of player is 1:
+				if metadata value "SoulCrusher" of player is 2:
+					send "&dYou consumed %metadata value "SoulCrusher" of player% Soul(s) ☬ and gained &c+6%% Damage &dfor &a20 seconds&d!" to player
+					set metadata value "SCExtrDmg" of player to 2
+			if metadata value "SoulCrusherBuffRndm" of player is 1:
+				if metadata value "SoulCrusher" of player is 3:
+					send "&dYou consumed %metadata value "SoulCrusher" of player% Soul(s) ☬ and gained &c+9%% Damage &dfor &a20 seconds&d!" to player
+					set metadata value "SCExtrDmg" of player to 3
+			if metadata value "SoulCrusherBuffRndm" of player is 1:
+				if metadata value "SoulCrusher" of player is 4:
+					send "&dYou consumed %metadata value "SoulCrusher" of player% Soul(s) ☬ and gained &c+12%% Damage &dfor &a20 seconds&d!" to player
+					set metadata value "SCExtrDmg" of player to 4
+			if metadata value "SoulCrusherBuffRndm" of player is 1:
+				if metadata value "SoulCrusher" of player is 5:
+					send "&dYou consumed %metadata value "SoulCrusher" of player% Soul(s) ☬ and gained &c+15%% Damage &dfor &a20 seconds&d!" to player
+					set metadata value "SCExtrDmg" of player to 5
+#===================EXTRA SOUL CHANCE===================
+			if metadata value "SoulCrusherBuffRndm" of player = 2:
+				if metadata value "SoulCrusher" of player is 1:
+					send "&dYou consumed %metadata value "SoulCrusher" of player% Soul(s) ☬ and gained &5+2%% Extra Soul Chance &dfor &a20 seconds&d!" to player
+					set metadata value "ExtraSoulChnc" of player to 2
+				if metadata value "SoulCrusher" of player is 2:
+					send "&dYou consumed %metadata value "SoulCrusher" of player% Soul(s) ☬ and gained &5+4%% Extra Soul Chance &dfor &a20 seconds&d!" to player
+					set metadata value "ExtraSoulChnc" of player to 4
+				if metadata value "SoulCrusher" of player is 3:
+					send "&dYou consumed %metadata value "SoulCrusher" of player% Soul(s) ☬ and gained &5+6%% Extra Soul Chance &dfor &a20 seconds&d!" to player
+					set metadata value "ExtraSoulChnc" of player to 6
+				if metadata value "SoulCrusher" of player is 4:
+					send "&dYou consumed %metadata value "SoulCrusher" of player% Soul(s) ☬ and gained &5+8%% Extra Soul Chance &dfor &a20 seconds&d!" to player
+					set metadata value "ExtraSoulChnc" of player to 8
+				if metadata value "SoulCrusher" of player is 5:
+					send "&dYou consumed %metadata value "SoulCrusher" of player% Soul(s) ☬ and gained &5+10%% Extra Soul Chance &dfor &a20 seconds&d!" to player
+					set metadata value "ExtraSoulChnc" of player to 10
+#===================DAMAGE REDUCTION===================
+			if metadata value "SoulCrusherBuffRndm" of player = 3:
+				if metadata value "SoulCrusher" of player is 1:
+					send "&dYou consumed %metadata value "SoulCrusher" of player% Soul(s) ☬ and gained &e+2%% Damage Reduction &dfor &a20 seconds&d!" to player
+					set metadata value "SCDmgRed" of player to 1
+				if metadata value "SoulCrusher" of player is 2:
+					send "&dYou consumed %metadata value "SoulCrusher" of player% Soul(s) ☬ and gained &e+4%% Damage Reduction &dfor &a20 seconds&d!" to player
+					set metadata value "SCDmgRed" of player to 2
+				if metadata value "SoulCrusher" of player is 3:
+					send "&dYou consumed %metadata value "SoulCrusher" of player% Soul(s) ☬ and gained &e+6%% Damage Reduction &dfor &a20 seconds&d!" to player
+					set metadata value "SCDmgRed" of player to 3
+				if metadata value "SoulCrusher" of player is 4:
+					send "&dYou consumed %metadata value "SoulCrusher" of player% Soul(s) ☬ and gained &e+8%% Damage Reduction &dfor &a20 seconds&d!" to player
+					set metadata value "SCDmgRed" of player to 4
+				if metadata value "SoulCrusher" of player is 5:
+					send "&dYou consumed %metadata value "SoulCrusher" of player% Soul(s) ☬ and gained &e+10%% Damage Reduction &dfor &a20 seconds&d!" to player
+					set metadata value "SCDmgRed" of player to 5
+			clear metadata value "SoulCrusher" of player 
+			wait 20 seconds
+			clear metadata value "ExtraSoulChnc" and "SCExtrDmg" and "SoulCrusherBuff" and "SoulCrusherBuffRndm" and "SCDmgRed" of player
+			send "&cYour buff is gone now!" to player
+	else:
+		send message "&cYou have no souls! Kill mobs to obtain some!" to player
+		play sound "entity.enderman.hurt" at pitch 0.75 to player
+		
+on damage:
+	attacker is player
+	name of attacker's chestplate is "&cSoul Breaker Chestplate"
+	if metadata value "SCExtrDmg" of attacker = 1:
+		increase damage by damage * 0.03
+	if metadata value "SCExtrDmg" of attacker = 2:
+		increase damage by damage * 0.06
+	if metadata value "SCExtrDmg" of attacker = 3:
+		increase damage by damage * 0.09
+	if metadata value "SCExtrDmg" of attacker = 4:
+		increase damage by damage * 0.12
+	if metadata value "SCExtrDmg" of attacker = 5:
+		increase damage by damage * 0.15
+	victim is player
+	if metadata value "SCDmgRed" of attacker = 1:
+	if metadata value "SCDmgRed" of attacker = 2:
+	if metadata value "SCDmgRed" of attacker = 3:
+	if metadata value "SCDmgRed" of attacker = 4:
+	if metadata value "SCDmgRed" of attacker = 5:
+
+on login:
+	clear metadata value "ExtraSoulChnc" and "SCExtrDmg" and "SoulCrusherBuff" and "SoulCrusherBuffRndm" and "SoulCrusher" of player

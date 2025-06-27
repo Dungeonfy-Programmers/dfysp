@@ -1,0 +1,82 @@
+command /seasonpass:
+	trigger:
+		#if name of player isn't "enook":
+		#	message "&cThis command is under maintenence!"
+		#else:
+		chance of 100%:
+			set {passgui} to a new chest inventory with 5 row with name "&6Season Tasks"
+			set slot 0 and 1 and 2 and 3 and 5 and 6 and 7 and 8 of {passgui} to white stained glass pane with name " "
+			set slot 4 of {passgui} to powder snow bucket named "&fWinter Season" with lore "&7Each season lasts 1-2 months, this" and "&7season started 12/26/2022"
+			set slot 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 and 36 and 37 and 38 and 39 and 40 and 41 and 42 and 43 and 44 and 45 and 46 and 47 and 48 and 50 and 51 and 52 and 53 and 54 of {passgui} to gray stained glass pane with name " "
+			if {task1.%uuid of player%} isn't set:
+				set {task1.%uuid of player%} to 0
+			if {task2.%uuid of player%} isn't set:
+				set {task2.%uuid of player%} to 0
+			if {task3.%uuid of player%} isn't set:
+				set {task3.%uuid of player%} to 0
+			set slot 21 of {passgui} to iron axe named "&6Foraging" with lore "&7%{task1.%uuid of player%}%/5000 Logs Chopped" and " " and "&7Reward: &2Pine Candle"
+			set slot 22 of {passgui} to diamond sword named "&6Killing" with lore "&7%{task2.%uuid of player%}%/8000 Mobs Killed" and " " and "&7Reward: &fSnow Trail Effect"
+			set slot 23 of {passgui} to gold pickaxe named "&fMining" with lore "&7%{task3.%uuid of player%}%/2500 Ores/Crystals Mined" and " " and "&7Reward: &cFestive Candle"
+
+
+			set slot 40 of {passgui} to barrier named "&fClose Menu"
+			open {passgui} to player
+
+on inventory click:
+	if name of event-inventory is "&6Season Tasks":
+		cancel event
+		if index of event-slot = 40:
+			close player's inventory
+
+on login:
+	if {task1.%uuid of player%} isn't set:
+		set {task1.%uuid of player%} to 0
+	if {task2.%uuid of player%} isn't set:
+		set {task2.%uuid of player%} to 0
+	if {task3.%uuid of player%} isn't set:
+		set {task3.%uuid of player%} to 0
+#Foraging
+on break of acacia wood or stripped warped stem:
+	if {in_sr.%uuid of player%} != true:
+		add 1 to {task1.%uuid of player%}
+		if {task1.%uuid of player%} = 5000:
+			broadcast "&a&lSEASON QUEST! &f%player% finished the &6Foraging &fseason quest!"
+			give player {pinedye}
+
+#Kills
+on death:
+	if {in_sr.%uuid of attacker%} != true:
+		add 1 to {task2.%uuid of attacker%}
+		if {task2.%uuid of attacker%} = 8000:
+			broadcast "&a&lSEASON QUEST! &f%attacker% finished the &6Killing &fseason quest!"
+			give attacker {snowtrail}
+#Mining
+on break of coal ore or iron ore or blue wool or blue concrete powder or red stained glass or white stained glass or orange stained glass or light blue stained glass or black stained glass or lime stained glass or purple stained glass or cyan stained glass or red stained glass pane or white stained glass pane or orange stained glass pane or light blue stained glass pane or black stained glass pane or lime stained glass pane or purple stained glass pane or cyan stained glass:
+	if {in_sr.%uuid of player%} != true:
+		add 1 to {task3.%uuid of player%}
+		if {task3.%uuid of player%} = 2500:
+			broadcast "&a&lSEASON QUEST! &f%player% finished the &6Mining &fseason quest!"
+			give player {festivelcandle}
+
+
+command /seasonpassmax:
+	permission: op
+	trigger:
+		set {pumpkins_farmed.%uuid of player%} to 7999
+command /seasonpassunmax:
+	permission: op
+	trigger:
+		set {pumpkins_farmed.%uuid of player%} to 0
+	
+
+
+#Seasonal Axe
+on death:
+	if name of attacker's held item is "&6Seasonal Axe":
+		chance of 10%:
+			give attacker sunflower with name "&eSeason Coins" with lore "&7Obtainable with the &6Season Axe &7in" and "&aTier IV &7of the season pass!"
+			send message "&e&lSEASON COINS! &fYou got &eSeason Coins &ffrom your &6Seasonal Axe&f! &7(10%%)" to attacker
+on break of pumpkin:
+	if name of player's held item is "&6Season Hatchet":
+		chance of 5%:
+			give player sunflower with name "&eSeason Coins" with lore "&7Obtainable with the &6Seasonal Axe &7in" and "&aTier IV &7of the season pass!"

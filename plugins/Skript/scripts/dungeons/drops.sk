@@ -1,0 +1,251 @@
+command /dungeon_drops:
+	trigger:
+		if {dungeondrops::%uuid of player%} = true:
+			set {dungeondrops::%uuid of player%} to false
+			message "&fDungeon Item Drops are now &cOFF&f!"
+		else:
+			set {dungeondrops::%uuid of player%} to true
+			message "&fDungeon Item Drops are now &aON&f!"
+			message "&fYou can now only pick up &bDiamonds &fand &aSlimeballs&f!"
+on pickup:
+	if {dungeondrops::%uuid of player%} = true:
+		if event-item isn't a diamond or slime ball:
+			cancel event		
+
+#Dungeon Commands
+command /dungeon_stats:
+	trigger:
+		message "&c%player%'s Dungeon Stats:"
+		message "&fDungeons Started: %{dungeonsstarted::%uuid of player%}%"
+		message "&fEasy Bosses Killed: %{ezdungeonbosskills::%uuid of player%}%"
+		message "&fMedium Bosses Killed: %{meddungeonbosskills::%uuid of player%}%"	
+		message "&fHard Bosses Killed: %{harddungeonbosskills::%uuid of player%}%"
+		message "&fInsane Bosses Killed: kills go here"
+command /dungeon_team:
+	trigger:
+		if {teamwarp::%uuid of player%} = true:
+			set {teamwarp::%uuid of player%} to false
+			message "&fDungeon Team Warps are now &cOFF&f!"
+		else:
+			set {teamwarp::%uuid of player%} to true
+			message "&fDungeon Team Warps are now &aON&f!"
+			
+#Weapon Requirements
+
+#Variables
+on login:
+	if {ezdungeonbosskills::%uuid of player%} isn't set:
+		set {ezdungeonbosskills::%uuid of player%} to 0
+on login:
+	if {meddungeonbosskills::%uuid of player%} isn't set:
+		set {meddungeonbosskills::%uuid of player%} to 0
+on login:
+	if {dungeonsstarted::%uuid of player%} isn't set:
+		set {dungeonsstarted::%uuid of player%} to 0
+on login:
+	if {harddungeonbosskills::%uuid of player%} isn't set:
+		set {harddungeonbosskills::%uuid of player%} to 0
+on login:
+	if {witherruns::%uuid of player%} isn't set:
+		set {witherruns::%uuid of player%} to 0
+
+
+#Hard Dungeon Boss Kill Fix
+on login:
+	if {meddungeonbosskills::%uuid of player%} < 10:
+		set {harddungeonbosskills::%uuid of player%} to 0
+
+#all dungeon boss drops
+on death:
+	attacker is player
+	if name of victim is "&cTree Spirit" or "&cThe Manager" or "&cEvil Shroom Baby" or "&eSwamp Witch" or "&eTNT Husk" or "&2Lost Wanderer" or "&c&lRobotic Mastermind" or "&8Withered Soldier":
+		wait 2 seconds
+		send message "&eTeleporting you back to dungeon gate in 3 seconds!" to attacker
+		wait 3 seconds
+		set {indungeon::%uuid of attacker%} to false
+		set {dungeonhub} to location at (318.5, 42, -49.5)
+		set {dungeonhub}'s yaw to 0.01
+		set {dungeonhub}'s pitch to 0.01
+		teleport attacker to {dungeonhub}
+on death:
+	if name of victim is "&cTree Spirit" or "&cThe Manager" or "&cEvil Shroom Baby" or "&eSwamp Witch" or "&eTNT Husk" or "&2Lost Wanderer" or "&c&lRobotic Mastermind" or "&e&lBullmite":
+		chance of 0.5+(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%:
+			give attacker red dye of protection 1 with item flag hide enchants with name "&cHealthy Heart" with lore "&8The core of all Healthy Pants." and " " and "&7This is a &d0.5&7%% &7drop from dungeon bosses!"
+			broadcast "&d&lCORE! &f%attacker% just dropped a &cHealthy Heart&f! &7(0.5&a+%(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%&7%%)"
+			if name of attacker's offhand item is "&aBlack Cat":
+				chance of 50%:
+					give attacker red dye of protection 1 with item flag hide enchants with name "&cHealthy Heart" with lore "&8The core of all Healthy Pants." and " " and "&7This is a &d0.5&7%% &7drop from dungeon bosses!"
+					broadcast "&d&lDOUBLE CORE! &f%attacker% just dropped a &cHealthy Heart&f! &7(50%%)"
+on death:
+	if name of victim is "&cTree Spirit" or "&cThe Manager" or "&cEvil Shroom Baby" or "&eSwamp Witch" or "&eTNT Husk" or "&2Lost Wanderer" or "&c&lRobotic Mastermind" or "&e&lBullmite":
+		chance of 0.5+(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%:
+			give attacker cyan dye of protection 1 with item flag hide enchants with name "&3Careless Relic" with lore "&8The core of all Careless Pants." and " " and "&7This is a &d0.5&7%% &7drop from dungeon bosses!"
+			broadcast "&d&lCORE! &f%attacker% just dropped a &3Careless Relic&f! &7(0.5&a+%(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%&7%%)"
+			if name of attacker's offhand item is "&aBlack Cat":
+				chance of 50%:
+					give attacker cyan dye of protection 1 with item flag hide enchants with name "&3Careless Relic" with lore "&8The core of all Careless Pants." and " " and "&7This is a &d0.5&7%% &7drop from dungeon bosses!"
+					broadcast "&d&lDOUBLE CORE! &f%attacker% just dropped a &3Careless Relic&f! &7(25%%)"
+
+
+#easy dungeon boss drops
+on death:
+	if name of victim is "&cTree Spirit" or "&cThe Manager" or "&cEvil Shroom Baby":
+		give attacker netherite scrap with name "&dDungeon Scrap" with lore "&7Obtained from killing dungeon bosses, bring" and "&7this to the dungeon forger to make" and "&7some powerful gear!" and " " and "&7Dungeon Difficulty: &aEasy"
+		send message "&cDUNGEON BOSS KILL! &f+&d1 Dungeon Scrap &a(Easy)&f!" to attacker
+		set {ezdungeonbosskills::%uuid of attacker%} to {ezdungeonbosskills::%uuid of attacker%} + 1
+		send message "&fYou have now killed %{ezdungeonbosskills::%uuid of attacker%}% total easy dungeon bosses!" to attacker
+		if name of attacker's offhand item is "&aBlack Cat":
+			chance of 50%:
+				give attacker netherite scrap with name "&dDungeon Scrap" with lore "&7Obtained from killing dungeon bosses, bring" and "&7this to the dungeon forger to make" and "&7some powerful gear!" and " " and "&7Dungeon Difficulty: &aEasy"
+				send message "&dDOUBLE DROP! &f+&d1 Dungeon Scrap &a(Easy)&f! &7(50%%)" to attacker
+		
+#medium dungeon boss drops
+on death:
+	if name of victim is "&eSwamp Witch" or "&eTNT Husk" or "&2Lost Wanderer":
+		give attacker netherite scrap with name "&dDungeon Scrap" with lore "&7Obtained from killing dungeon bosses, bring" and "&7this to the dungeon forger to make" and "&7some powerful gear!" and " " and "&7Dungeon Difficulty: &eMedium"
+		send message "&cDUNGEON BOSS KILL! &f+&d1 Dungeon Scrap &e(Medium)&f!" to attacker
+		set {meddungeonbosskills::%uuid of attacker%} to {meddungeonbosskills::%uuid of attacker%} + 1
+		send message "&fYou have now killed %{meddungeonbosskills::%uuid of attacker%}% total medium dungeon bosses!" to attacker
+		if name of attacker's offhand item contains "&aBlack Cat":
+			chance of 50%:
+				give attacker netherite scrap with name "&dDungeon Scrap" with lore "&7Obtained from killing dungeon bosses, bring" and "&7this to the dungeon forger to make" and "&7some powerful gear!" and " " and "&7Dungeon Difficulty: &eMedium"
+				send message "&dDOUBLE DROP! &f+&d1 Dungeon Scrap &e(Medium)&f!" to attacker
+
+on death: #swamp witch drop
+	if name of victim is "&eSwamp Witch":
+		give attacker fermented spider eye with name "&eSwamp Potion Ingredients" with lore "&7a combination of some very special ingredients!" and "&8(Swamp Witch drop)"
+		send message "&cDUNGEON BOSS KILL! &f+&eSwamp Potion Ingredients&f!" to attacker
+
+on death: #tnt husk drop
+	if name of victim is "&eTNT Husk":
+		give attacker tnt with name "&eDynamite" with lore "&7Can be very powerful when charged!" and "&8(TNT Husk Drop)"
+		send message "&cDUNGEON BOSS KILL! &f+&eDynamite&f!" to attacker
+on damage:
+	if attacker's name is "&eTNT Husk":
+		play sound "entity.generic.explode" to victim
+on death:
+	if victim's name is "&2Swamp Spider":
+		chance of 20+(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%:
+			give attacker string with name "&aSwamp Spider String" with lore "&7Only the spiders who live in the" and "&7swamp produce this type of string!"
+			send message "&2&lSWAMP! &fYou got a &aSwamp Spider String&f! &7(10%%)" to attacker
+on death:
+	if victim's name is "&2Swamp Spider":
+		drop 4 diamonds
+on death:
+	if name of victim is "&eSwamp Witch" or "&eTNT Husk" or "&2Lost Wanderer":
+		chance of 20+(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%:
+			give quartz with name "&dBoss Shard" with lore "&7Acquired from killing &eMedium &7dungeon bosses!" to attacker
+			send message "&cDUNGEON BOSS KILL! &f+&dBoss Shard&f! &7(15&a+%(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%&7%%)" to attacker
+			if name of attacker's offhand item contains "&aBlack Cat":
+				chance of 50%:
+					give quartz with name "&dBoss Shard" with lore "&7Acquired from killing &eMedium &7dungeon bosses!" to attacker
+					send message "&dDOUBLE DROP! &f+&dBoss Shard&f! &8(50%%)" to attacker
+
+
+			
+#======================HARD DUNGEON BOSSES===============
+on death: #hard dungeon scrap
+	if name of victim is "&c&lRobotic Mastermind" or "&8Withered Soldier" or "&e&lBullmite":
+		give attacker netherite scrap with name "&dDungeon Scrap" with lore "&7Obtained from killing dungeon bosses, bring" and "&7this to the dungeon forger to make" and "&7some powerful gear!" and " " and "&7Dungeon Difficulty: &cHard"
+		send message "&cDUNGEON BOSS KILL! &f+&d1 Dungeon Scrap &c(Hard)&f!" to attacker
+		set {harddungeonbosskills::%uuid of attacker%} to {harddungeonbosskills::%uuid of attacker%} + 1
+		send message "&fYou have now killed %{harddungeonbosskills::%uuid of attacker%}% total hard dungeon bosses!" to attacker		
+		if name of attacker's offhand item contains "&aBlack Cat":
+			chance of 50%:
+				give attacker netherite scrap with name "&dDungeon Scrap" with lore "&7Obtained from killing dungeon bosses, bring" and "&7this to the dungeon forger to make" and "&7some powerful gear!" and " " and "&7Dungeon Difficulty: &cHard"
+				send message "&dDOUBLE DROP! &f+&d1 Dungeon Scrap &c(Hard)&f!" to attacker
+
+#the beans
+on death: #magic beans
+	if name of victim is "&c&lRobotic Mastermind" or "&8Withered Soldier":
+		chance of 1+(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%:
+			give attacker cocoa beans of protection 1 with item flag hide enchants with name "&dMagical Beans" with lore "&8Legends say these have" and "&8pants-upgrading powers!" and " " and "&7A &b1%% &7drop from &cHard &7dungeon bosses!"
+			broadcast "&d&lBEANS! &f%attacker% just dropped &dMagical Beans&f! &7(1&a+%(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%&7%%)"
+			if name of attacker's offhand item contains "&aBlack Cat":
+				chance of 50%:
+					give attacker cocoa beans of protection 1 with item flag hide enchants with name "&dMagical Beans" with lore "&8Legends say these have" and "&8pants-upgrading powers!" and " " and "&7A &b1%% &7drop from &cHard &7dungeon bosses!"
+					broadcast "&d&lDOUBLE BEANS! &f%attacker% just dropped &dMagical Beans&f! &7(1&a+%(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%&7%%)"
+
+#=======================robotic master mind
+on death: #lightning dust
+	if name of victim is "&c&lRobotic Mastermind":
+		clear drops
+		chance of 6.4+(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%:
+			give attacker white dye with name "&eLightning Dust" with lore "&7Extra special dust, originating from" and "&7lightning artificially made by the" and "&cRobotic Mastermind&7." and " " and "&7This is a &c6.4%% &7drop from the &cRobotic Mastermind&7."
+			send message "&cDUNGEON BOSS KILL! &f+&eLightning Dust&f! &7(6.4&a+%(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%&7%%)" to attacker
+on death:
+	if name of victim is "&c&lRobotic Mastermind":
+		clear drops
+		chance of 0.4+(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%:
+			give attacker {roboticmysteryblade}
+			broadcast "&d&lSLAY! &f%attacker% just got a Robotic Mastermind's Mysterious Blade&f! &7(&d0.4&a+%(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%&7%%&7)"
+			if name of attacker's offhand item contains "&aBlack Cat":
+				chance of 50%:
+					broadcast "&d&lDOUBLE SLAY! &f%attacker% just got a Robotic Mastermind's Mysterious Blade&f! &7(&d50%%&7)"
+					give attacker {roboticmysteryblade}
+on death:
+	if name of victim is "&c&lRobotic Mastermind":
+		clear drops
+		chance of 1+(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%:
+			give attacker {roboticchestplate}
+			send message "&cDUNGEON BOSS KILL! &f+Robotic Mastermind's Body-Plate&f! &7(1%%)" to attacker
+on death:
+	if name of victim is "&c&lRobotic Mastermind":
+		clear drops
+		chance of 1+(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%:
+			give attacker {robotichelmet}
+			send message "&cDUNGEON BOSS KILL! &f+Robotic Mastermind's Head&f! &7(1%%)" to attacker
+			
+#===================withered soldier===================
+on death:
+	if name of victim is "&8Withered Soldier":
+		clear drops
+		chance of 2+(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%:
+			give attacker netherite ingot with name "&8Withered Armor Chunk" with lore "&7An entire chunk of the &6Withered" and "&6Soldier's Armor&7. A very valuable" and "&7item."
+			broadcast "&cDUNGEON BOSS KILL! &f%attacker% just dropped &8Withered Armor Chunk&f! &7(2&a+%(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%&7%%)"
+			if name of attacker's offhand item contains "&aBlack Cat":
+				chance of 50%:
+					broadcast "&dDOUBLE DROP! &f%attacker% just dropped &8Withered Armor Chunk&f! &7(50%%)"
+					give attacker netherite ingot with name "&8Withered Armor Chunk" with lore "&7An entire chunk of the &6Withered" and "&6Soldier's Armor&7. A very valuable" and "&7item."
+on death:
+	if name of victim is "&8Withered Soldier":
+		clear drops
+		chance of 5+(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%:
+			give attacker netherite scrap with name "&8Withered Armor Shard" with lore "&7A shard of the &6Withered Soldier's" and "&6Armor&7."
+			send message "&cDUNGEON BOSS KILL! &f+&8Withered Armor Shard&f! &7(5&a+%(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%&7%%)" to attacker
+			if name of attacker's offhand item contains "&aBlack Cat":
+				chance of 50%:
+					give attacker netherite scrap with name "&8Withered Armor Shard" with lore "&7A shard of the &6Withered Soldier's" and "&6Armor&7."
+					send message "&dDOUBLE DROP! &f+&8Withered Armor Shard&f! &7(50%%)" to attacker
+on death:
+	if name of victim is "&8Withered Soldier":
+		clear drops
+		chance of 0.5+(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%:
+			give attacker stone sword with name "&8Broken Withered Soldier's Dagger" with lore "&7It's useless. Bring it to the" and "&cWithered Forger&7. Maybe he can" and "&7do something it."
+			broadcast "&cDUNGEON BOSS KILL! &f%attacker% just dropped &8Broken Withered Soldier's Dagger&f! &7(&d0.5&a+%(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%&7%%&7)"
+			if name of attacker's offhand item contains "&aBlack Cat":
+				chance of 50%:
+					give attacker stone sword with name "&8Broken Withered Soldier's Dagger" with lore "&7It's useless. Bring it to the" and "&cWithered Forger&7. Maybe he can" and "&7do something it."
+					broadcast "&dDOUBLE DROP! &f%attacker% just dropped &8Broken Withered Soldier's Dagger&f! &7(&d50%%&7)"
+on death:
+	if name of victim is "&8Withered Soldier":
+		clear drops
+		chance of 1.5+(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%:
+			give attacker cobblestone slab with name "&8Withered Soldier's Dagger Piece" with lore "&7An incredible piece of work. Beautiful" and "&7craftsmanship. Forged by the" and "&cWithered Forger&7."
+			broadcast "&cDUNGEON BOSS KILL! &f%attacker% dropped &8Withered Soldier's Dagger Piece&f! &7(1.5&a+%(({witherruns::%uuid of attacker%}/10)+({harddungeonbosskills::%uuid of attacker%}/20)+({meddungeonbosskills::%uuid of attacker%}/30)+({ezdungeonbosskills::%uuid of attacker%}/40))/100%&7%%)"
+			if name of attacker's offhand item contains "&aBlack Cat":
+				chance of 50%:
+					give attacker cobblestone slab with name "&8Withered Soldier's Dagger Piece" with lore "&7An incredible piece of work. Beautiful" and "&7craftsmanship. Forged by the" and "&cWithered Forger&7."
+					broadcast "&dDOUBLE DROP! &f%attacker% dropped &8Withered Soldier's Dagger Piece&f! &7(50%%)"
+			
+#===========================Reality's End=========================
+on death:
+	if victim's name contains "Reality Bender":
+		clear drops
+		make console execute command "/kill @e[type=vex]"
+		give attacker red shulker box named "&4Reality Box" with lore "&8The Reality Bender once stored his items" and "&8in boxes, covered in the blood of" and "&8fallen adventurers who dared challange him." and " " and "&6Right click to open!"
+on damage:
+	projectile exists
+	if victim is evoker:
+		cancel event
+		send message "&cYou can't damage the Reality Bender with projectiles!" to shooter

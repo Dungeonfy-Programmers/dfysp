@@ -1,0 +1,15 @@
+{
+  "minecraft:husbandry/balanced_diet": {
+    "criteria": {
+      "sweet_berries": "2022-03-26 06:16:40 +0000"
+    },
+    "done": false
+  },
+  "minecraft:husbandry/root": {
+    "criteria": {
+      "consumed_item": "2022-03-26 06:16:40 +0000"
+    },
+    "done": true
+  },
+  "DataVersion": 2730
+}

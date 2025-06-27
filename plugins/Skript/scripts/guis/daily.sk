@@ -1,0 +1,72 @@
+options:
+    cooldown: 24 hours
+   
+command dailyreward:
+	aliases: /daily
+	trigger:
+		if {in_sr::%uuid of player%} = true:
+			message "&cYou can't claim your daily reward while speedrunning!"
+		else:
+			set {_waited} to difference between {dailyReward::%uuid of player%} and now
+			if {_waited} is less than {@cooldown}:
+				send "&cYou must wait %difference between {@cooldown} and {_waited}% before claiming your daily reward again"
+			else:
+				set {dailyReward::%uuid of player%} to now
+				broadcast "&6%player% claimed their daily reward with /dailyreward"
+				set {_gui.%player%} to a new chest inventory with 3 row with name "&6Daily Reward"
+				set slot random integer between 0 to 8 of {_gui.%player%} to 10 experience bottle named "&a10 Experience Levels"
+				if {bits.%uuid of player%} >= 1000:
+					set slot random integer between 0 to 8 of {_gui.%player%} to 10 experience bottle named "&a10 Experience Levels"
+				if {bits.%uuid of player%} >= 5000:
+					set slot random integer between 0 to 8 of {_gui.%player%} to 20 experience bottle named "&a20 Experience Levels"
+				if {bits.%uuid of player%} >= 10000:
+					set slot random integer between 0 to 8 of {_gui.%player%} to 20 experience bottle named "&a20 Experience Levels"
+				set slot random integer between 18 to 26 of {_gui.%player%} to 8 emeralds
+				if {bits.%uuid of player%} >= 2500:
+					set slot random integer between 18 to 26 of {_gui.%player%} to 4 diamond blocks
+				if {bits.%uuid of player%} >= 5000:
+					set slot random integer between 18 to 26 of {_gui.%player%} to 4 diamond blocks
+				if {bits.%uuid of player%} >= 10000:
+					set slot random integer between 18 to 26 of {_gui.%player%} to 4 diamond blocks
+
+				set slot random integer between 9 to 17 of {_gui.%player%} to 8 gold nuggets
+				if {bits.%uuid of player%} >= 1000:
+					set slot random integer between 9 to 17 of {_gui.%player%} to 8 gold ingot
+				if {bits.%uuid of player%} >= 2500:
+					set slot random integer between 9 to 17 of {_gui.%player%} to 2 gold blocks
+				if {bits.%uuid of player%} >= 5000:
+					set slot random integer between 9 to 17 of {_gui.%player%} to 4 gold blocks
+				if {bits.%uuid of player%} >= 10000:
+					set slot random integer between 9 to 17 of {_gui.%player%} to 4 gold blocks
+
+				chance of 3.33%:
+					set slot random integer between 0 to 26 of {_gui.%player%} to {cellphone}
+					broadcast "&e&ke &e%player% got a &cCellphone &efrom /daily &8(&d3.33%%&8) &e&ke"
+				if {supporter.%uuid of player%} = true:
+					chance of 2%:
+						set slot random integer between 0 to 26 of {_gui.%player%} to {cellphone}
+						broadcast "&e&ke &e%player% got a &cCellphone &efrom /daily &8(&d3.33&6+2%%&8) &e&ke"
+				open {_gui.%player%} to player
+ 
+on inventory click:
+	if name of event-inventory is "&6Daily Reward":
+		if name of event-item is "&a10 Experience Levels":
+			cancel event
+			play sound "entity.player.levelup"
+			message "&a+10 Experience Levels!"
+			set event-slot to air
+			make console execute command "/experience add %player% 10 levels"
+		if name of event-item is "&a20 Experience Levels":
+			cancel event
+			play sound "entity.player.levelup"
+			message "&a+20 Experience Levels!"
+			set event-slot to air
+			make console execute command "/experience add %player% 20 levels"
+on login:
+	set {_waited} to difference between {dailyReward::%uuid of player%} and now
+	if {_waited} is less than {@cooldown}:
+		wait 5 seconds
+		message "&eYou can claim your daily reward with /dailyreward"
+	if {dailyReward::%uuid of player%} isn't set:
+		wait 5 seconds
+		message "&eYou can claim your daily reward with /dailyreward"

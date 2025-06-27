@@ -1,0 +1,358 @@
+on shoot:
+    wait 3 ticks
+    if name of shooter's held item is "&6Yondu's Arrow":
+        send "&cItem ability discontinued" to shooter
+on damage:
+	name of attacker's held item is "&6Yondu's Arrow":
+		name of victim isn't "&6The Grandfather":
+			add 300 to the damage
+			play sound "entity.experience_orb.pickup" to attacker
+on rightclick:
+	name of player's held item is "&6Yondu's Arrow":
+		send "&cItem ability discontinued" to player
+
+#Bowstaff
+#bowstaff bow mode shoot/damage
+on right click:
+    if name of player's held item is "&6Bowstaff &8(Bow Mode)":
+        cancel event
+        wait 1 tick
+        set player's held item to {bowstaffmeleemode}
+on right click:
+    if name of player's held item is "&6Bowstaff &8(Melee Mode)":
+        wait 1 tick
+        set player's held item to {bowstaffbowmode}
+on left click:
+	if name of player's held item is "&6Bowstaff &8(Bow Mode)":
+		make player shoot arrow at speed 3
+on damage:
+    if damage was caused by projectile:
+        projectile exists
+        if projectile is a arrow:
+            if attacker's tool is bow named "&6Bowstaff &8(Bow Mode)":
+                cancel event
+                make attacker damage victim by 300
+                play sound "entity.experience_orb.pickup" to attacker
+
+#bowstaff melee ability
+on damage:
+	attacker is player
+	if damage cause isn't thorns:
+		if name of attacker's held item is "&6Bowstaff &8(Melee Mode)":
+			chance of 15%:
+				loop all entities in radius 3 of attacker:
+					if loop-entity isn't player:
+						make attacker damage loop-entity by 1000
+						send title " " with subtitle "&6[SPIN]" to attacker
+
+#Explosive Dynamite
+on right click:
+	if name of player's held item is "&dExplosive Dynamite":
+		if {tntlauncher.%uuid of player%} isn't set:
+			set {tntlauncher.%uuid of player%} to false
+		if {tntlauncher.%uuid of player%} = false:
+			make player shoot tnt at speed 1
+			set {tntlauncher.%uuid of player%} to true
+			wait 1 second
+			delete {tntlauncher.%uuid of player%}
+		else:
+			message "&cThis ability is on a cooldown!" to player
+on explosion prime:
+	if event-entity is tnt:
+		cancel event
+		kill event-entity
+		loop all entities in radius 4 around event-entity:
+			if loop-entity isn't a player:
+				damage loop-entity by 200
+
+#Double Shaft Bows
+on left click with bow:
+	if name of player's held item contains "&bDouble Shaft Bow" or "&6Gold-strengthened Double Shaft Bow":
+		if slot 6 of player's inventory is player head with name "&dUnbound Quiver":
+			shoot arrow from player at speed 3
+			shoot arrow from player at speed 3
+			push the last shot projectile up at speed 0.2
+		else:
+			if player has 2 arrows:
+				remove 2 arrows from player
+				shoot arrow from player at speed 3
+				play sound "entity.arrow.shoot"
+				shoot arrow from player at speed 3
+				push the last shot projectile up at speed 0.2
+				play sound "entity.arrow.shoot"
+			else:
+				send message "&c2 Arrows are required to fire this weapon!" to player
+on damage:
+	projectile exists
+	if projectile is a arrow:
+		if name of attacker's held item is "&bDouble Shaft Bow":
+			if victim is iron golem:
+				cancel event
+				send message "&cJoe cannot be damaged by bow!" to attacker
+			else:
+				make attacker damage victim by 15
+				play sound "entity.experience_orb.pickup" to attacker
+on damage:
+	projectile exists
+	if projectile is a arrow:
+		if name of attacker's held item is "&6Gold-strengthened Double Shaft Bow":
+			if victim is iron golem:
+				cancel event
+				send message "&cJoe cannot be damaged by bow!" to attacker
+			else:
+				make attacker damage victim by 120
+				play sound "entity.experience_orb.pickup" to attacker
+				
+#Shortbows
+on left click:
+	if name of player's held item is "&bOak Shortbow":
+		if slot 6 of player's inventory is player head with name "&dUnbound Quiver":
+			shoot arrow from player at speed 2
+			play sound "entity.arrow.shoot"
+		else:
+			if player has arrow:
+				remove 1 arrow from player
+				shoot arrow from player at speed 2
+				play sound "entity.arrow.shoot"
+			else:
+				send message "&cYou don't have any arrows to fire!" to player
+on damage:
+	projectile exists
+	if projectile is a arrow:
+		if name of attacker's held item is "&bOak Shortbow":
+			if victim is iron golem:
+				cancel event
+				send message "&cJoe cannot be damaged by bow!" to attacker
+			else:
+				make attacker damage victim by 10
+				play sound "entity.experience_orb.pickup" to attacker
+
+on left click:
+	if name of player's held item is "&bBirch Shortbow":
+		if slot 6 of player's inventory is player head with name "&dUnbound Quiver":
+			shoot arrow from player at speed 2
+			play sound "entity.arrow.shoot"
+		else:
+			if player has arrow:
+				remove 1 arrow from player
+				shoot arrow from player at speed 2
+				play sound "entity.arrow.shoot"
+			else:
+				send message "&cYou don't have any arrows to fire!" to player
+on damage:
+	projectile exists
+	if projectile is a arrow:
+		if name of attacker's held item is "&bBirch Shortbow":
+			if victim is iron golem:
+				cancel event
+				send message "&cJoe cannot be damaged by bow!" to attacker
+			else:
+				make attacker damage victim by 30
+				play sound "entity.experience_orb.pickup" to attacker
+			
+on left click:
+	if name of player's held item is "&5Ender Shortbow":
+		if slot 6 of player's inventory is player head with name "&dUnbound Quiver":
+			shoot arrow from player at speed 2
+			play sound "entity.arrow.shoot"
+		else:
+			if player has arrow:
+				remove 1 arrow from player
+				shoot arrow from player at speed 2
+				play sound "entity.arrow.shoot"
+			else:
+				send message "&cYou don't have any arrows to fire!" to player
+on damage:
+	projectile exists
+	if projectile is a arrow:
+		if name of attacker's held item is "&5Ender Shortbow":
+			if victim is iron golem:
+				cancel event
+				send message "&cJoe cannot be damaged by bow!" to attacker
+			else:
+				make attacker damage victim by 50
+				play sound "entity.experience_orb.pickup" to attacker
+on left click:
+	if name of player's held item is "&6Gold-strengthened Shortbow":
+		if slot 6 of player's inventory is player head with name "&dUnbound Quiver":
+			shoot arrow from player at speed 2
+			play sound "entity.arrow.shoot"
+		else:
+			if player has arrow:
+				remove 1 arrow from player
+				shoot arrow from player at speed 2
+				play sound "entity.arrow.shoot"
+			else:
+				send message "&cYou don't have any arrows to fire!" to player
+on damage:
+	projectile exists
+	if projectile is a arrow:
+		if name of attacker's held item is "&6Gold-strengthened Shortbow":
+			if victim is iron golem:
+				cancel event
+				send message "&cJoe cannot be damaged by bow!" to attacker
+			else:
+				make attacker damage victim by 80
+				play sound "entity.experience_orb.pickup" to attacker
+on damage:
+	projectile exists
+	if projectile is a arrow:
+		if name of attacker's held item is "&6Tog's Crossbow":
+			if victim is iron golem:
+				cancel event
+				send message "&cJoe cannot be damaged by crossbow!" to attacker
+			else:
+				make attacker damage victim by 250
+				play sound "entity.experience_orb.pickup" to attacker
+				
+#Viking Shortbow & Sorrow
+on damage:
+    projectile exists
+    if projectile is a arrow:
+        if name of attacker's held item is "&bViking Shortbow":
+            if victim is iron golem:
+                cancel event
+                send message "&cJoe cannot be damaged by bow!" to attacker
+            else:
+                make attacker damage victim by 150
+                play sound "entity.experience_orb.pickup" to attacker
+        if name of attacker's held item is "&dSorrow":
+            if victim is iron golem:
+                cancel event
+                send message "&cJoe cannot be damaged by bow!" to attacker
+            else if {finalshotcounter::%attacker%} is 2:
+                make attacker damage victim by 500
+                set {finalshotcounter::%attacker%} to 0
+            else:
+                make attacker damage victim by 155
+                play sound "entity.experience_orb.pickup" to attacker
+#bows
+on rightclick holding bow:
+    name of player's held item is "&bViking Shortbow":
+        make player shoot arrow at speed 3
+on leftclick holding bow:
+	name of player's held item is "&dSorrow":
+		if {finalshotcounter::%player%} is 2:
+			make player shoot arrow at speed 3
+			make player shoot arrow at speed 3
+			push last shot projectile left at force 0.2
+			make player shoot arrow at speed 3
+			push last shot projectile right at force 0.2
+			set {finalshotcounter::%player%} to 0
+			send action bar "&9&l✺ FINAL SHOT ✺" to player
+		else:
+			make player shoot arrow at speed 3
+			push last shot projectile left at force 0.2
+			make player shoot arrow at speed 3
+			push last shot projectile right at force 0.2
+			add 1 to {finalshotcounter::%player%}
+			
+on left click:
+	if name of player's held item contains "&5Warpol" or "&dWarpol":
+		if slot 6 of player's inventory is player head with name "&dUnbound Quiver":
+			play sound "entity.arrow.shoot"
+			shoot arrow from player at speed 2
+		else:
+			if player has arrow:
+				remove 1 arrow from player
+				shoot arrow from player at speed 2
+				play sound "entity.arrow.shoot"
+			else:
+				send message "&cYou don't have any arrows to fire!" to player
+on damage:
+	projectile exists
+	if projectile is a arrow:
+		if name of attacker's held item is "&5Warpol ✪":
+			if victim is iron golem:
+				cancel event
+				send message "&cJoe cannot be damaged by bow!" to attacker
+			else:
+				make attacker damage victim by 25
+				play sound "entity.experience_orb.pickup" to attacker
+on damage:
+	projectile exists
+	if projectile is a arrow:
+		if name of attacker's held item is "&5Warpol ✪✪":
+			if victim is iron golem:
+				cancel event
+				send message "&cJoe cannot be damaged by bow!" to attacker
+			else:
+				make attacker damage victim by 50
+				apply absorption 1 to attacker for 120 seconds
+				play sound "entity.experience_orb.pickup" to attacker
+on damage:
+	projectile exists
+	if projectile is a arrow:
+		if name of attacker's held item is "&5Warpol ✪✪✪":
+			if victim is iron golem:
+				cancel event
+				send message "&cJoe cannot be damaged by bow!" to attacker
+			else:
+				make attacker damage victim by 80
+				apply absorption 1 to attacker for 120 seconds
+				play sound "entity.experience_orb.pickup" to attacker
+on damage:
+	projectile exists
+	if projectile is a arrow:
+		if name of attacker's held item is "&dWarpol ✪✪✪✪":
+			if victim is iron golem:
+				cancel event
+				send message "&cJoe cannot be damaged by bow!" to attacker
+			else:
+				make attacker damage victim by 120
+				apply absorption 2 to attacker for 120 seconds
+				play sound "entity.experience_orb.pickup" to attacker
+on damage:
+	projectile exists
+	if projectile is a arrow:
+		if name of attacker's held item is "&dWarpol ✪✪✪✪✪":
+			if victim is iron golem:
+				cancel event
+				send message "&cJoe cannot be damaged by bow!" to attacker
+			else:
+				apply absorption 2 to attacker for 120 seconds
+				make attacker damage victim by 150
+				play sound "entity.experience_orb.pickup" to attacker
+				summon a evoker fangs at event-location
+
+#shundo (i'll keep it in oni.sk)		
+on left click:
+	if name of player's held item is "&6Shundo":
+		if player doesn't have arrow:
+			cancel event
+			send message "&cYou don't have any arrows." to player
+		if name of player's held item is "&6Shundo":
+			if player has arrow:
+				if {shundocd.%uuid of player%} isn't set:
+					set {shundocd.%uuid of player%} to false
+				if {shundocd.%uuid of player%} = false:
+					set {shundocd.%uuid of player%} to true
+					make player shoot arrow at speed 3
+					remove 1 arrow from player
+					wait 0.25 seconds
+					set {shundocd.%uuid of player%} to false
+#shundo (i'll keep it in oni.sk)		
+on right click:
+	if name of player's held item is "&6Shundo":
+		if player doesn't have arrow:
+			cancel event
+			send message "&cYou don't have any arrows." to player
+		if name of player's held item is "&6Shundo":
+			if player has arrow:
+				cancel event
+				if {shundocd.%uuid of player%} isn't set:
+					set {shundocd.%uuid of player%} to false
+				if {shundocd.%uuid of player%} = false:
+					set {shundocd.%uuid of player%} to true
+					make player shoot arrow at speed 3
+					remove 1 arrow from player
+					wait 0.25 seconds
+					set {shundocd.%uuid of player%} to false
+#shundo damage (i'll keep it in oni.sk)			
+on damage:
+	if damage was caused by projectile:
+		projectile exists
+		if projectile is a arrow:
+			if attacker's tool is bow named "&6Shundo":
+				cancel event
+				damage victim by 100 hearts

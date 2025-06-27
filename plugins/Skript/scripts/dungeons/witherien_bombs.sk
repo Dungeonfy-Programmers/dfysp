@@ -1,0 +1,183 @@
+#Bomb Defuse
+#The main bomb
+on right click:
+	if clicked block is tnt:
+		if block below event-block is command block:
+			set {_bombgui} to a new chest inventory with 3 row with name "&cClick the shears to defuse!"
+			set slot 13 of {_bombgui} to shears named "&6Defuse Bomb" with lore "&cREQUIRES ALL OTHER BOMBS TO BE DEFUSED!" and " " and "&fClick to defuse!"
+			open {_bombgui} to player
+			
+on inventory click:
+	if name of event-inventory is "&cClick the shears to defuse!":
+		cancel event
+		if index of event-slot = 13:
+			close player's inventory
+			if {bombsleft} = 1:
+				play sound "block.respawn_anchor.charge"
+				make console execute command "/setblock -205 115 -456 rail"
+				set {bombsleft} to {bombsleft} - 1
+				loop all players:
+					if {in_witherien.%uuid of loop-player%} = true:
+						send message "&6%player% defused a bomb! %{bombsleft}%/5 Bombs remain!" to loop-player
+						send title "&6[%{bombsleft}%/5]" with subtitle "&6BOMBS REMAIN" to loop-player
+				play sound "entity.snow_golem.shear"
+			else:
+				message "&cYou must defuse all other bombs first!"
+#Crafting Table
+on right click:
+	if clicked block is tnt:
+		if block below event-block is workbench:
+			open workbench to player
+			set name of player's current inventory to "&cCraft an iron pickaxe!"
+			set slot 1 of player's current inventory to 3 iron ingots
+			set slot 2 of player's current inventory to 2 sticks
+			set slot 0 of player's current inventory to lime stained glass pane named "&aClick to submit!"
+on inventory click:
+	if name of event-inventory is "&cCraft an iron pickaxe!":
+		if event-slot >= 10:
+			cancel event
+			close player's inventory
+			remove lime stained glass pane from player
+			remove 2 sticks from player
+			remove 3 iron ingots from player
+		else:
+			if event-slot = 0:
+				if {craft_bomb} = false:
+					cancel event
+					if slot 1 and 2 and 3 of player's current inventory is iron ingots:
+						if slot 5 and 8 of player's current inventory is stick:
+							set {craft_bomb} to true
+							make console execute command "/setblock -201 115 -443 rail"
+							set {bombsleft} to {bombsleft} - 1
+							loop all players:
+								if {in_witherien.%uuid of loop-player%} = true:
+									send message "&6%player% defused a bomb! %{bombsleft}%/5 Bombs remain!" to loop-player
+									send title "&6[%{bombsleft}%/5]" with subtitle "&6BOMBS REMAIN" to loop-player
+					else:
+						message "&cThat's not how you craft an Iron Pickaxe!"
+				else:
+					message "&cThis bomb has already been solved!"
+				close player's inventory
+
+#Respawn Anchor
+on right click:
+	if clicked block is tnt:
+		if block below event-block is respawn anchor:
+			set {_bombgui} to a new chest inventory with 3 row with name "&cClick all the glowstone to defuse!"
+			set slot 9 and 17 of {_bombgui} to tripwire hook
+			set slot 10 and 11 and 12 and 13 and 14 and 15 and 16 of {_bombgui} to glowstone of protection 1 with item flag hide enchants named "&6Active Glowstone" with lore "&fClick to remove"
+			set {bombwire_left} to 7
+			open {_bombgui} to player
+			
+#Note block
+on right click:
+	if clicked block is tnt:
+		if block below event-block is note block:
+			set {current_note} to "C"
+			set {current_notenum} to 1
+			set {notecombo} to random integer between 2 to 7
+			if {notecombo} = 2:
+				set {notecombo} to "D"
+			if {notecombo} = 3:
+				set {notecombo} to "E"
+			if {notecombo} = 4:
+				set {notecombo} to "F"
+			if {notecombo} = 5:
+				set {notecombo} to "G"
+			if {notecombo} = 6:
+				set {notecombo} to "A"
+			if {notecombo} = 7:
+				set {notecombo} to "B"
+			set {bombgui} to a new chest inventory with 3 row with name "&cAdd up to: %{notecombo}%     Currently at: %{current_notecombo}%"
+			set slot 13 of {bombgui} to note block named "&6Click to go up a note"
+			open {bombgui} to player
+#Blast Furnace
+on right click:
+	if clicked block is tnt:
+		if block below event-block is blast furnace:
+			set {_bombgui} to a new chest inventory with 3 row with name "&cClick all items that can be used as fuel!"
+			set slot 0 and 18 of {_bombgui} to stone pickaxe
+			set slot 1 and 5 and 19 and 15 of {_bombgui} to coal
+			set slot 3 of {_bombgui} to lava bucket
+			set slot 8 of {_bombgui} to wooden pickaxe
+			set slot 10 and 13 of {_bombgui} to dried kelp block
+			set slot 12 and 20 of {_bombgui} to brown wool
+			set slot 14 and 17 of {_bombgui} to hay bale
+			set slot 23 and 25 of {_bombgui} to coal block
+			set {fuelleft} to 12
+			open {_bombgui} to player
+on inventory click:
+	if name of event-inventory is "&cClick all the glowstone to defuse!":
+		cancel event
+		if name of event-item is "&6Active Glowstone":
+			play sound "block.respawn_anchor.charge"
+			set event-slot to air
+			set {bombwire_left} to {bombwire_left} - 1
+			if {bombwire_left} = 0:
+				if {anchor_bomb} = false:
+					set {anchor_bomb} to true
+					make console execute command "/setblock -201 115 -469 rail"
+					set {bombsleft} to {bombsleft} - 1
+					close player's inventory
+					play sound "block.respawn_anchor.deplete"
+					loop all players:
+						if {in_witherien.%uuid of loop-player%} = true:
+							send message "&6%player% defused a bomb! %{bombsleft}%/5 Bombs remain!" to loop-player
+							send title "&6[%{bombsleft}%/5]" with subtitle "&6BOMBS REMAIN" to loop-player
+				else:
+					close player's inventory
+					message "&cThis bomb has already been defused!"
+	if name of event-inventory contains "&cAdd up to":
+		cancel event
+		if name of event-item is "&6Click to go up a note":
+			set {current_notenum} to {current_notenum} + 1
+			if {current_notenum} = 2:
+				set {current_note} to "D"
+			if {current_notenum} = 3:
+				set {current_note} to "E"
+			if {current_notenum} = 4:
+				set {current_note} to "F"
+			if {current_notenum} = 5:
+				set {current_note} to "G"
+			if {current_notenum} = 6:
+				set {current_note} to "A"
+			if {current_notenum} = 7:
+				set {current_note} to "B"
+			play sound "block.note_block.pling" at pitch {current_notenum} to player
+			set {bombgui} to a new chest inventory with 3 row with name "&cAdd up to: %{notecombo}%     Currently at: %{current_note}%"
+			set slot 13 of {bombgui} to note block named "&6Click to go up a note"
+			open {bombgui} to player
+			if {current_note} = {notecombo}:
+				if {note_bomb} = false:
+					set {note_bomb} to true
+					make console execute command "/setblock -189 115 -443 rail"
+					set {bombsleft} to {bombsleft} - 1
+					close player's inventory
+					play sound "block.note_block.bell"
+					loop all players:
+						if {in_witherien.%uuid of loop-player%} = true:
+							send message "&6%player% defused a bomb! %{bombsleft}%/5 Bombs remain!" to loop-player
+							send title "&6[%{bombsleft}%/5]" with subtitle "&6BOMBS REMAIN" to loop-player
+				else:
+					close player's inventory
+					message "&cThis bomb has already been defused!"
+	if name of event-inventory is "&cClick all items that can be used as fuel!":
+		cancel event
+		if event-item is coal or coal block or lava bucket or wooden pickaxe or dried kelp block or brown wool or lava bucket:
+			play sound "block.loom.select pattern"
+			set event-slot to air
+			set {fuelleft} to {fuelleft} - 1
+			if {fuelleft} = 0:
+				if {fuel_bomb} = false:
+					set {fuel_bomb} to true
+					make console execute command "/setblock -189 115 -469 rail"
+					set {bombsleft} to {bombsleft} - 1
+					close player's inventory
+					play sound "block.chest.locked"
+					loop all players:
+						if {in_witherien.%uuid of loop-player%} = true:
+							send message "&6%player% defused a bomb! %{bombsleft}%/5 Bombs remain!" to loop-player
+							send title "&6[%{bombsleft}%/5]" with subtitle "&6BOMBS REMAIN" to loop-player
+				else:
+					close player's inventory
+					message "&cThis bomb has already been defused!"

@@ -1,0 +1,34 @@
+#
+# A vanilla example of a gui creation using Skript only
+# Requires Skript 2.3+
+#
+
+command /election:
+	trigger:
+		if {voted.%player%} isn't set:
+			set {voted.%player%} to false
+		set {mayors} to a new chest inventory with 4 row with name "&6Mayor Elections"
+		set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 of {mayors} to gray stained glass pane named " "
+		set slot 12 of {mayors} to blaze powder with name "&cHot Man Barry" with lore "&8Man's never hot" and " " and "&fI will fortify the village in case of" and "&ftactical invasion from Greg."
+		set slot 35 of {mayors} to paper with name "&eTotal Votes" with lore "&dBob: %{bobvotes}%" and "&aFred: %{fredvotes}%" and "&cBarry: %{barryvotes}%"
+		set slot 31 of {mayors} to barrier with name "&fClose Menu"
+		open {mayors} to player
+on load:
+	set {barryvotes} to 0
+	set {gregvotes} to 0
+on inventory click:
+	if name of event-inventory is "&6Mayor Elections":
+		cancel event
+		if index of event-slot = 14:
+			if {voted2.%player%} = false:
+				set {voted2.%player%} to true
+				set {barryvotes} to {barryvotes} + 1
+				close player's inventory
+				send message "&aYou voted for Barry, bringing him to %{barryvotes}% total votes!"
+			else:
+				cancel event
+				close player's inventory
+				send message "&cYou already voted for another candidate!"
+		if index of event-slot = 31:
+			cancel event
+			close player's inventory

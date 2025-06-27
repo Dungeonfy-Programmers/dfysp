@@ -1,0 +1,12 @@
+on right click with birch stair:
+	if name of player's held item is "&6Boosted Wheelchair":
+		if metadata tag "boostedW" of player isn't set:
+			set  metadata tag "boostedW" of player to false
+		if  metadata tag "boostedW" of player = false:
+			set  metadata tag "boostedW" of player to true
+			push player backwards at velocity 2
+			wait 4 seconds
+			delete  metadata tag "boostedW" of player
+		else:
+			cancel event
+			send message "&cThis ability is on a cooldown!" to player

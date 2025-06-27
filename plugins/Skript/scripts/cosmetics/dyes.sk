@@ -1,0 +1,110 @@
+on sneak toggle:
+	if name of player's offhand item is "&6Pumpkin Candle":
+		if lore of player's held item contains "&8✔ Dye Applied":
+			message "&cYou can only apply dyes once!"
+		else:
+			if player's held item is leather helmet or leather chestplate or leather pants:
+				remove orange candle named "&6Pumpkin Candle" from player
+				dye player's held item (255, 156, 8) #FF9C08
+				add " " and "&6Pumpkin Candle" and "&8✔ Dye Applied" to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&dYou waxed %{_enchanteditem}% &dwith &6Pumpkin Dye"
+				play sound "entity.villager.work_loom" to player
+			else:
+				if player's held item is leather boots:
+					remove orange candle named "&6Pumpkin Candle" from player
+					dye player's held item (0, 158, 16) #009E10
+					add " " and "&6Pumpkin Candle" and "&8✔ Dye Applied" to lore of player's held item
+					set {_enchanteditem} to name of player's held item
+					message "&dYou waxed %{_enchanteditem}% &dwith &6Pumpkin Dye"
+					play sound "entity.villager.work_loom" to player
+				else:
+					send message "&cYou can only apply dyes to leather armor!" to player
+					
+#command /package_halloween:
+	#trigger:
+		#if {supporter.%uuid of player%} = true:
+			#if {halloweenpack.%uuid of player%} isn't set:
+				#set {halloweenpack.%uuid of player%} to true
+				#set {_halloweenpack} to a new chest inventory with 3 row with name "&6Halloween Supporter Package"
+				#set slot 13 of {_halloweenpack} to {pumpkincandle}
+				#open {_halloweenpack} to player
+			#else:
+				#message "&cYou've already claimed this package!"
+		#else:
+			#message "&cYou have to be a supporter to use this command!"
+			
+on sneak toggle:
+	if name of player's offhand item is "&cFestive Candle":
+		if lore of player's held item contains "&8✔ Dye Applied":
+			message "&cYou can only apply dyes once!"
+		else:
+			if player's held item is leather helmet or leather chestplate or leather pants:
+				remove red candle named "&cFestive Candle" from player
+				dye player's held item (176, 46, 38) #B02E26
+				add " " and "&cFestive Candle" and "&8✔ Dye Applied" to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&dYou waxed %{_enchanteditem}% &dwith &cFestive Candle"
+				play sound "entity.villager.work_loom" to player
+			else:
+				if player's held item is leather boots:
+					remove red candle named "&cFestive Candle" from player
+					dye player's held item (255, 255, 255) #FFFFFF
+					add " " and "&cFestive Candle" and "&8✔ Dye Applied" to lore of player's held item
+					set {_enchanteditem} to name of player's held item
+					message "&dYou waxed %{_enchanteditem}% &dwith &cFestive Candle"
+					play sound "entity.villager.work_loom" to player
+				else:
+					send message "&cYou can only apply dyes to leather armor!" to player
+					
+on sneak toggle:
+	if name of player's offhand item is "&2Pine Candle":
+		if lore of player's held item contains "&8✔ Dye Applied":
+			message "&cYou can only apply dyes once!"
+		else:
+			if player's held item is leather helmet or leather chestplate or leather pants:
+				remove green candle named "&2Pine Candle" from player
+				dye player's held item (103, 132, 36) #678424
+				add " " and "&2Pine Candle" and "&8✔ Dye Applied" to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&dYou waxed %{_enchanteditem}% &dwith &2Pine Candle"
+				play sound "entity.villager.work_loom" to player
+			else:
+				if player's held item is leather boots:
+					remove green candle named "&2Pine Candle" from player
+					dye player's held item (131, 84, 50) #835432
+					add " " and "&2Pine Candle" and "&8✔ Dye Applied" to lore of player's held item
+					set {_enchanteditem} to name of player's held item
+					message "&dYou waxed %{_enchanteditem}% &dwith &2Pine Candle"
+					play sound "entity.villager.work_loom" to player
+				else:
+					send message "&cYou can only apply dyes to leather armor!" to player
+
+on fishing:
+	if fishing state is "CAUGHT_FISH":
+		chance of 0.2%:
+			give player cyan candle named "&3Fishing Dye" with lore "&7Shift while holding this in your offhand" and "&7and the armor piece you want to apply" and "&7this to in your mainhand." and "" and "&7Leather Helmet: &300AAAA" and "&7Leather Tunic: &300AAAA" and "&7Leather Pants: &300AAAA" and "&7Leather Boots: &0000000" and "" and "&cDo not apply this to armor" and "&cyou plan to upgrade." and "&80.2%% drop from fishing :D"
+			broadcast "&b&lDYE! &f%player% got the &3Fishing Dye &ffrom fishing :D &8(0.2%%)"
+
+on sneak toggle:
+	if name of player's offhand item is "&3Fishing Dye":
+		if lore of player's held item contains "&8✔ Dye Applied":
+			message "&cYou can only apply dyes once!"
+		else:
+			if player's held item is leather helmet or leather chestplate or leather pants:
+				remove cyan candle named "&3Fishing Dye" from player
+				dye player's held item (0, 170, 170) #00AAAA
+				add " " and "&3Fishing Dye" and "&8✔ Dye Applied" to lore of player's held item
+				set {_enchanteditem} to name of player's held item
+				message "&dYou dyed %{_enchanteditem}% &dwith &3Fishing Dye"
+				play sound "entity.villager.work_loom" to player
+			else:
+				if player's held item is leather boots:
+					remove cyan candle named "&3Fishing Dye" from player
+					dye player's held item (0, 0, 0) #000000
+					add " " and "&3Fishing Dye" and "&8✔ Dye Applied" to lore of player's held item
+					set {_enchanteditem} to name of player's held item
+					message "&dYou dyed %{_enchanteditem}% &dwith &3Fishing Dye"
+					play sound "entity.villager.work_loom" to player
+				else:
+					send message "&cYou can only apply dyes to leather armor!" to player

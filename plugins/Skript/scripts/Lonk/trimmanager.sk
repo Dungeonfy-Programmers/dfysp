@@ -1,0 +1,91 @@
+command /TrimManager:
+  permission: op
+  trigger:
+    set {_trimGUI::%player's uuid%} to a new chest inventory with 5 row named "&6Trim Creator"
+    loop 54 times:
+      set slot loop-value - 1 of {_trimGUI::%player's uuid%} to black stained glass pane named " "
+    set slot 10 of {_trimGUI::%player's uuid%} to emerald named "&aColors" with lore "&7Choose the ore you want to" and "&7use to color your armor trim"
+    set slot 28 of {_trimGUI::%player's uuid%} to sentry armor smithing templates named "&aTrims" with lore "&7Choose the design you" and "&7want for your armor trim" with all item flags 
+
+    set slot 12 of {_trimGUI::%player's uuid%} to white stained glass pane named " "
+    set slot 13 of {_trimGUI::%player's uuid%} to white stained glass pane named " "
+    set slot 14 of {_trimGUI::%player's uuid%} to white stained glass pane named " "
+    set slot 21 of {_trimGUI::%player's uuid%} to white stained glass pane named " "
+    
+    set slot 22 of {_trimGUI::%player's uuid%} to white candle named " "
+    
+    set slot 23 of {_trimGUI::%player's uuid%} to white stained glass pane named " "
+    set slot 30 of {_trimGUI::%player's uuid%} to white stained glass pane named " "
+    set slot 31 of {_trimGUI::%player's uuid%} to white stained glass pane named " "
+    set slot 32 of {_trimGUI::%player's uuid%} to white stained glass pane named " "
+
+    set slot 25 of {_trimGUI::%player's uuid%} to spyglass named "&3Preview" with lore "&7click to see how your trim looks on armor"
+
+    
+    open {_trimGUI::%player's uuid%} to player
+
+on inventory click:
+  if name of event-inventory is "&6Trim Creator":
+    cancel event
+    if index of event-slot is 10:
+      if event-slot is emerald:
+        set event-slot to redstone with name name of event-slot with lore lore of event-slot with all item flags
+      else if event-slot is redstone:
+        set event-slot to lapis with name name of event-slot with lore lore of event-slot with all item flags
+      else if event-slot is lapis:
+        set event-slot to amethyst shard with name name of event-slot with lore lore of event-slot with all item flags
+      else if event-slot is amethyst shard:
+        set event-slot to quartz with name name of event-slot with lore lore of event-slot
+      else if event-slot is quartz:
+        set event-slot to netherite ingot with name name of event-slot with lore lore of event-slot with all item flags
+      else if event-slot is netherite ingot:
+        set event-slot to diamond with name name of event-slot with lore lore of event-slot with all item flags
+      else if event-slot is diamond:
+        set event-slot to gold ingot with name name of event-slot with lore lore of event-slot with all item flags
+      else if event-slot is gold ingot:
+        set event-slot to iron ingot with name name of event-slot with lore lore of event-slot with all item flags
+      else if event-slot is iron ingot:
+        set event-slot to copper ingot with name name of event-slot with lore lore of event-slot with all item flags
+      else if event-slot is copper ingot:
+        set event-slot to emerald with name name of event-slot with lore lore of event-slot with all item flags         
+
+  if index of event-slot is 28:
+    if event-slot is sentry armor smithing templates:
+      set event-slot to vex armor smithing template with name name of event-slot with lore lore of event-slot with all item flags
+    else if event-slot is vex armor smithing template:
+      set event-slot to wild armor smithing template with name name of event-slot with lore lore of event-slot with all item flags
+    else if event-slot is wild armor smithing templates:
+      set event-slot to coast armor smithing template with name name of event-slot with lore lore of event-slot with all item flags
+    else if event-slot is coast armor smithing templates:
+      set event-slot to dune armor smithing template with name name of event-slot with lore lore of event-slot with all item flags
+    else if event-slot is dune armor smithing templates:
+      set event-slot to wayfinder armor smithing template with name name of event-slot with lore lore of event-slot with all item flags
+    else if event-slot is wayfinder armor smithing templates:
+      set event-slot to raiser armor smithing template with name name of event-slot with lore lore of event-slot with all item flags
+    else if event-slot is raiser armor smithing templates:
+      set event-slot to shaper armor smithing template with name name of event-slot with lore lore of event-slot with all item flags
+    else if event-slot is shaper armor smithing templates:
+      set event-slot to host armor smithing template with name name of event-slot with lore lore of event-slot with all item flags
+    else if event-slot is host armor smithing templates:
+      set event-slot to ward armor smithing template with name name of event-slot with lore lore of event-slot with all item flags
+    else if event-slot is ward armor smithing templates:
+      set event-slot to silence armor smithing template with name name of event-slot with lore lore of event-slot with all item flags
+    else if event-slot is silence armor smithing templates:
+      set event-slot to tide armor smithing template with name name of event-slot with lore lore of event-slot with all item flags
+    else if event-slot is tide armor smithing templates:
+      set event-slot to snout armor smithing template with name name of event-slot with lore lore of event-slot with all item flags
+    else if event-slot is snout armor smithing templates:
+      set event-slot to rib armor smithing template with name name of event-slot with lore lore of event-slot with all item flags
+    else if event-slot is rib armor smithing templates:
+      set event-slot to eye armor smithing template with name name of event-slot with lore lore of event-slot with all item flags
+    else if event-slot is eye armor smithing templates:
+      set event-slot to spire armor smithing template with name name of event-slot with lore lore of event-slot with all item flags
+    else if event-slot is spire armor smithing templates:
+      set event-slot to sentry armor smithing template with name name of event-slot with lore lore of event-slot with all item flags
+    updateTrim(slot 28 of event-inventory, stone, event-inventory)
+
+local function updateTrim(Item: Item type, Item2: Item, Inv: inventory):
+  set slot 22 of {_inv} to {_Item} 
+
+
+      

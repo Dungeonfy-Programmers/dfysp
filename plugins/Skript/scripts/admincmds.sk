@@ -1,0 +1,31 @@
+command /vanish:
+	permission: op
+	trigger:
+		if {vanish.%player%} is true:
+			set {vanish.%player%} to false
+			broadcast "&e%player% joined the game"
+			reveal player to all players
+		else:
+			set {vanish.%player%} to true
+			broadcast "&e%player% left the game"
+			hide player from all players
+
+command consoleplayerjoin <text>:
+	permission: op
+	trigger:
+		broadcast "&e%arg-1% joined the game"
+		set {player} to arg-1
+command consoleplayerleave:
+	permission: op
+	trigger:
+		broadcast "&e%{player}% left the game"
+		delete {player}
+
+command consoleplayersend <text>:
+	permission: op
+	trigger:
+		broadcast "<%{player}%> %arg-1%"
+
+command ping:
+	trigger:
+		send "pong" to player

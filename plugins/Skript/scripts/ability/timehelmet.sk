@@ -1,0 +1,106 @@
+on damage:
+	if name of attacker's helmet is "&cTime Traveler's Helmet":
+		wait 1 tick
+		set victim's invulnerability ticks to 15
+
+every 1 second:
+	loop all players:
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (201, 31, 22)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (204, 54, 21)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (217, 88, 14)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (221, 104, 11)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (230, 134, 1)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (238, 173, 0)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (252, 207, 3)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (237, 228, 0)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (206, 213, 0)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (176, 197, 15)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (143, 187, 12)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (119, 179, 18)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (105, 176, 17)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (71, 164, 30)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (45, 156, 31)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (24, 148, 37)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (8, 131, 67)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (14, 140, 98)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (5, 148, 157)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (8, 148, 182)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (31, 154, 215)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (13, 132, 196)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (3, 99, 163)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (9, 74, 145)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (17, 50, 121)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (24, 35, 105)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (29, 18, 89)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (49, 12, 90)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (91, 11, 90)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (130, 0, 96)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (174, 9, 100)
+		wait 1 ticks
+		if name of loop-player's helmet is "&cTime Traveler's Helmet":
+			dye loop-player's helmet (197, 0, 89)
+		wait 1 ticks
+		if name of loop-player's helmet is "&aTime Traveler's Helmet":
+			dye loop-player's helmet (197, 10, 42)
+		wait 1 ticks

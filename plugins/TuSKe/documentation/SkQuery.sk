@@ -1,0 +1,965 @@
+Events:
+	Lambda when:
+		ID: lambda_when
+		Patterns:
+			when %predicate% [[with] limit[(ing|er)] %-boolean%]
+		Event values:
+			none
+		Cancellable: false
+	On Falling Block Land:
+		ID: falling_block_land
+		Patterns:
+			[on] block land
+		Event values:
+			event-block
+			event-entity
+			event-location
+			event-world
+			event-commandsender
+			event-itemstack
+		Cancellable: true
+	Tab Complete:
+		ID: tab_complete
+		Patterns:
+			tab complet(er|ion) [for [command]] %string%
+		Event values:
+			event-player
+		Cancellable: true
+Conditions:
+	CondBoolean:
+		ID: CondBoolean
+		Patterns:
+			%booleans%
+	Entity has Potion:
+		ID: CondHasPotion
+		Patterns:
+			%livingentities% (has|have) [potion [effect]] %potioneffecttypes%
+			%livingentities% (doesn't|does not|do not|don't) have [potion [effect]] %potioneffecttypes%
+	File existance:
+		ID: CondFileExistance
+		Description:
+			Checks whether or not a file at the defined path(s) exist.
+		Patterns:
+			file %string% (does|does(n't| not)) exist
+			existance of [file] %string% is %boolean%
+	Is Block:
+		ID: CondIsBlock
+		Patterns:
+			%itemtype% is [a] block
+			%itemtype% (isn't|is not) [a] block
+	Is Divisible:
+		ID: CondIsDivisible
+		Patterns:
+			%numbers% (is|are) divisible by %number%
+			%number% (isn't|is not|aren't|are not) divisible by %number%
+	Is Prime:
+		ID: CondIsPrime
+		Patterns:
+			%numbers% (is|are) [a] prime [number]
+			%numbers% (isn't|is not|aren't|are not) [a] prime [number]
+	Is Within Cuboid:
+		ID: CondIsWithin
+		Patterns:
+			%locations% (is|are) within %location% (to|and) %location%
+			%locations% (are|is)(n't| not) within %location% (to|and) %location%
+	Midi is playing:
+		ID: CondMidi
+		Patterns:
+			midi [ids] %strings% (are|is) playing
+			midi [ids] %strings% (are|is)(n't| not) playing
+	Within Border:
+		ID: CondWithinBorder
+		Patterns:
+			%locations% is [with]in [world[ ]border[s]] %worldborder%
+			%locations% (isn't|is not) [with]in [world[ ]border[s]] %worldborder%
+Effects:
+	Branch:
+		ID: EffBranch
+		Patterns:
+			branch %number%
+	Clear Server Recipes:
+		ID: EffClearRecipes
+		Patterns:
+			wipe server crafting recipes
+	Clear Single Recipes:
+		ID: EffClearItemRecipes
+		Patterns:
+			wipe crafting recipes for %itemtypes%
+	Client Block:
+		ID: EffClientBlock
+		Patterns:
+			make %players% see %blocks% as %itemtype%
+	Client Sign:
+		ID: EffClientSign
+		Patterns:
+			make %players% see lines of %blocks% as %string%, %string%, %string%( and|,) %string%
+	Developer Mode Option:
+		ID: EffOptionDeveloperMode
+		Patterns:
+			$ developer mode
+	EffExecuteLambda:
+		ID: EffExecuteLambda
+		Patterns:
+			(do|execute) [%-number% time[s]] %lambda%
+	EffOptionSQLPool:
+		ID: EffOptionSQLPool
+		Patterns:
+			$ pool <.+>
+	EffSQLUpdate:
+		ID: EffSQLUpdate
+		Patterns:
+			update %string%
+	EffShootItemProjectile:
+		ID: EffShootItemProjectile
+		Patterns:
+			make %livingentitys% shoot [an] item projectile [of] %itemtype% [at speed %number%]
+	EffShowCredits:
+		ID: EffShowCredits
+		Patterns:
+			display credits to %player%
+	EffStopServer:
+		ID: EffStopServer
+		Patterns:
+			(stop|shutdown) server
+	EffTame:
+		ID: EffTame
+		Patterns:
+			tame %entities% to %player%
+	EffTexture:
+		ID: EffTexture
+		Patterns:
+			send [(resource|texture)] pack from %string% to %players%
+	Entity Homing:
+		ID: EffHoming
+		Patterns:
+			make %entity% home towards %location%
+			make %entities% home towards %location% normally
+	Escape Lines:
+		ID: EffEscape
+		Patterns:
+			escape %number% [(level[s]|line[s])]
+	Evaluate Input Effect:
+		ID: EffEvaluateEffect
+		Patterns:
+			evaluate %string/markup%
+			^%markup%
+	Format Inventory Slot:
+		ID: EffFormatSlot
+		Patterns:
+			format slot %number% of %players% with %itemstack% to close then run %string/lambda%
+			format slot %number% of %players% with %itemstack% to run %string/lambda%
+			format slot %number% of %players% with %itemstack% to close
+			format slot %number% of %players% with %itemstack% to (be|act) unstealable
+			unformat slot %number% of %players%
+	Leash Entities:
+		ID: EffLeash
+		Patterns:
+			make %entities% (leash|lead) %livingentities%
+			(leash|lead) %livingentities% to %entities%
+	Make Damage:
+		ID: EffMakeDamage
+		Patterns:
+			(make|force) %livingentities% [to] damage %livingentities% by %number%
+	Make Say:
+		ID: EffMakeSay
+		Patterns:
+			(make|force) %players% say %strings%
+	Make Sleep:
+		ID: EffMakeSleep
+		Patterns:
+			(make|force) %player% [to] sleep at %location%
+	Pathfind:
+		ID: EffPathfind
+		Patterns:
+			make %livingentities% pathfind to %location% (with|at) speed %number%
+	Play MIDI:
+		ID: EffMIDI
+		Patterns:
+			play midi [from] %string% (for|to) %players% [at [tempo] %-number%] [with id %-string%]
+			play midi from (website|link) %string% (for|to) %players% [at [tempo] %-number%] [with id %-string%]
+	Pop Firework:
+		ID: EffPop
+		Patterns:
+			(detonate|pop) %fireworkeffects% at %locations%
+	Preinit Driver Option:
+		ID: EffOptionSQLInit
+		Patterns:
+			$ init <.+>
+	Register Recipe:
+		ID: EffNewRecipe
+		Patterns:
+			register new shaped recipe for %itemtype% using %itemtype%, %itemtype%, %itemtype%, %itemtype%, %itemtype%, %itemtype%, %itemtype%, %itemtype%, %itemtype%
+			register new shapeless recipe for %itemtype% using %itemtype%, %itemtype%, %itemtype%, %itemtype%, %itemtype%, %itemtype%, %itemtype%, %itemtype%, %itemtype%
+	Restore Inventory:
+		ID: EffDeserializeInventory
+		Patterns:
+			restore %inventories% (to|from) %string%
+	SQL Password Option:
+		ID: EffOptionSQLPassword
+		Patterns:
+			$ db password <.+>
+	SQL URL Option:
+		ID: EffOptionSQLURL
+		Patterns:
+			$ db url <.+>
+	SQL Username Option:
+		ID: EffOptionSQLUsername
+		Patterns:
+			$ db username <.+>
+	Safely Execute Thread:
+		ID: EffOptionThread
+		Patterns:
+			$ thread
+	Set Block Without Updates:
+		ID: EffSetBlock
+		Patterns:
+			@noupdate::set %blocks% to %itemtype%
+	Spawn Falling Block:
+		ID: EffBlockFall
+		Patterns:
+			spawn falling block of %itemtype% at %locations%
+			spawn damaging falling block of %itemtype% at %locations%
+			spawn undroppable falling block of %itemtype% at %locations%
+			spawn damaging undroppable falling block of %itemtype% at %locations%
+			spawn undroppable damaging falling block of %itemtype% at %locations%
+	Stop MIDI:
+		ID: EffMIDIStop
+		Patterns:
+			stop midi[s] [[with] id] %strings%
+	Trail Projectile:
+		ID: EffTrail
+		Patterns:
+			trail projectile with %particles%
+	Visibility:
+		ID: EffPlayerVisibility
+		Patterns:
+			hide %players% (to|from) %players%
+			reveal %players% (to|from) %players%
+	skQueryPerms Option:
+		ID: EffOptionSkriptPermissionsManager
+		Patterns:
+			$ use permissions
+Expressions:
+	ExprArrayValue:
+		ID: ExprArrayValue
+		Return type: Object
+		Changers:
+			none
+		Patterns:
+			index %number% of %objects%
+	ExprArrowCrit:
+		ID: ExprArrowCrit
+		Return type: Boolean
+		Changers:
+			set
+			reset
+		Patterns:
+			[the] critical arrow (state|ability|mode) of %entities%
+			%entities%'[s] critical arrow (state|ability|mode)
+	ExprArrowKnockback:
+		ID: ExprArrowKnockback
+		Return type: Number
+		Changers:
+			set
+			reset
+		Patterns:
+			[the] arrow knockback [amount] of %entities%
+			%entities%'[s] arrow knockback [amount]
+	ExprArt:
+		ID: ExprArt
+		Return type: art
+		Changers:
+			set
+			reset
+		Patterns:
+			[the] [displayed] art of %entities%
+			%entities%'[s] [displayed] art
+	ExprBlankInventories:
+		ID: ExprBlankInventories
+		Return type: Inventory
+		Changers:
+			add
+			set
+			remove
+			remove all
+			delete
+		Patterns:
+			inventory of %inventorytype%
+			chest with %number% row[s]
+			chest with %number% row[s] named %string%
+	ExprBlastRadius:
+		ID: ExprBlastRadius
+		Return type: Number
+		Changers:
+			set
+			reset
+		Patterns:
+			[the] (blast|explosion) (radius|size|yield) of %entities%
+			%entities%'[s] (blast|explosion) (radius|size|yield)
+	ExprBlockChunk:
+		ID: ExprBlockChunk
+		Return type: Block
+		Changers:
+			add
+			set
+			remove
+			remove all
+			delete
+		Patterns:
+			blocks within %chunk%
+	ExprBlockCube:
+		ID: ExprBlockCube
+		Return type: Block
+		Changers:
+			add
+			set
+			remove
+			remove all
+			delete
+		Patterns:
+			blocks within %location% (to|and) %location%
+	ExprBlockInChunk:
+		ID: ExprBlockInChunk
+		Return type: Block
+		Changers:
+			add
+			set
+			remove
+			remove all
+			delete
+		Patterns:
+			[the] block at %number%, %number%, %number% in [chunk] %chunk%
+	ExprBorder:
+		ID: ExprBorder
+		Return type: worldborder
+		Changers:
+			delete
+			reset
+		Patterns:
+			[the] world[ ]border[s] of %worlds%
+			%worlds%'[s] world[ ]border[s]
+	ExprBorderCenter:
+		ID: ExprBorderCenter
+		Return type: Location
+		Changers:
+			set
+		Patterns:
+			[the] [world[ ]border[s]] center of %worldborders%
+			%worldborders%'[s] [world[ ]border[s]] center
+	ExprBorderDamageAmount:
+		ID: ExprBorderDamageAmount
+		Return type: Number
+		Changers:
+			set
+		Patterns:
+			[the] [world[ ]border[s]] damage [amount] of %worldborders%
+			%worldborders%'[s] [world[ ]border[s]] damage [amount]
+	ExprBorderDamageBuffer:
+		ID: ExprBorderDamageBuffer
+		Return type: Number
+		Changers:
+			set
+		Patterns:
+			[the] [world[ ]border[s]] [damage] buffer of %worldborders%
+			%worldborders%'[s] [world[ ]border[s]] [damage] buffer
+	ExprBorderSize:
+		ID: ExprBorderSize
+		Return type: Number
+		Changers:
+			add
+			set
+			remove
+		Patterns:
+			(size|diameter) of world[ ]border[s] %worldborders% [over [a [(time|period) of]] %-timespan%]
+	ExprBorderWarningDistance:
+		ID: ExprBorderWarningDistance
+		Return type: Number
+		Changers:
+			set
+		Patterns:
+			[the] [world[ ]border[s]] warning distance of %worldborders%
+			%worldborders%'[s] [world[ ]border[s]] warning distance
+	ExprBorderWarningTime:
+		ID: ExprBorderWarningTime
+		Return type: Number
+		Changers:
+			add
+			set
+			remove
+		Patterns:
+			[the] [world[ ]border[s]] warning time of %worldborders%
+			%worldborders%'[s] [world[ ]border[s]] warning time
+	ExprCharacterIndex:
+		ID: ExprCharacterIndex
+		Return type: Text
+		Changers:
+			none
+		Patterns:
+			char[acter][s] at [index] %numbers% (within|in) %strings%
+	ExprCheck:
+		ID: ExprCheck
+		Return type: Boolean
+		Changers:
+			none
+		Patterns:
+			check[ed] %predicate%
+	ExprColoredPotion:
+		ID: ExprColoredPotion
+		Return type: Item / Material
+		Changers:
+			none
+		Patterns:
+			blank %potioneffecttype% [colo[u]r[ed]] potion
+	ExprComparisons:
+		ID: ExprComparisons
+		Return type: Boolean
+		Changers:
+			none
+		Patterns:
+			%object%[ ]===[ ]%object%
+			%object%[ ]==[ ]%object%
+			%object%[ ]\>[ ]%object%
+			%object%[ ]\<[ ]%object%
+			%object%[ ]\>=[ ]%object%
+			%object%[ ]\<=[ ]%object%
+	ExprComplicatedMath:
+		ID: ExprComplicatedMath
+		Return type: Number
+		Changers:
+			none
+		Patterns:
+			sin[e] %number%
+			cos[ine] %number%
+			tan[gent] %number%
+			arc sin[e] %number%
+			arc cos[ine] %number%
+			arc tan[gent] %number%
+			hyperbolic sin[e] %number%
+			hyperbolic cos[ine] %number%
+			hyperbolic tan[gent] %number%
+			[natural ]log[arithm] %number%
+			base(-| )10 log[arithm] %number%
+			signum %number%
+			(sqrt|square root)[ of] %number%
+			(%number% factorial|%number%!)
+	ExprCustomReturn:
+		ID: ExprCustomReturn
+		Return type: Object
+		Changers:
+			set
+		Patterns:
+			[custom] expression ([return] value|output)
+	ExprDefaultValue:
+		ID: ExprDefaultValue
+		Return type: Object
+		Changers:
+			none
+		Patterns:
+			%object%[ ]?[ ]%object%
+	ExprDirectionFromTo:
+		ID: ExprDirectionFromTo
+		Return type: Direction
+		Changers:
+			none
+		Patterns:
+			[the] direction from %location% to %location%
+	ExprEnchantLevel:
+		ID: ExprEnchantLevel
+		Return type: integer
+		Changers:
+			none
+		Patterns:
+			[the] enchant(ing|ment|) level
+	ExprEntities:
+		ID: ExprEntities
+		Return type: Entity
+		Changers:
+			add
+			remove
+			remove all
+		Patterns:
+			[the] entities of %chunks%
+			%chunks%'[s] entities
+	ExprExplodedBlocks:
+		ID: ExprExplodedBlocks
+		Return type: Block
+		Changers:
+			add
+			set
+			remove
+			remove all
+			delete
+		Patterns:
+			[the] (destroyed|exploded|boom boomed) blocks
+	ExprFakeMaxPlayers:
+		ID: ExprFakeMaxPlayers
+		Return type: Number
+		Changers:
+			set
+		Patterns:
+			[the] [max] player count
+	ExprFlightMode:
+		ID: ExprFlightMode
+		Return type: Boolean
+		Changers:
+			set
+			reset
+		Patterns:
+			[the] fl(y|ight) (state|ability|mode) of %players%
+			%players%'[s] fl(y|ight) (state|ability|mode)
+	ExprFormerLocation:
+		ID: ExprFormerLocation
+		Return type: Location
+		Changers:
+			none
+		Patterns:
+			[the] (past|former) move[ment] [location]
+	ExprGlowingItemStack:
+		ID: ExprGlowingItemStack
+		Return type: Item / Material
+		Changers:
+			none
+		Patterns:
+			[skquery] glowing %itemstacks%
+	ExprHealthScale:
+		ID: ExprHealthScale
+		Return type: Number
+		Changers:
+			set
+			reset
+		Patterns:
+			[the] scaled health of %players%
+			%players%'[s] scaled health
+	ExprHealthScaleMode:
+		ID: ExprHealthScaleMode
+		Return type: Boolean
+		Changers:
+			set
+			reset
+		Patterns:
+			[the] scaled health (state|ability|mode) of %players%
+			%players%'[s] scaled health (state|ability|mode)
+	ExprHotbarSlot:
+		ID: ExprHotbarSlot
+		Return type: Number
+		Changers:
+			add
+			set
+			remove
+			reset
+		Patterns:
+			[the] (current|selected) hotbar slot [id] of %players%
+			%players%'[s] (current|selected) hotbar slot [id]
+	ExprIIf:
+		ID: ExprIIf
+		Return type: Object
+		Changers:
+			none
+		Patterns:
+			%boolean%[ ]?[ ]%object%[ ]:[ ]%object%
+	ExprImageLocal:
+		ID: ExprImageLocal
+		Return type: Object
+		Changers:
+			none
+		Patterns:
+			[the] [buffered[ ]]image stored as %string%
+	ExprImageURL:
+		ID: ExprImageURL
+		Return type: Object
+		Changers:
+			none
+		Patterns:
+			[the] [buffered[ ]]image from [url] %string%
+	ExprIncendiaryExplosion:
+		ID: ExprIncendiaryExplosion
+		Return type: Boolean
+		Changers:
+			set
+			reset
+		Patterns:
+			[the] (blast|explosion) fire (state|ability|mode) of %entities%
+			%entities%'[s] (blast|explosion) fire (state|ability|mode)
+	ExprInnerExpression:
+		ID: ExprInnerExpression
+		Return type: Object
+		Changers:
+			none
+		Patterns:
+			%*classinfo% expression( |-)%integer%
+			loopable %*classinfo% expression( |-)%integer%
+	ExprInput:
+		ID: ExprInput
+		Return type: Object
+		Changers:
+			add
+			set
+			remove
+			remove all
+			delete
+			reset
+		Patterns:
+			%*classinfo% input
+	ExprInventoryName:
+		ID: ExprInventoryName
+		Return type: Text
+		Changers:
+			none
+		Patterns:
+			inventory (title|name)
+	ExprInventoryNameContainer:
+		ID: ExprInventoryNameContainer
+		Return type: Text
+		Changers:
+			set
+		Patterns:
+			[the] inventory (title|name)[s] of %inventories%
+			%inventories%'[s] inventory (title|name)[s]
+	ExprInventorySerials:
+		ID: ExprInventorySerials
+		Return type: Text
+		Changers:
+			set
+		Patterns:
+			[the] serialized contents of %inventory%
+			%inventory%'[s] serialized contents
+	ExprItemStackSize:
+		ID: ExprItemStackSize
+		Return type: Number
+		Changers:
+			set
+			reset
+		Patterns:
+			[the] [global] [max] stack size of %inventories%
+			%inventories%'[s] [global] [max] stack size
+	ExprKeyString:
+		ID: ExprKeyString
+		Return type: Text
+		Changers:
+			none
+		Patterns:
+			random %number% (char|long|length) string from [charset] %markup%
+	ExprLambdaConcatenate:
+		ID: ExprLambdaConcatenate
+		Return type: Object
+		Changers:
+			none
+		Patterns:
+			%lambda%-\>%lambda%
+			%predicate%-\>%predicate%
+	ExprLandBoats:
+		ID: ExprLandBoats
+		Return type: Boolean
+		Changers:
+			set
+			reset
+		Patterns:
+			[the] land boat (state|mode|ability) of %entities%
+			%entities%'[s] land boat (state|mode|ability)
+	ExprLoadedChunks:
+		ID: ExprLoadedChunks
+		Return type: Chunk
+		Changers:
+			none
+		Patterns:
+			[the] loaded chunks of %worlds%
+			%worlds%'[s] loaded chunks
+	ExprMOTD:
+		ID: ExprMOTD
+		Return type: Text
+		Changers:
+			set
+		Patterns:
+			[the] (motd|message of the day)
+	ExprMaxSpeed:
+		ID: ExprMaxSpeed
+		Return type: Number
+		Changers:
+			set
+			reset
+		Patterns:
+			[the] [maximum] minecart speed of %entities%
+			%entities%'[s] [maximum] minecart speed
+	ExprMessageFormat:
+		ID: ExprMessageFormat
+		Return type: Text
+		Changers:
+			set
+		Patterns:
+			message format
+	ExprModulus:
+		ID: ExprModulus
+		Return type: Number
+		Changers:
+			none
+		Patterns:
+			%number% mod %number%
+	ExprMoonPhase:
+		ID: ExprMoonPhase
+		Return type: moonphase
+		Changers:
+			set
+		Patterns:
+			[the] [current] moon phase of %world%
+			%world%'[s] [current] moon phase
+	ExprNewLine:
+		ID: ExprNewLine
+		Return type: Text
+		Changers:
+			none
+		Patterns:
+			(nl|new[ ]line)
+	ExprNewUUID:
+		ID: ExprNewUUID
+		Return type: Text
+		Changers:
+			none
+		Patterns:
+			[new] (guid|uuid)
+	ExprNotBoolean:
+		ID: ExprNotBoolean
+		Return type: Boolean
+		Changers:
+			none
+		Patterns:
+			(!|not )%boolean%
+	ExprNthPrime:
+		ID: ExprNthPrime
+		Return type: integer
+		Changers:
+			none
+		Patterns:
+			%number%(st|nd|rd|th) prime
+	ExprNull:
+		ID: ExprNull
+		Return type: Object
+		Changers:
+			none
+		Patterns:
+			null
+	ExprOpenInventory:
+		ID: ExprOpenInventory
+		Return type: Inventory
+		Changers:
+			add
+			set
+			remove
+			remove all
+			delete
+		Patterns:
+			[the] (current|open) inventory of %player%
+			%player%'[s] (current|open) inventory
+	ExprOriginExpression:
+		ID: ExprOriginExpression
+		Return type: Object
+		Changers:
+			none
+		Patterns:
+			%*classinfo% origin expression
+	ExprParameter:
+		ID: ExprParameter
+		Return type: Object
+		Changers:
+			none
+		Patterns:
+			parameter(-| )%number%
+	ExprPluginVersion:
+		ID: ExprPluginVersion
+		Return type: Text
+		Changers:
+			none
+		Patterns:
+			[the] version of %string%
+			%string%'[s] version
+	ExprPrimer:
+		ID: ExprPrimer
+		Return type: Entity
+		Changers:
+			add
+			remove
+			remove all
+		Patterns:
+			[the] (primer|fuse lighting piece of shit) of %entities%
+			%entities%'[s] (primer|fuse lighting piece of shit)
+	ExprPull:
+		ID: ExprPull
+		Return type: Text
+		Changers:
+			none
+		Patterns:
+			value [of] %string% pulled from %string%
+	ExprRadix:
+		ID: ExprRadix
+		Return type: Text
+		Changers:
+			none
+		Patterns:
+			radix %number% of %number%
+	ExprRegainReason:
+		ID: ExprRegainReason
+		Return type: Heal Reason
+		Changers:
+			none
+		Patterns:
+			(regen|heal) (cause|reason)
+	ExprRegexMatches:
+		ID: ExprRegexMatches
+		Return type: Text
+		Changers:
+			none
+		Patterns:
+			groups %number% of %string% matched (to|with|against) %string%
+	ExprRomanNumeralFrom:
+		ID: ExprRomanNumeralFrom
+		Return type: Number
+		Changers:
+			none
+		Patterns:
+			[the] arabic num(ber|eral) of %strings%
+			%strings%'[s] arabic num(ber|eral)
+	ExprRomanNumeralTo:
+		ID: ExprRomanNumeralTo
+		Return type: Text
+		Changers:
+			none
+		Patterns:
+			[the] roman num(ber|eral) of %numbers%
+			%numbers%'[s] roman num(ber|eral)
+	ExprSQLQuery:
+		ID: ExprSQLQuery
+		Return type: queryresult
+		Changers:
+			none
+		Patterns:
+			result of query %string%
+	ExprSQLQueryObjects:
+		ID: ExprSQLQueryObjects
+		Return type: Object
+		Changers:
+			none
+		Patterns:
+			objects in column %string% from %queryresult%
+	ExprSerial:
+		ID: ExprSerial
+		Return type: Text
+		Changers:
+			none
+		Patterns:
+			[the] serialized inventory of %player%
+			%player%'[s] serialized inventory
+	ExprServerIcon:
+		ID: ExprServerIcon
+		Return type: Object
+		Changers:
+			none
+		Patterns:
+			[the] server icon
+	ExprTabCompleteArgument:
+		ID: ExprTabCompleteArgument
+		Return type: Text
+		Changers:
+			none
+		Patterns:
+			arg[ument] at %number%
+	ExprTabCompletions:
+		ID: ExprTabCompletions
+		Return type: Text
+		Changers:
+			add
+		Patterns:
+			[tab] (completions|suggestions)
+	ExprTameOwner:
+		ID: ExprTameOwner
+		Return type: Player
+		Changers:
+			set
+			reset
+		Patterns:
+			[the] (tamer|[pet] owner) of %entities%
+			%entities%'[s] (tamer|[pet] owner)
+	ExprTileEntities:
+		ID: ExprTileEntities
+		Return type: Block
+		Changers:
+			add
+			set
+			remove
+			remove all
+			delete
+		Patterns:
+			[the] tile entities of %chunks%
+			%chunks%'[s] tile entities
+	ExprTimeAbs:
+		ID: ExprTimeAbs
+		Return type: Time
+		Changers:
+			set
+			reset
+		Patterns:
+			[the] time of %players%
+			%players%'[s] time
+	ExprTimeRel:
+		ID: ExprTimeRel
+		Return type: Time
+		Changers:
+			set
+			delete
+			reset
+		Patterns:
+			(relative|player) time of %player% [with relative %-boolean%]
+			%player%'s (relative|player) time [with relative %-boolean%]
+	ExprTntSource:
+		ID: ExprTntSource
+		Return type: Entity
+		Changers:
+			add
+			remove
+			remove all
+		Patterns:
+			[the] (primer|fuse lighting piece of shit) of %entities%
+			%entities%'[s] (primer|fuse lighting piece of shit)
+	ExprTransientObject:
+		ID: ExprTransientObject
+		Return type: Object
+		Changers:
+			set
+		Patterns:
+			transient [object] %string%
+	ExprURLText:
+		ID: ExprURLText
+		Return type: Text
+		Changers:
+			none
+		Patterns:
+			text from [url] %string%
+	ExprValues:
+		ID: ExprValues
+		Return type: Text
+		Changers:
+			none
+		Patterns:
+			[all ]enum values of %classinfo%
+	ExprVillagerJob:
+		ID: ExprVillagerJob
+		Return type: profession
+		Changers:
+			set
+			reset
+		Patterns:
+			[the] villager (profession|job) of %entities%
+			%entities%'[s] villager (profession|job)
+	ExprWhere:
+		ID: ExprWhere
+		Return type: Object
+		Changers:
+			none
+		Patterns:
+			%objects% where %predicate%
+	ExprYaml:
+		ID: ExprYaml
+		Return type: Object
+		Changers:
+			delete
+			reset
+		Patterns:
+			yaml (value|nodes|nodes with keys|list) %string% from [file] %string%

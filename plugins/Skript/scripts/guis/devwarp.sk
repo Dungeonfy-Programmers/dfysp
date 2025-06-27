@@ -1,0 +1,74 @@
+on inventory click:
+	if name of event-inventory is "&dDevelopment Warps":
+		cancel event
+		if index of event-slot = 49:
+			close player's inventory
+			stop
+		if index of event-slot = 45:
+			close player's inventory
+			make player execute command "/warp"
+			stop
+		set {_length} to size of {starry.devwarps::*}
+		set {_length} to {_length} - 1
+		if index of event-slot > {_length}:
+			if index of event-slot < 45:
+				close player's inventory
+				send "&cNo warp in this slot"
+				stop
+		set {_li} to 0
+		loop {starry.devwarps::*}:
+			if {_li} = index of event-slot:
+				if event-clicktype is right mouse button:
+					if player has permission "starry.dev.delwarp":
+						delete {starry.devwarps::%loop-index%}
+						close player's inventory
+						send "&cWarp ""&6%loop-index in strict proper case%&c"" deleted"
+					else:
+						send "&cNo permission to delete"
+						close player's inventory
+					exit loop
+				else:
+					teleport player to loop-value
+					send "&aWarped to ""&e%loop-index in strict proper case%&a""!"
+					exit loop
+			add 1 to {_li}
+		
+
+command /devwarp [<string>]:
+	aliases: /devwarps, /dw
+	permission: starry.dev.warp
+	trigger:
+		if arg is not set:
+			set {_gui} to a new chest inventory with 6 row with name "&dDevelopment Warps"
+			set {_li} to 0
+			loop 45 times:
+				set slot {_li} of {_gui} to oak button named "&7No warp"
+				add 1 to {_li}
+			loop 9 times:
+				set slot {_li} of {_gui} to black stained glass pane named "&7"
+				add 1 to {_li}
+			set slot 49 of {_gui} to barrier named "&cClose Menu"
+			set slot 45 of {_gui} to arrow named "&6Back"
+			set {_li} to 0
+			loop {starry.devwarps::*}:
+				set {_i} to repeating command block if mod({_li}, 3) = 0
+				set {_i} to chain command block if mod({_li}, 3) = 1
+				set {_i} to command block if mod({_li}, 3) = 2
+				set slot {_li} of {_gui} to {_i} named "&d%loop-index in strict proper case%" with lore "", "&aLeft click to warp" and "&cRight click to remove!"
+				add 1 to {_li}
+			open {_gui} to player
+		else:
+			set {_look} to arg in strict proper case
+			if {starry.devwarps::%{_look}%} is set:
+				teleport player to {starry.devwarps::%{_look}%}
+				send "&aWarped to ""&e%{_look}%&a""!"
+			else:
+				send "&cNo warp exists for ""&6%{_look}%&c"""
+
+command /devwarp-add <string>:
+	permission: starry.dev.makewarp
+	usage: /devwarp-add <warp name>
+	aliases: /dw-a, /dw-add, /devwarps-add
+	trigger:
+		set {starry.devwarps::%arg in strict proper case%} to location of player
+		send "&aDev warp ""&e%arg in strict proper case%&a"" added!"

@@ -1,0 +1,9 @@
+{
+  "minecraft:recipes/food/cake": {
+    "criteria": {
+      "has_egg": "2022-03-12 18:50:32 +0000"
+    },
+    "done": true
+  },
+  "DataVersion": 2730
+}

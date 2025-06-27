@@ -1,0 +1,11 @@
+on damage:
+	if lore of victim's helmet contains "&6Thick Skull":
+		if {ts_count.%uuid of victim%} isn't set:
+			set {ts_count.%uuid of victim%} to 0
+		if {ts_count.%uuid of victim%} >= 25:
+			set {ts_count.%uuid of victim%} to 0
+			apply resistance 2 to victim for 3 seconds
+			send message "&aYour Thick Skull activated!" to victim
+		else:
+			add 1 to {ts_count.%uuid of victim%}
+			send action bar "&6&lTHICK SKULL %{ts_count.%uuid of victim%}%" to victim

@@ -1,0 +1,22 @@
+#Dungeon Skill formula
+#{dungeonsstarted.%uuid of player%}
+#{ezdungeonbosskills.%uuid of player%}
+#{meddungeonbosskills.%uuid of player%}	#{harddungeonbosskills.%uuid of player%}
+# ({harddungeonbosskills.%uuid of player%}/20)+({meddungeonbosskills.%uuid of player%}/25)+({ezdungeonbosskills.%uuid of player%}/30)
+#wither runs / 15 hd kills / 20 + md kills / 30 + ez kills / 40
+command /dungeon_luck [<offline player>]:
+	trigger:
+		set {_gui} to a new chest inventory with 4 row with name "&dDungeon Luck"
+		set slot 31 of {_gui} to barrier named "&fClose Menu"
+		if arg-1 is set:
+			set {_p} to arg-1
+			set slot 13 of {_gui} to {_p}'s skull named "&aDungeon Luck %({witherruns::%uuid of {_p}%}/10)+({harddungeonbosskills::%uuid of {_p}%}/20)+({meddungeonbosskills::%uuid of {_p}%}/30)+({ezdungeonbosskills::%uuid of {_p}%}/40)%" with lore "&7Dungeon Level defines how much you've" and "&7played dungeons and how much extra" and "&7chance you have for rare drops!" and "", "&7Insane Boss Kills: &4+%{witherruns::%uuid of {_p}%}/10%", and "&7Hard Boss Kills: &c+%{harddungeonbosskills::%uuid of {_p}%}/20%" and "&7Medium Boss Kills: &e+%{meddungeonbosskills::%uuid of {_p}%}/30%" and "&7Easy Boss Kills: &a+%{ezdungeonbosskills::%uuid of {_p}%}/40%" and " " and "&8ie. magical beans now have a %1+(({witherruns::%uuid of {_p}%}/10)+({harddungeonbosskills::%uuid of {_p}%}/20)+({meddungeonbosskills::%uuid of {_p}%}/30)+({ezdungeonbosskills::%uuid of {_p}%}/40))/100%%% drop rate"
+		else:
+			set slot 13 of {_gui} to player's skull named "&aDungeon Luck %({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40)%" with lore "&7Dungeon Level defines how much you've", "&7played dungeons and how much extra", "&7chance you have for rare drops!", "", "&7Insane Boss Kills: &4+%{witherruns::%uuid of player%}/10%", "&7Hard Boss Kills: &c+%{harddungeonbosskills::%uuid of player%}/20%", "&7Medium Boss Kills: &e+%{meddungeonbosskills::%uuid of player%}/30%", "&7Easy Boss Kills: &a+%{ezdungeonbosskills::%uuid of player%}/40%", " ", "&8ie. magical beans now have a %1+(({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40))/100%%% drop rate"
+		open {_gui} to player
+
+on inventory click:
+	if name of event-inventory is "&dDungeon Luck":
+		cancel event
+		if index of event-slot = 31:
+			cancel event

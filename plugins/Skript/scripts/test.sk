@@ -175,7 +175,7 @@ command /kills:
 #Tab list					
 every second:
 	loop all players:
-		set loop-player's tab list header to "&b- dungeonfy.minehut.gg -"
+		set loop-player's tab list header to "&b- Dungeonfy -"
 		set {_onlineplayers} to number of all players
 		set loop-player's tab list footer to "&fPlayers: &a%{_onlineplayers}% &fBits: &b%{bits::%uuid of loop-player%}%%nl%&fKills: &c%{kills::%uuid of loop-player%}% %{badges::%uuid of loop-player%}%"
 
@@ -277,9 +277,6 @@ on damage:
 		set {damagetest::%uuid of attacker%} to damage * 2
 	else:
 		set {damagetest::%uuid of attacker%} to damage * 2
-command /ip:
-	trigger:
-		message "&fThe ip is &bdungeonfy.minehut.gg"
 command /damagetest:
 	trigger:
 		message "&eYour last hit dealt &c%{damagetest::%uuid of player%}% damage&e!"

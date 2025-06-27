@@ -97,7 +97,7 @@ command /timerewards:
 			set {clockdrops::%player%} to true
 			send "&aTime played rewards now enabled!"
 every 120 seconds:
-    broadcast "<##FFC300>You are currently playing &bdungeonfy.minehut.gg"
+    broadcast "<##FFC300>You are currently playing &bDungeonfy"
 #playtime rewards
 every 600 seconds:
 	loop all players:
